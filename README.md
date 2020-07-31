@@ -9,5 +9,5 @@
 - Waterloo ID: z2gui
 
 ## Author
-- Name:
-- Waterloo ID:
+- Name: Alexandru Camer
+- Waterloo ID: acamer
