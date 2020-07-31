@@ -1,11 +1,11 @@
-# CS 246 Final Project:
+# CS 246 Final Project: Watopoly
 
 ## Author
 - Name: Karem Abdul-Samad
 - Waterloo ID: k2abduls
 
 ## Author
-- Name:Zhao Gui 
+- Name: Zhao Gui
 - Waterloo ID: z2gui
 
 ## Author
