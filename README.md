@@ -5,9 +5,9 @@
 - Waterloo ID: k2abduls
 
 ## Author
-- Name:Zhao Gui 
+- Name: Zhao Gui 
 - Waterloo ID: z2gui
 
 ## Author
-- Name:
-- Waterloo ID:
+- Name: Alexandru Camer
+- Waterloo ID: acamer
