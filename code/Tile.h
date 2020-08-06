@@ -2,8 +2,6 @@
 #define TILE_H
 #include "Subject.h"
 
-class Player;
-
 class Tile: public Subject{
 
     protected:
