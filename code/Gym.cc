@@ -3,7 +3,7 @@
 #include <string>
 
 Gym::Gym(std::string name, int purchaseCost){
-    property(name, purchaseCost);
+    Property(name, purchaseCost);
 }
 
 void Gym::land(Player* p){

@@ -1,11 +1,11 @@
 #include "AcademicBuilding.h"
+#include "iostream"
 
 std::map<const std::string, int> AcademicBuilding::blockMap = {
     {"Arts1", 2}, {"Arts2", 3}, {"Eng", 3}, {"Health", 3}, {"Env", 3}, {"Sci1", 3}, {"Sci2", 3}, {"Math", 2},
 };
 
-AcademicBuilding::AcademicBuilding( std::string name, std::string blockName, int improvementCost, int purchaseCost, int tutzero, int tutone, int tuttwo,   int tutthree, int tutfour, int tutfive): blockName{blockName}, improvementCost{improvementCost}, improvementLevel{0} {
-    property{purchaseCost, name};
+AcademicBuilding::AcademicBuilding( std::string name, std::string blockName, int improvementCost, int purchaseCost, int tutzero, int tutone, int tuttwo,   int tutthree, int tutfour, int tutfive): blockName{blockName}, improvementCost{improvementCost}, improvementLevel{0},     property{purchaseCost, name} {
     tuitionAtLevels.emplace_back(tutzero);
     tuitionAtLevels.emplace_back(tutone);
     tuitionAtLevels.emplace_back(tuttwo);
@@ -51,9 +51,9 @@ void AcademicBuilding::unmortgage(Player* p){
 
 }
 
-void improve(Player* p){
+void AcademicBuilding::improve(Player* p){
     if(improvementLevel < 5){
-        if (p->getBlockCount(blockName) == blockmap.find(blockName)->second){
+        if (p->getBlockCount(blockName) == blockMap.find(blockName)->second){
             p->withdraw(improvementCost);
             // add not enough money error maybe
             improvementLevel += 1;
