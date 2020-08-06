@@ -4,6 +4,6 @@ Property::Property(std::string name){
     tile(name);
 }
 
-bool Property::isProperty(){
+bool Property::setIsProperty(){
     isProperty = false;
 }

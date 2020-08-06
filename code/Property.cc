@@ -4,6 +4,6 @@ Property::Property(std::string name, int purchaseCost): purchaseCost{purchaseCos
     tile(name);
 }
 
-bool Property::isProperty(){
+bool Property::setIsProperty(){
     isProperty = true;
 }
