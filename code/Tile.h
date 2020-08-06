@@ -1,6 +1,6 @@
 #ifndef TILE_H
 #define TILE_H
-#include "subject.h"
+#include "Subject.h"
 
 class Tile: public Subject{
     
