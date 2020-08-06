@@ -12,7 +12,7 @@ class property:public tile{
     bool morgaged;
     
     public:
-    property(int purchaseCost);
+    property(std::string name, int purchaseCost);
     virtual void buy(Player* p);
     virtual void mortgage(Player* p);
     virtual void unmortgage(Player* p);

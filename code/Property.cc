@@ -1,6 +1,6 @@
 #include "property.h"
 
-Property::Property(int purchaseCost, std::string name): purchaseCost{purchaseCost}, owner{nullptr}, morgaged{false}{
+Property::Property(std::string name, int purchaseCost): purchaseCost{purchaseCost}, owner{nullptr}, morgaged{false}{
     tile(name);
 }
 
