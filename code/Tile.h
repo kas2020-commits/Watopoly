@@ -1,20 +1,22 @@
 #ifndef TILE_H
 #define TILE_H
-#include "subject.h"
+#include "Subject.h"
 
-class Tile: public subject{
-    
+class Player;
+
+class Tile: public Subject{
+
     protected:
     std::string name;
     bool isProperty;
-    
+
     public:
     Tile(std::string name);
     virtual void land(Player *) = 0;
     virtual void pass(Player *);
-    virtual bool isProperty() = 0;
+    virtual bool setIsProperty() = 0;
     std::string getName();
-    
+
 
 };
 

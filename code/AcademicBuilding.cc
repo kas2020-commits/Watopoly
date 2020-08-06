@@ -1,18 +1,10 @@
 #include "AcademicBuilding.h"
 
-static std::map<const std::string, int> AcademicBuilding::blockMap{
-    blockmap.emplace("Arts1", 2);
-    blockmap.emplace("Arts2", 3);
-    blockmap.emplace("Eng", 3);
-    blockmap.emplace("Health", 3);
-    blockmap.emplace("Env", 3);
-    blockmap.emplace("Sci1", 3);
-    blockmap.emplace("Sci2", 3);
-    blockmap.emplace("Math", 2);
+std::map<const std::string, int> AcademicBuilding::blockMap = {
+    {"Arts1", 2}, {"Arts2", 3}, {"Eng", 3}, {"Health", 3}, {"Env", 3}, {"Sci1", 3}, {"Sci2", 3}, {"Math", 2},
 };
 
-
-AcademicBuilding::AcademicBuilding( std::string name, std::string blockName, int      improvementCost, int purchaseCost, int tutzero, int tutone, int tuttwo,   int tutthree, int tutfour, int tutfive): blockName{blockName}, improvementCost{improvementCost}, improvementLevel{0} {
+AcademicBuilding::AcademicBuilding( std::string name, std::string blockName, int improvementCost, int purchaseCost, int tutzero, int tutone, int tuttwo,   int tutthree, int tutfour, int tutfive): blockName{blockName}, improvementCost{improvementCost}, improvementLevel{0} {
     property{purchaseCost, name};
     tuitionAtLevels.emplace_back(tutzero);
     tuitionAtLevels.emplace_back(tutone);
@@ -34,7 +26,7 @@ void AcademicBuilding::buy(Player* p){
         p->withdraw( purchaseCost );
     } else {
         std::cout << "Have an owner!";
-        throw propertyerror;
+        throw propertyerror();
     }
 }
 
@@ -56,7 +48,7 @@ void AcademicBuilding::unmortgage(Player* p){
         std::cout << "Not Morgaged!";
         throw propertyerror;
     }
-    
+
 }
 
 void improve(Player* p){

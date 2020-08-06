@@ -3,8 +3,8 @@
 #include <string>
 #include <map>
 #include "Board.h"
-/* #include "Subject.h" */
-/* #include "Tile.h" */
+#include "Subject.h"
+#include "Tile.h"
 
 class Player;
 

@@ -3,14 +3,14 @@
 #include "NonProperty.h"
 
 class OSAP: public NonProperty{
-    
+
     protected:
     std::string name;
-    
+
     public:
     OSAP(std::string name);
     void land(Player* p) override;
-    void pass(Player* p);
+    void pass(Player* p) override;
     void applyEffect(Player* p) override;
 };
 

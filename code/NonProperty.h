@@ -1,18 +1,17 @@
 #ifndef NONPROPERTY_H
 #define NONPROPERTY_H
-#include tile.h
-#include player.h
+#include "Tile.h"
+#include "Player.h"
 
 
-class NonProperty:public tile{
-    
+class NonProperty : public Tile{
+
     protected:
-    
+
     public:
-    Property(std::string name, int purchaseCost);
+    NonProperty(std::string name);
     virtual void applyEffect(Player*);
-    bool isProperty() override;
-    
+    virtual bool setIsProperty() override;
 
 };
 

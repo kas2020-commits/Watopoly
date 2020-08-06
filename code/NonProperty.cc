@@ -1,9 +1,9 @@
-#include "property.h"
+#include "NonProperty.h"
 
-Property::Property(std::string name){
+NonProperty::NonProperty(std::string name){
     tile(name);
 }
 
-bool Property::isProperty(){
+bool NonProperty::isProperty(){
     isProperty = false;
 }
