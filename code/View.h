@@ -8,6 +8,7 @@
 
 class View : public Observer {
   private:
+    int pp;
     Game* game;
     std::string view;
     map<>
