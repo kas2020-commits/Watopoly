@@ -4,7 +4,7 @@
 #include player.h
 
 
-class property:public tile{
+class Property:public tile{
     
     protected:
     int purchaseCost;
@@ -12,7 +12,7 @@ class property:public tile{
     bool morgaged;
     
     public:
-    property(std::string name, int purchaseCost);
+    Property(std::string name, int purchaseCost);
     virtual void buy(Player* p);
     virtual void mortgage(Player* p);
     virtual void unmortgage(Player* p);
