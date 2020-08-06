@@ -16,7 +16,7 @@ View::View(Game* game) : game{game}, view{""} {
     // read in view template
     std::ifstream viewTemplate{"test.txt"};
     std::string line;
-    while (viewTemplate, line) view += line;
+    while (viewTemplate, line) view += line + "\n";
     game->attach(this);
 
     // set up building position map
@@ -46,6 +46,10 @@ View::View(Game* game) : game{game}, view{""} {
     }
 }
 
+//
+int getPosition(int row, int col) {return 101 * row + col}
+
+//
 void update(Subject* whoUpdated) {
     Player* p = std::dynamic_cast<Player*>(whoUpdated);
     if (p) {
