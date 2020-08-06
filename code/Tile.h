@@ -2,7 +2,7 @@
 #define TILE_H
 #include "subject.h"
 
-class Tile: public subject{
+class Tile: public Subject{
     
     protected:
     std::string name;
@@ -12,7 +12,7 @@ class Tile: public subject{
     Tile(std::string name);
     virtual void land(Player *) = 0;
     virtual void pass(Player *);
-    virtual bool isProperty() = 0;
+    virtual bool setIsProperty() = 0;
     std::string getName();
     
 

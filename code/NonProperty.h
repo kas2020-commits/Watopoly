@@ -11,7 +11,7 @@ class NonProperty:public tile{
     public:
     Property(std::string name, int purchaseCost);
     virtual void applyEffect(Player*);
-    bool isProperty() override;
+    bool setIsProperty() override;
     
 
 };
