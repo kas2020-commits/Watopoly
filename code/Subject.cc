@@ -18,19 +18,19 @@ void Subject::updateObservers(std::string message) {
 }
 
 // attaches observer to self
-void Subject::attachToSelf(Observer* ob) {
+void Subject::attachSelf(Observer* ob) {
     if (std::find(observers.begin(), observers.end(), ob) != observers.end()) {
         observers.emplace_back(ob);
     }
 }
 
 // virtual method for attaching observer to subject's members
-void Subject::attachToMembers(Observer* ob) {}
+void Subject::attachMembers(Observer* ob) {}
 
 // template pattern for attach, purpose is to let a subject attach some of its
 //  members if wants to. This will be useful for the Game class implentation,
 //  so it can attach the observer to the playrs and tiles
 void Subject::attach(Observer* ob) {
-    attachToSelf(ob);
-    attachToMembers(ob);
+    attachSelf(ob);
+    attachMembers(ob);
 }

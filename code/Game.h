@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Board.h"
 
+//
 class Game : public Subject {
   private:
     std::shared_ptr<Board> board;
@@ -17,7 +18,7 @@ class Game : public Subject {
   public:
     Game();
     virtual ~Game();
-    virtual void attachToMembers(Observer* ob) override;
+    virtual void attachMembers(Observer* ob) override;
     void addPlayer();
     void bankruptPlayer();
     std::shared_ptr<Player> start(); // all players must be added before game started

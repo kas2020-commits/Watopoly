@@ -5,11 +5,13 @@
 
 class Subject; // forward declaration
 
+//
 class Observer {
   public:
-    virtual ~Observer() {}
+    virtual ~Observer();
     virtual void update(Subject* whoNotified) = 0;
     virtual void update(std::string message) = 0;
+    void attachTo(Subject* s);
 };
 
 #endif
