@@ -1,0 +1,21 @@
+#ifndef TILE_H
+#define TILE_H
+#include "subject.h"
+
+class Tile: public subject{
+    
+    protected:
+    std::string name;
+    bool isProperty;
+    
+    public:
+    Tile(std::string name);
+    virtual void land(Player *) = 0;
+    virtual void pass(Player *);
+    virtual bool isProperty() = 0;
+    std::string getName();
+    
+
+};
+
+#endif
