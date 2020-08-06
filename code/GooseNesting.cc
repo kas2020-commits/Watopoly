@@ -1,7 +1,7 @@
 #include "GooseNesting.h"
 
-GooseNesting::GooseNesting(std::string name){
-    NonProperty(name);
+GooseNesting::GooseNesting(std::string name):     NonProperty{name}{
+
 }
 void GooseNesting::land(Player* p){
     applyEffect(p);

@@ -13,9 +13,7 @@ class AcademicBuilding: public Property{
 
     public:
     static std::map<const std::string, int> blockMap;
-    AcademicBuilding( std::string name, std::string blockName,
-			int improvementCost, int purchaseCost, int tutzero, int tutone,
-			int tuttwo, int tutthree, int tutfour, int tutfive );
+    AcademicBuilding( std::string name, std::string blockName, int purchaseCost, int improvementCost,  int tutzero, int tutone, int tuttwo, int tutthree, int tutfour, int tutfive);
 
     void land(Player* p) override;
     void buy(Player* p) override;

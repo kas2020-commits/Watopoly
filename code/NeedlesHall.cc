@@ -1,7 +1,7 @@
 #include "NeedlesHall.h"
 
-NeedlesHall::NeedlesHall(std::string name){
-    NonProperty(name);
+NeedlesHall::NeedlesHall(std::string name): NonProperty{name}{
+
     
 }
 
@@ -10,7 +10,7 @@ void NeedlesHall::land(Player* p){
 }
 
 
-NeedlesHall::applyEffect(Player* p){
+void NeedlesHall::applyEffect(Player* p){
     int rutr = rand() % 100 + 1;
     if (rutr == 1){
         if(p->getTotalTimsCups() < 4){
@@ -30,7 +30,7 @@ NeedlesHall::applyEffect(Player* p){
     } else if(( v1 >= 3) && (v1 <= 5)){
         p->withdraw(50);
         updateObservers("You lose $50");
-    } else if(( v1 >= 6) && (v1 <= 12){
+    } else if(( v1 >= 6) && (v1 <= 12)){
         p->deposit(25);
         updateObservers("You win $25");
     } else if(( v1 >= 13) && (v1 <= 15)){
@@ -43,3 +43,4 @@ NeedlesHall::applyEffect(Player* p){
         p->deposit(200);
         updateObservers("You win $200");
     }
+}

@@ -1,6 +1,7 @@
 #ifndef TILE_H
 #define TILE_H
 #include "Subject.h"
+#include <string>
 
 class Player;
 
@@ -16,8 +17,7 @@ class Tile: public Subject{
     virtual void pass(Player *);
     virtual bool setIsProperty() = 0;
     std::string getName();
-
-
+    
 };
 
 #endif

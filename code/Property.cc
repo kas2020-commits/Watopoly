@@ -1,7 +1,6 @@
-#include "property.h"
+#include "Property.h"
 
-Property::Property(std::string name, int purchaseCost): purchaseCost{purchaseCost}, owner{nullptr}, morgaged{false}{
-    tile(name);
+Property::Property(std::string name, int purchaseCost): purchaseCost{purchaseCost}, owner{nullptr}, morgaged{false}, Tile{name}{
 }
 
 bool Property::setIsProperty(){

@@ -1,6 +1,7 @@
 #ifndef SLC_H
 #define SLC_H
 #include <cstdlib>
+#include "NonProperty.h"
 
 class SLC:public NonProperty{
     

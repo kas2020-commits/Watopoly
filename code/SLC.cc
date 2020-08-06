@@ -1,7 +1,7 @@
 #include "SLC.h"
+#include <string>
+SLC::SLC(std::string name): NonProperty{name}{
 
-SLC::SLC(std::string name): {
-    NonProperty(name);
 }
 void SLC::land(Player* p){
     applyEffect(p);
@@ -12,7 +12,7 @@ void SLC::applyEffect(Player* p){
     int rutr = rand() % 100 + 1;
     if (rutr == 1){
         if(p->getTotalTimsCups() < 4){
-            p->giveTimsCups(1);
+            p->changeTimsCups(1);
             updateObservers("You won a Roll Up the Rim cup");
         }
     }

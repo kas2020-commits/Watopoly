@@ -1,9 +1,8 @@
 #include "NonProperty.h"
 
-NonProperty::NonProperty(std::string name){
-    tile(name);
+NonProperty::NonProperty(std::string name): Tile{name}{
 }
 
-bool Property::setIsProperty(){
+bool NonProperty::setIsProperty(){
     isProperty = false;
 }

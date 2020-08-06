@@ -1,13 +1,12 @@
 #include "OSAP.h"
 
-OSAP::OSAP(std::string name){
-    NonProperty(name);
-}
+OSAP::OSAP(std::string name): NonProperty(name){}
+
 void OSAP::land(Player* p){
     applyEffect(p);
 }
 
-void pass(Player* p){
+void OSAP::pass(Player* p){
     applyEffect(p);
 }
 
