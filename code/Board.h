@@ -2,6 +2,8 @@
 #define __BOARD_H__
 #include <vector>
 #include <memory>
+#include <string>
+#include "Tile.h"
 
 class Tile;
 class Board;
@@ -14,6 +16,8 @@ class BoardIterator {
 
 	BoardIterator(std::vector<std::shared_ptr<Tile>> &,
 			std::vector<std::shared_ptr<Tile>>::iterator, const bool isCyclic = false);
+
+	BoardIterator & moveTo(const std::string);
 
 	// Increments the itterator. Before incrementing however the method will
 	// check if the cyclic varibale was chosen. If it was, then it will

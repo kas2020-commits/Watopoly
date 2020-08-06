@@ -30,14 +30,7 @@ void Player::move(int amount)
 
 void Player::move(const std::string name)
 {
-	const std::string oldLocation { (*position).getName() };
-	while (true)
-	{
-		std::string newLocation = (*position).getName();
-		if (newLocation == oldLocation) throw PlayerException();
-		else if (newLocation == name) return;
-		else ++position;
-	}
+	position.moveTo(name);
 	updateObservers();
 }
 
