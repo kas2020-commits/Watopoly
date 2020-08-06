@@ -15,12 +15,7 @@ class Property:public Tile{
     virtual void buy(Player* p);
     virtual void mortgage(Player* p);
     virtual void unmortgage(Player* p);
-<<<<<<< HEAD
     virtual bool setIsProperty() override;
-=======
-    bool setIsProperty() override;
-    
->>>>>>> f1838a8af29f331755e1a5a56655a910b0a63c30
 
 };
 
