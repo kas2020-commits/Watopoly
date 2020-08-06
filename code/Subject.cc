@@ -21,6 +21,7 @@ void Subject::updateObservers(std::string message) {
 void Subject::attachSelf(Observer* ob) {
     if (std::find(observers.begin(), observers.end(), ob) != observers.end()) {
         observers.emplace_back(ob);
+        updateObservers();
     }
 }
 

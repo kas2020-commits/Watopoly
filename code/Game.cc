@@ -2,10 +2,7 @@
 #include "BoardIterator.h"
 
 // Constructor
-Game::Game() :
-  board{std::make_unique<Board>{}},
-  players{std::map<std::string, std::shared_ptr<Player>>{}},
-  started{false} {
+Game::Game() : board{std::make_unique<Board>{}}, started{false} {
     curPlayer = players.begin();
 }
 
@@ -14,12 +11,8 @@ Game::~Game() {}
 
 // virtual override of subject class, attaches subject members to Observer
 Game::attachMembers(Observer* ob) {
-    for (auto &it = players.begin(); it != player.end(); it++) {
-        it->attach(ob);
-    }
-    for (auto &it = board->begin(); it != board->end(); it++) {
-        it->attach(ob);
-    }
+    for (auto it = players.begin(); it != player.end(); it++) it->attach(ob);
+    for (auto it = board->begin(); it != board->end(); it++) it->attach(ob);
 }
 
 // adds a player to the game
@@ -27,7 +20,6 @@ void Game::addPlayer(std::shared_ptr<Player> p) {
     auto p = std::shared_ptr<Player>();
     players[p->getName()] = p;
     attachObservers(p.get());
-    p->updateObservers();
 }
 
 // bankrupts a player, i.e, removes them
