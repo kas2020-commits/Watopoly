@@ -2,8 +2,8 @@
 #include <iostream>
 #include <string>
 
-Res::Res(std::string name, int purchaseCost){
-    property(name, purchaseCost);
+Res::Res(std::string name, int purchaseCost): Property(name, purchaseCost){
+
 }
 
 void Res::land(Player* p){
@@ -23,7 +23,7 @@ void Res::land(Player* p){
         }
     } else {
         std::cout << "No owner";
-        throw propertyerror;
+        throw PropertyError{};
     }
 }
 
@@ -33,7 +33,7 @@ void Res::buy(Player* p){
         p->withdraw( purchaseCost );
     } else {
         std::cout << "Have an owner!";
-        throw propertyerror;
+        throw PropertyError{};
     }
 }
 
@@ -42,8 +42,8 @@ void Res::mortgage(Player* p){
         morgaged = true;
         p->deposit( purchaseCost * 0.5 );
     } else {
-        std::cout << "Wrong Owner!"
-        throw propertyerror;
+        std::cout << "Wrong Owner!";
+        throw PropertyError{};
     }
 }
 
@@ -53,7 +53,7 @@ void Res::unmortgage(Player* p){
         p->withdraw( purchaseCost * 0.6 );
     } else {
         std::cout << "Not Morgaged!";
-        throw propertyerror;
+        throw PropertyError{};
     }
     
 }

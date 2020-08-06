@@ -1,9 +1,9 @@
 #ifndef GYM_H
 #define GYM_H
-#include property.h
+#include "Property.h"
 
 
-class Gym: public property{
+class Gym: public Property{
     
     protected:
     

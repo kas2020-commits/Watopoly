@@ -3,6 +3,8 @@
 #include "Tile.h"
 #include "Player.h"
 
+class PropertyError{};
+
 class Property:public Tile{
 
     protected:

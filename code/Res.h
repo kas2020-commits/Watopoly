@@ -1,9 +1,11 @@
 #ifndef RES_H
 #define RES_H
-#include property.h
+#include "Property.h"
+#include <string>
 
 
-class Res: public property{
+
+class Res: public Property{
     
     protected:
     

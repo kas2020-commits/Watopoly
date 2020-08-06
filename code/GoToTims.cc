@@ -1,12 +1,11 @@
-#include "GoToTIms.h"
+#include "GoToTims.h"
 
-GoToTIms::GoToTIms(std::string name){
-    NonProperty(name);
+GoToTims::GoToTims(std::string name): NonProperty{name}{
 }
-void GoToTIms::land(Player* p){
+void GoToTims::land(Player* p){
     applyEffect(p);
 }
-void GoToTIms::applyEffect(Player* p){
+void GoToTims::applyEffect(Player* p){
     p->move("DC Tims Line");
     updateObservers("You Go To Tims Line!");
 }
