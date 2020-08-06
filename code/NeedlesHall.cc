@@ -1,6 +1,6 @@
 #include "NeedlesHall.h"
 
-NeedlesHall::NeedlesHall(std::string name): NonProperty{name}{
+NeedlesHall::NeedlesHall(): NonProperty{NEEDLES_HALL}{
 
     
 }

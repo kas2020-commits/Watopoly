@@ -1,6 +1,6 @@
 #include "SLC.h"
 #include <string>
-SLC::SLC(std::string name): NonProperty{name}{
+SLC::SLC(): NonProperty{SLC_S}{
 
 }
 void SLC::land(Player* p){

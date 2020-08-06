@@ -2,14 +2,12 @@
 #define NEEDLESHALL_H
 #include <cstdlib>
 #include "NonProperty.h"
-
+#include "util.h"
 
 class NeedlesHall:public NonProperty{
     
-    protected:
-    
     public:
-    NeedlesHall(std::string name);
+    NeedlesHall();
     void land(Player* p) override;
     void applyEffect(Player* p) override;
 

@@ -1,15 +1,17 @@
-#ifndef COOPFEE_H
-#define COOPFEE_H
+#ifndef TUTITION_H
+#define TUTITION_H
 #include "NonProperty.h"
 #include "util.h"
-
-class CoopFee: public NonProperty{
-    
-    
-    public:
-    CoopFee();
+class Tutition: public NonProperty{
+ public:
+    Tutition();
     void land(Player* p) override;
     void applyEffect(Player* p) override;
-};
+
+}; 
+
+
+
+
 
 #endif

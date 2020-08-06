@@ -1,16 +1,19 @@
-#ifndef SLC_H
-#define SLC_H
-#include <cstdlib>
+#ifndef DCTIMSLINE_H
+#define DCTIMSLINE_H
 #include "NonProperty.h"
 #include "util.h"
 
-class SLC:public NonProperty{
-    
-    public:
-    SLC();
+
+class DCTimsLine: public NonProperty{
+ public:
+    DCTimsLine();
     void land(Player* p) override;
     void applyEffect(Player* p) override;
 
-};
+}; 
+
+
+
+
 
 #endif

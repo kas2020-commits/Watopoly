@@ -1,8 +1,6 @@
 #include "CoopFee.h"
 
-CoopFee::CoopFee(std::string name)
-	: NonProperty{name}
-{}
+CoopFee::CoopFee(): NonProperty{COOP_FEE}{}
 
 void CoopFee::land(Player* p){
     applyEffect(p);
