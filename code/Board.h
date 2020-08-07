@@ -3,8 +3,19 @@
 #include <vector>
 #include <memory>
 #include <string>
+
 #include "AcademicBuilding.h"
-#include "util.h"
+#include "Tutition.h"
+#include "SLC.h"
+#include "NeedlesHall.h"
+#include "DCTimsLine.h"
+#include "Gym.h"
+#include "Res.h"
+#include "GooseNesting.h"
+#include "GoToTims.h"
+#include "CoopFee.h"
+
+/* #include "util.h" */
 
 class Board;
 class SLC;
@@ -39,10 +50,11 @@ class Board {
 	std::vector<std::shared_ptr<Tile>> tiles;
 	public:
 	Board();
+	~Board();
 
 	// Standard behavior. begin and end construct and return an itterator which
 	// starts at either the first or last
-	BoardIterator begin();
+	BoardIterator begin(const bool isCyclic = false);
 	BoardIterator end();
 };
 
