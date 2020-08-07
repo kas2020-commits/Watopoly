@@ -5,6 +5,7 @@
 #include "Subject.h"
 #include "BoardIterator.h"
 #include "Tile.h"
+#include "util.h"
 
 class Player;
 
@@ -38,6 +39,9 @@ class Player : public Subject {
 	int getTimsCups();
 	int getBlockCount(const std::string);
 	bool isBankrupt();
+	const char getSymbol();
+	const std::string getName();
+	Tile & getPosition();
 
 	// setters:
 	void changeTimsCups(const int);

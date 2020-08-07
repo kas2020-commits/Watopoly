@@ -4,18 +4,18 @@ int Player::totalTimsCups = 0;
 
 Player::Player(const std::string name, const char symbol, BoardIterator it)
 	:
-	name{name}, symbol{symbol}, cash{500}, position{it},
-	timsCups{0}, gymCount{0}, resCount{0}, // set counts to 0
-	blockCount{std::map<std::string, int>()} // create blockCount map
+		name{name}, symbol{symbol}, cash{500}, position{it},
+		timsCups{0}, gymCount{0}, resCount{0}, // set counts to 0
+		blockCount{std::map<std::string, int>()} // create blockCount map
 {
-	blockCount.emplace("Arts1", 0);
-	blockCount.emplace("Arts2", 0);
-	blockCount.emplace("Eng", 0);
-	blockCount.emplace("Health", 0);
-	blockCount.emplace("Env", 0);
-	blockCount.emplace("Sci1", 0);
-	blockCount.emplace("Sci2", 0);
-	blockCount.emplace("Math", 0);
+	blockCount.emplace(ARTS1, 0);
+	blockCount.emplace(ARTS2, 0);
+	blockCount.emplace(ENG, 0);
+	blockCount.emplace(HEALTH, 0);
+	blockCount.emplace(ENV, 0);
+	blockCount.emplace(SCI1, 0);
+	blockCount.emplace(SCI2, 0);
+	blockCount.emplace(MATH, 0);
 }
 
 // move player:
@@ -50,6 +50,9 @@ int Player::getGymCount() { return gymCount; }
 int Player::getTimsCups() { return timsCups; }
 int Player::getBlockCount(const std::string block) { return blockCount.find(block)->second; }
 bool Player::isBankrupt() { return bankrupt; }
+const char Player::getSymbol() { return symbol; }
+const std::string Player::getName() { return name; }
+Tile & Player::getPosition() { return *position; }
 
 // setters:
 void Player::changeTimsCups(const int amount) { timsCups += amount; }
