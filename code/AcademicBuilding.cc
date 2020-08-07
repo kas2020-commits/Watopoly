@@ -15,8 +15,8 @@ AcademicBuilding::AcademicBuilding( std::string name, std::string blockName, int
 }
 
 void AcademicBuilding::land(Player* p){
-    owner->deposit(tuitionAtLevels.at(improvementLevel));
     p->withdraw(tuitionAtLevels.at(improvementLevel));
+    owner->deposit(tuitionAtLevels.at(improvementLevel));
     // do execption here later
 }
 
@@ -55,7 +55,6 @@ void AcademicBuilding::improve(Player* p){
     if(improvementLevel < 5){
         if (p->getBlockCount(blockName) == blockMap.find(blockName)->second){
             p->withdraw(improvementCost);
-            // add not enough money error maybe
             improvementLevel += 1;
         } else{
             std::cout<< "Don't have monopoly yet";
@@ -65,4 +64,8 @@ void AcademicBuilding::improve(Player* p){
         std::cout<< "already 5 improvements";
         throw PropertyError{};
     }
+}
+
+int AcademicBuilding::getImprovementLevel(){
+    return improvementLevel;
 }

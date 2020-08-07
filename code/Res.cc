@@ -9,17 +9,21 @@ Res::Res(std::string name, int purchaseCost): Property(name, purchaseCost){
 void Res::land(Player* p){
     if (owner != nullptr){
         if(p->getResCount() == 4){
-            owner->deposit(200);
             p->withdraw(200);
+            owner->deposit(200);
+
         } else if(p->getResCount() == 3){
-            owner->deposit(100);
             p->withdraw(100);
+            owner->deposit(100);
+
         } else if(p->getResCount() == 2){
-            owner->deposit(50);
             p->withdraw(50);
+            owner->deposit(50);
+
         } else if(p->getResCount() == 1){
-            owner->deposit(25);
             p->withdraw(25);
+            owner->deposit(25);
+
         }
     } else {
         std::cout << "No owner";
