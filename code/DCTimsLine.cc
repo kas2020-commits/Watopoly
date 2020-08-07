@@ -8,7 +8,7 @@ void DCTimsLine::land(Player* p){
 
 
 void DCTimsLine::applyEffect(Player* p){
-    int dice1, dice2, counter;
+    int die1, die2, counter;
     char temp;
     counter = 0;
     while (counter < 3){
@@ -17,9 +17,9 @@ void DCTimsLine::applyEffect(Player* p){
         // interaction right here
         std::cin >> temp;
         if(temp == 'A'){
-            dice1 = rolldice();
-            dice2 = rolldice();
-            if(dice1 != dice2){
+            die1 = rollDie();
+            die2 = rollDie();
+            if(die1 != die2){
                 updateObservers("Not same, try again");
                 counter += 1;
             } else {
