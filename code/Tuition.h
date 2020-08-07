@@ -1,17 +1,14 @@
-#ifndef TUIION_H
-#define TUITION_H
+#ifndef __TUITION_H__
+#define __TUITION_H__
 #include "NonProperty.h"
 #include "util.h"
+
+//
 class Tuition: public NonProperty{
- public:
+  public:
     Tuition();
-    void land(Player* p) override;
-    void applyEffect(Player* p) override;
-
+    void land(std::shared_ptr<Player> p) override;
+    void applyEffect(std::shared_ptr<Player> p) override;
 }; 
-
-
-
-
 
 #endif

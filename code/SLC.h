@@ -1,16 +1,11 @@
-#ifndef SLC_H
-#define SLC_H
-#include <cstdlib>
+#ifndef __SLC_H__
+#define __SLC_H__
 #include "NonProperty.h"
-#include "util.h"
 
-class SLC:public NonProperty{
-    
-    public:
+class SLC : public NonProperty {
+  public:
     SLC();
-    void land(Player* p) override;
-    void applyEffect(Player* p) override;
-
+    virtual void applyEffect(std::shared_ptr<Player>) override;
 };
 
 #endif

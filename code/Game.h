@@ -30,7 +30,7 @@ class Game : public Subject {
     virtual void attachMembers(Observer* ob) override;
     bool isPlayer(std::string name);
     bool isProperty(std::string name);
-    bool isAcademicBuilding();
+    bool isAcademicBuilding(std::string name);
     void addPlayer(std::string name, char symbol);
     void start(); // all players must be added before game started
     void roll();
@@ -40,8 +40,8 @@ class Game : public Subject {
     void trade(std::string name, int giveCash, std::string receiveProp);
     void mortgage(std::string prop);
     void unmortgage(std::string prop);
-    void buyImprovement(std::string prop);
-    void sellImprovement(std::string prop);
+    void buyImprovement(std::string ab);
+    void sellImprovement(std::string ab);
     void bankrupt();
     void assets(std::string name);
     void all();

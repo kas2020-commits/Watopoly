@@ -22,7 +22,7 @@ class AcademicBuilding: public Property{
     void unmortgage(Player* p) override;
     void improve(Player* p);
     int getImprovementLevel();
-
+    bool isAcademicBuilding();
 
 };
 

@@ -1,19 +1,27 @@
 #include "Tile.h"
+
+//
 int Tile::tileCount = 0;
 
-Tile::Tile(std::string name): name{name}, isProperty{false}, index{tileCount} {
+//
+Tile::Tile(std::string name) : name{name}, index{tileCount} {
     tileCount += 1;
 }
 
-std::string Tile::getName(){
-    return name;
-}
+//
+void Tile::pass(std::shared_ptr<Player> p) {}
 
-int Tile::getIndex(){
-    return index;
-}
+//
+std::string Tile::getName(){ return name; }
 
-bool Tile::operator==(Tile & t){
-    return this->index == t.index;
+//
+int Tile::getIndex(){ return index; }
 
-}
+//
+bool Tile::operator==(Tile & t){ return this->index == t.index; }
+
+//
+bool Tile::isProperty() { return false; }
+
+//
+bool Tile::isAcademicBuilding() { return false; }
