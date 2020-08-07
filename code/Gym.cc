@@ -18,8 +18,8 @@ void Gym::land(Player* p){
             updateObservers("Second dice is " + rollsecond );
             std::string str= std::to_string(total);
             updateObservers("Pay a total of " + str +"dollars!");
-            owner->deposit(total);
             p->withdraw(total);
+            owner->deposit(total);
         } else if (p->getGymCount() == 1){
             total = total * 4;
             std::string rollfirst = std::to_string(firstdice);
@@ -28,8 +28,8 @@ void Gym::land(Player* p){
             updateObservers("Second dice is " + rollsecond );
             std::string str= std::to_string(total);
             updateObservers("Pay a total of " + str +"dollars!");
-            owner->deposit(total);
             p->withdraw(total);
+            owner->deposit(total);
         }
 
         // do execption here later

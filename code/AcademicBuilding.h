@@ -20,6 +20,7 @@ class AcademicBuilding: public Property{
     void mortgage(Player* p) override;
     void unmortgage(Player* p) override;
     void improve(Player* p);
+    int getImprovementLevel();
 
 
 };
