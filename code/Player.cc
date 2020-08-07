@@ -31,7 +31,16 @@ void Player::move(int amount)
 
 void Player::move(const std::string name)
 {
-	position.moveTo(name);
+	const std::string oldLocation { (*position).getName() };
+	std::string midval;
+	while (true)
+	{
+		midval = (*position).getName();
+		if (midval.compare(name) == 0) break;
+		else if (midval.compare(oldLocation) == 0) throw PlayerException();
+		else ++position;
+	}
+	(*position).land(this);
 	updateObservers();
 }
 

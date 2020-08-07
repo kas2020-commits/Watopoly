@@ -4,6 +4,7 @@
 #include <map>
 #include "Subject.h"
 #include "BoardIterator.h"
+#include "Tile.h"
 
 class Player;
 

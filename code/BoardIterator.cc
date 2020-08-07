@@ -6,19 +6,6 @@ BoardIterator::BoardIterator(std::vector<std::shared_ptr<Tile>> & vec,
 {
 }
 
-BoardIterator & BoardIterator::moveTo(const std::string s)
-{
-	for (auto i = tiles.begin(); i != tiles.end(); ++i)
-	{
-		if (i->get()->getName() == s)
-		{
-			curTile = i;
-			return *this;
-		}
-	}
-	return *this;
-}
-
 BoardIterator &  BoardIterator::operator++()
 {
 	++curTile;

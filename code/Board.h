@@ -8,8 +8,8 @@
 
 #include "AcademicBuilding.h"
 #include "Tutition.h"
-#include "SLC.h"
 #include "NeedlesHall.h"
+#include "SLC.h"
 #include "DCTimsLine.h"
 #include "Gym.h"
 #include "Res.h"
