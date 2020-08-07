@@ -1,9 +1,10 @@
 #ifndef PROPERTY_H
 #define PROPERTY_H
 #include "Tile.h"
-#include "Player.h"
+//#include "Player.h"
 
 class PropertyError{};
+class Player;
 
 class Property:public Tile{
 
