@@ -1,16 +1,12 @@
-#ifndef GOTOTIMS_H
-#define GOTOTIMS_H
+#ifndef __GO_TO_TIMS_H__
+#define __GO_TO_TIMS_H__
 #include "NonProperty.h"
 
-class GoToTims: public NonProperty{
-    
-    protected:
-    std::string name;
-    
-    public:
+//
+class GoToTims : public NonProperty {
+  public:
     GoToTims(std::string name);
-    void land(Player* p) override;
-    void applyEffect(Player* p) override;
+    void applyEffect(std::shared_ptr<Player> p) override;
 };
 
 #endif

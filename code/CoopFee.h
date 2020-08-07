@@ -1,15 +1,12 @@
-#ifndef COOPFEE_H
-#define COOPFEE_H
+#ifndef __COOP_FEE_H_
+#define __COOP_FEE_H_
 #include "NonProperty.h"
-#include "util.h"
 
+//
 class CoopFee: public NonProperty{
-    
-    
-    public:
+  public:
     CoopFee();
-    void land(Player* p) override;
-    void applyEffect(Player* p) override;
+    void applyEffect(std::shared_ptr<Player> p) override;
 };
 
 #endif

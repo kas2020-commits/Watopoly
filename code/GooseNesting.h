@@ -1,16 +1,12 @@
-#ifndef GOOSENESTING_H
-#define GOOSENESTING_H
+#ifndef __GOOSE_NESTING_H__
+#define __GOOSE_NESTING_H__
 #include "NonProperty.h"
 
-class GooseNesting: public NonProperty{
-    
-    protected:
-    std::string name;
-    
-    public:
+//
+class GooseNesting : public NonProperty{
+  public:
     GooseNesting(std::string name);
-    void land(Player* p) override;
-    void applyEffect(Player* p) override;
+    void applyEffect(std::shared_ptr<Player> p) override;
 };
 
 #endif

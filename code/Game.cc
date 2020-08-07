@@ -1,5 +1,7 @@
-#include "Game.h"
+#include "AcademicBuilding.h"
 #include "Board.h"
+#include "Game.h"
+#include "Property.h"
 #include "util.h"
 
 // Constructor
@@ -27,6 +29,14 @@ bool Game::isProperty(std::string name) {
     return false;
 }
 
+//
+bool Game::isAcademicBuilding(std::string name) {
+    for (auto it = board->begin(); it != board->end(); it++) {
+        if (it->isAcademicBuilding() && it->getName() == name) return true;
+    }
+    return false;
+}
+
 // adds a player to the game
 void Game::addPlayer(std::string name, char symbol) {
     if (started) throw GameException{"Can't add players after game has started."};
@@ -43,6 +53,7 @@ void Game::start() {
     next();
 }
 
+//
 void Game::roll() {
     if (rolled) throw GameException{"Already rolled."};
     int distance = rollDie() + rollDie();
@@ -71,23 +82,27 @@ void Game::trade(std::string name, std::string giveProp, int receiveCash) {}
 void Game::trade(std::string name, int giveCash, std::string receiveProp) {}
 
 //
-void Game::mortgage(std::string prop) {
-    board->at(prop).mortgage(curPlayer->second);
+void Game::mortgage(std::string name) {
+    Property& p = dynamic_cast<Property&>(board->at(name));
+    p.mortgage(curPlayer->second);
 }
 
 //
-void Game::unmortgage(std::string prop) {
-    board->at(prop).unmortgage(curPlayer->second);
+void Game::unmortgage(std::string name) {
+    Property& p = dynamic_cast<Property&>(board->at(name));
+    if (p) p.unmortgage(curPlayer->second);
 }
 
 //
-void Game::buyImprovement(std::string prop) {
-    board->at(prop).buyImprovement(curPlayer->second);
+void Game::buyImprovement(std::string name) {
+    AcademicBuilding& ab = dynamic_cast<AcademicBuilding&>(board->at(name));
+    if (ab) ab.buyImprovement(curPlayer->second);
 }
 
 //
-void Game::sellImprovement(std::string prop) {
-    board->at(prop).sellImprovement(curPlayer->second);
+void Game::sellImprovement(std::string name) {
+    AcademicBuilding& ab = dynamic_cast<AcademicBuilding&>(board->at(name));
+    if (ab) ab.sellImprovement(curPlayer->second);
 }
 
 //

@@ -69,3 +69,5 @@ void AcademicBuilding::improve(Player* p){
 int AcademicBuilding::getImprovementLevel(){
     return improvementLevel;
 }
+
+bool AcademicBuilding::isAcademicBuilding() { return true; }
