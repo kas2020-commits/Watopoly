@@ -3,7 +3,7 @@
 #include <string>
 #include <map>
 #include "Subject.h"
-#include "Board.h"
+#include "BoardIterator.h"
 
 class Player;
 

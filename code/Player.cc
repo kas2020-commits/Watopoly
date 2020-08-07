@@ -3,7 +3,8 @@
 int Player::totalTimsCups = 0;
 
 Player::Player(const std::string name, const char symbol, BoardIterator it)
-	: name{name}, symbol{symbol}, cash{500}, position{it},
+	:
+	name{name}, symbol{symbol}, cash{500}, position{it},
 	timsCups{0}, gymCount{0}, resCount{0}, // set counts to 0
 	blockCount{std::map<std::string, int>()} // create blockCount map
 {

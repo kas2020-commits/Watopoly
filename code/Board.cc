@@ -1,49 +1,8 @@
 #include "Board.h"
 
-BoardIterator::BoardIterator(std::vector<std::shared_ptr<Tile>> & vec,
-		std::vector<std::shared_ptr<Tile>>::iterator it, const bool isCyclic)
-	: tiles{vec}, isCyclic{isCyclic}, curTile{it}
-{
-}
-
-BoardIterator & BoardIterator::moveTo(const std::string s)
-{
-	for (auto i = tiles.begin(); i != tiles.end(); ++i)
-	{
-		if (i->get()->getName() == s)
-		{
-			curTile = i;
-			return *this;
-		}
-	}
-	return *this;
-}
-
-BoardIterator &  BoardIterator::operator++()
-{
-	++curTile;
-	if (curTile == tiles.end() && isCyclic) curTile = tiles.begin();
-	return *this;
-}
-
-Tile & BoardIterator::operator*()
-{
-	return **curTile;
-}
-
-bool BoardIterator::operator==(const BoardIterator & other)
-{
-	return *curTile == *other.curTile;
-}
-
-bool BoardIterator::operator!=(const BoardIterator & other)
-{
-	return !(*this == other);
-}
-
 Board::Board()
 	: tiles{std::vector<std::shared_ptr<Tile>> {
-		std::make_shared<AcademicBuilding>(AL,		ARTS1,	40 , 50 , 2 , 10 , 30 , 90  , 160 , 250 ),
+		std::make_shared<AcademicBuilding>(AL,			ARTS1,	40 , 50 , 2 , 10 , 30 , 90  , 160 , 250 ),
 			std::make_shared<SLC>(),
 			std::make_shared<AcademicBuilding>(ML,		ARTS1,	60 , 50 , 4 , 20 , 60 , 180 , 320 , 450 ),
 			std::make_shared<Tuition>(),
@@ -85,8 +44,6 @@ Board::Board()
 	}}
 {}
 
-Board::~Board() {}
-
 BoardIterator Board::begin(const bool isCyclic)
 {
 	BoardIterator retval {tiles, tiles.begin(), isCyclic};
@@ -98,4 +55,3 @@ BoardIterator Board::end()
 	BoardIterator retval {tiles, tiles.end()};
 	return retval;
 }
-
