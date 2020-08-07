@@ -14,6 +14,7 @@ class PlayerException {};
 class Player : public Subject {
 	// static fields
 	static int totalTimsCups;
+	static std::map<const char, bool> symbolChart;
 
 	// fields
 	const std::string name;

@@ -1,21 +1,24 @@
 #include "Player.h"
 
-int Player::totalTimsCups = 0;
+// static member construction
+int Player::totalTimsCups {0};
+std::map<const char, bool> Player::symbolChart {
+	{'G', false}, {'B', false}, {'D', false}, {'P', false}, {'S', false},
+		{'$', false}, {'L', false}, {'T', false}
+};
 
+// constructor
 Player::Player(const std::string name, const char symbol, BoardIterator it)
 	:
 		name{name}, symbol{symbol}, cash{500}, position{it},
 		timsCups{0}, gymCount{0}, resCount{0}, // set counts to 0
-		blockCount{std::map<std::string, int>()} // create blockCount map
+		blockCount{std::map<std::string, int>
+			{{ARTS1, 0}, {ARTS2, 0}, {ENG, 0}, {HEALTH, 0}, {ENV, 0}, {SCI1, 0},
+				{SCI2, 0}, {MATH, 0}}}
 {
-	blockCount.emplace(ARTS1, 0);
-	blockCount.emplace(ARTS2, 0);
-	blockCount.emplace(ENG, 0);
-	blockCount.emplace(HEALTH, 0);
-	blockCount.emplace(ENV, 0);
-	blockCount.emplace(SCI1, 0);
-	blockCount.emplace(SCI2, 0);
-	blockCount.emplace(MATH, 0);
+	bool & isDup = symbolChart.find(symbol)->second;
+	if (isDup) throw PlayerException();
+	else isDup = false;
 }
 
 // move player:
