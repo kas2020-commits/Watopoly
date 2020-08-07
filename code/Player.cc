@@ -50,8 +50,8 @@ int Player::getGymCount() { return gymCount; }
 int Player::getTimsCups() { return timsCups; }
 int Player::getBlockCount(const std::string block) { return blockCount.find(block)->second; }
 bool Player::isBankrupt() { return bankrupt; }
-const char Player::getSymbol() { return symbol; }
-const std::string Player::getName() { return name; }
+char Player::getSymbol() { return symbol; }
+std::string Player::getName() { return name; }
 Tile & Player::getPosition() { return *position; }
 
 // setters:

@@ -1,7 +1,7 @@
 #include "BoardIterator.h"
 
-BoardIterator::BoardIterator(std::vector<std::shared_ptr<Tile>> & vec,
-		std::vector<std::shared_ptr<Tile>>::iterator it, const bool isCyclic)
+BoardIterator::BoardIterator(std::array<std::shared_ptr<Tile>, MAX_TILES> & vec,
+		std::array<std::shared_ptr<Tile>, MAX_TILES>::iterator it, const bool isCyclic)
 	: tiles{vec}, isCyclic{isCyclic}, curTile{it}
 {
 }

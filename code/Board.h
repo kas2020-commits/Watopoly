@@ -1,10 +1,10 @@
 #ifndef __BOARD_H__
 #define __BOARD_H__
-#include <vector>
 #include <memory>
 #include <string>
 #include <map>
 #include "BoardIterator.h"
+#include <array>
 
 #include "AcademicBuilding.h"
 #include "Tuition.h"
@@ -20,7 +20,7 @@
 /* #include "util.h" */
 
 class Board {
-	std::vector<std::shared_ptr<Tile>> tiles;
+	std::array<std::shared_ptr<Tile>, MAX_TILES> tiles;
 	public:
 	Board();
 

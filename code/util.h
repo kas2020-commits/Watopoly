@@ -3,6 +3,8 @@
 #include <string>
 #include <cstdlib>
 
+const int MAX_TILES {40};
+
 // rollDie will roll 1 die only, and return the value. If 2 dice need to be
 // rolled make sure to call this method twice. The range of values is 1 through
 // 6 inclusive.
