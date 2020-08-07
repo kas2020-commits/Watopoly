@@ -3,8 +3,9 @@
 #include <memory>
 #include <string>
 #include <map>
-#include "BoardIterator.h"
 #include <array>
+#include "BoardIterator.h"
+#include "util.h"
 
 #include "AcademicBuilding.h"
 #include "Tuition.h"
@@ -16,8 +17,6 @@
 #include "GooseNesting.h"
 #include "GoToTims.h"
 #include "CoopFee.h"
-
-/* #include "util.h" */
 
 class Board {
 	std::array<std::shared_ptr<Tile>, MAX_TILES> tiles;

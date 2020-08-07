@@ -27,6 +27,9 @@ class BoardIterator {
 	// the board
 	Tile & operator*();
 
+	// derefernce the itterator and call a specfic method in Tile.
+	Tile * operator->();
+
 	// Standard itterator behavior. No major changes have been made.
 	bool operator==(const BoardIterator &);
 	bool operator!=(const BoardIterator &);

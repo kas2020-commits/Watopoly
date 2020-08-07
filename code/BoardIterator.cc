@@ -18,6 +18,11 @@ Tile & BoardIterator::operator*()
 	return **curTile;
 }
 
+Tile * BoardIterator::operator->()
+{
+	return curTile->get();
+}
+
 bool BoardIterator::operator==(const BoardIterator & other)
 {
 	return *curTile == *other.curTile;

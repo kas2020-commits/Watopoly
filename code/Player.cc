@@ -23,24 +23,24 @@ void Player::move(int amount)
 {
 	for (int i = 0; i < amount; ++i) {
 		++position;
-		(*position).pass(this);
+		position->pass(this);
 	}
-	(*position).land(this);
+	position->land(this);
 	updateObservers();
 }
 
 void Player::move(const std::string name)
 {
-	const std::string oldLocation { (*position).getName() };
+	const std::string oldLocation { position->getName() };
 	std::string midval;
 	while (true)
 	{
-		midval = (*position).getName();
+		position->getName();
 		if (midval.compare(name) == 0) break;
 		else if (midval.compare(oldLocation) == 0) throw PlayerException();
 		else ++position;
 	}
-	(*position).land(this);
+	position->land(this);
 	updateObservers();
 }
 
