@@ -2,8 +2,8 @@
 #define __PLAYER_H_
 #include <string>
 #include <map>
-#include "Board.h"
 #include "Subject.h"
+#include "Board.h"
 
 class Player;
 

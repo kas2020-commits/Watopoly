@@ -41,7 +41,16 @@ const std::string GO_TO_TIMS {"Go to Tims"};
 const std::string GOOSE_NESTING {"Goose Nesting"};
 const std::string TUITION {"Tuition"};
 const std::string COOP_FEE {"Coop Fee"};
-const std::string SLC {"SLC"};
+const std::string SLC_S {"SLC"};
 const std::string NEEDLES_HALL {"Needles Hall"};
 const std::string ROLL_UP_THE_RIM_CUP {"Roll Up the Rim Cup"};
 
+// Block names
+const std::string ARTS1 {"Arts1"};
+const std::string ARTS2 {"Arts2"};
+const std::string ENG {"Eng"};
+const std::string HEALTH {"Health"};
+const std::string ENV {"Env"};
+const std::string SCI1 {"Sci1"};
+const std::string SCI2 {"Sci2"};
+const std::string MATH {"Math"};

@@ -3,10 +3,11 @@
 #include <vector>
 #include <memory>
 #include <string>
-#include "Tile.h"
+#include "AcademicBuilding.h"
+#include "util.h"
 
-class Tile;
 class Board;
+class SLC;
 
 class BoardIterator {
 	const bool isCyclic;
