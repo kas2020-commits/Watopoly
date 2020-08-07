@@ -1,6 +1,12 @@
 #ifndef __UTIL_H__
 #define __UTIL_H__
 #include <string>
+#include <cstdlib>
+
+// rollDie will roll 1 die only, and return the value. If 2 dice need to be
+// rolled make sure to call this method twice. The range of values is 1 through
+// 6 inclusive.
+int rollDie() { return rand() % 6 + 1; }
 
 // Accademic buildings
 const std::string AL {"AL"};

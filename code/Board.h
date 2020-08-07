@@ -7,7 +7,7 @@
 #include "BoardIterator.h"
 
 #include "AcademicBuilding.h"
-#include "Tutition.h"
+#include "Tuition.h"
 #include "NeedlesHall.h"
 #include "SLC.h"
 #include "DCTimsLine.h"
