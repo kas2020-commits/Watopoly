@@ -39,8 +39,8 @@ class Player : public Subject {
 	int getTimsCups();
 	int getBlockCount(const std::string);
 	bool isBankrupt();
-	const char getSymbol();
-	const std::string getName();
+	char getSymbol();
+	std::string getName();
 	Tile & getPosition();
 
 	// setters:
