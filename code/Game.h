@@ -20,7 +20,6 @@ class Game : public Subject {
     virtual ~Game();
     virtual void attachMembers(Observer* ob) override;
     void addPlayer();
-    void bankruptPlayer();
     std::shared_ptr<Player> start(); // all players must be added before game started
     std::shared_ptr<Player> nextTurn();
 };

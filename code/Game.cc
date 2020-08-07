@@ -22,11 +22,6 @@ void Game::addPlayer(std::shared_ptr<Player> p) {
     attachObservers(p.get());
 }
 
-// bankrupts a player, i.e, removes them
-void Game::bankruptPlayer() {
-    //implement this
-}
-
 // starts "game", all players must be added before game started
 std::shared_ptr<Player> Game::start() {
     start = true;
