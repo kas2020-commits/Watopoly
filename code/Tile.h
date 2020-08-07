@@ -9,16 +9,16 @@ class Tile: public Subject{
 
     protected:
     std::string name;
-    bool isProperty;
     int index;
     static int tileCount;
     public:
     Tile(std::string name);
     virtual void land(Player *) = 0;
     virtual void pass(Player *);
-    virtual bool setIsProperty() = 0;
     std::string getName();
     int getIndex();
+    bool operator==(Tile &);
+    virtual bool isProperty() = 0;
 
 };
 

@@ -12,3 +12,8 @@ std::string Tile::getName(){
 int Tile::getIndex(){
     return index;
 }
+
+bool Tile::operator==(Tile & t){
+    return this->index == t.index;
+
+}

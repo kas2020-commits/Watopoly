@@ -6,14 +6,14 @@ Gym::Gym(std::string name, int purchaseCost): Property{name, purchaseCost} {}
 
 void Gym::land(Player* p){
     if (owner != nullptr){
-        int firstdice = rollDice();
-        int seconddice = rollDice();
-        int total = firstdice + seconddice;
+        int firstdie = rollDie();
+        int seconddie = rollDie();
+        int total = firstdie + seconddie;
     
         if(p->getGymCount() == 2){
             total = total * 10;
-            std::string rollfirst = std::to_string(firstdice);
-            std::string rollsecond = std::to_string(seconddice);
+            std::string rollfirst = std::to_string(firstdie);
+            std::string rollsecond = std::to_string(seconddie);
             updateObservers("First dice is " + rollfirst );
             updateObservers("Second dice is " + rollsecond );
             std::string str= std::to_string(total);
@@ -22,8 +22,8 @@ void Gym::land(Player* p){
             owner->deposit(total);
         } else if (p->getGymCount() == 1){
             total = total * 4;
-            std::string rollfirst = std::to_string(firstdice);
-            std::string rollsecond = std::to_string(seconddice);
+            std::string rollfirst = std::to_string(firstdie);
+            std::string rollsecond = std::to_string(seconddie);
             updateObservers("First dice is " + rollfirst );
             updateObservers("Second dice is " + rollsecond );
             std::string str= std::to_string(total);
