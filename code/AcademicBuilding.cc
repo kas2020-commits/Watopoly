@@ -14,57 +14,67 @@ AcademicBuilding::AcademicBuilding( std::string name, std::string blockName, int
     tuitionAtLevels.emplace_back(tutfive);
 }
 
-void AcademicBuilding::land(Player* p){
+void AcademicBuilding::land(std::shared_ptr<Player> p){
     p->withdraw(tuitionAtLevels.at(improvementLevel));
     owner->deposit(tuitionAtLevels.at(improvementLevel));
     // do execption here later
 }
 
-void AcademicBuilding::buy(Player* p){
+void AcademicBuilding::buy(std::shared_ptr<Player> p){
     if (owner == nullptr){
         owner = p;
         p->withdraw( purchaseCost );
     } else {
         std::cout << "Have an owner!";
-        throw PropertyError{};
+        throw PropertyException{};
     }
 }
 
-void AcademicBuilding::mortgage(Player* p){
+void AcademicBuilding::mortgage(std::shared_ptr<Player> p){
     if( owner == p ){
         morgaged = true;
         p->deposit( purchaseCost * 0.5 );
     } else {
         std::cout << "Wrong Owner!";
-        throw PropertyError{};
+        throw PropertyException{};
     }
 }
 
-void AcademicBuilding::unmortgage(Player* p){
+void AcademicBuilding::unmortgage(std::shared_ptr<Player> p){
     if(morgaged){
         morgaged = false;
         p->withdraw( purchaseCost * 0.6 );
     } else {
         std::cout << "Not Morgaged!";
-        throw PropertyError{};
+        throw PropertyException{};
     }
 
 }
 
-void AcademicBuilding::improve(Player* p){
+void AcademicBuilding::buyImprovement(std::shared_ptr<Player> p){
     if(improvementLevel < 5){
         if (p->getBlockCount(blockName) == blockMap.find(blockName)->second){
             p->withdraw(improvementCost);
             improvementLevel += 1;
         } else{
             std::cout<< "Don't have monopoly yet";
-            throw PropertyError{};
+            throw PropertyException{};
         }
     } else{
         std::cout<< "already 5 improvements";
-        throw PropertyError{};
+        throw PropertyException{};
     }
 }
+    void AcademicBuilding::sellImprovement(std::shared_ptr<Player> p){
+        if(improvementLevel > 0){
+            p->deposit(improvementCost * 0.5);
+            improvementLevel -= 1;
+        } else{
+             std::cout<< "no improvements!";
+            throw PropertyException{};
+        }
+
+    }
 
 int AcademicBuilding::getImprovementLevel(){
     return improvementLevel;

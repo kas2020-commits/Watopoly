@@ -7,7 +7,6 @@ class CollectOSAP: public NonProperty{
     CollectOSAP();
     virtual void land(std::shared_ptr<Player> p) override;
     virtual void pass(std::shared_ptr<Player> p) override;
-    virtual void applyEffect(std::shared_ptr<Player> p) override;
 };
 
 #endif

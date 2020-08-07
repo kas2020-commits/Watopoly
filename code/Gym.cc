@@ -4,7 +4,7 @@
 
 Gym::Gym(std::string name, int purchaseCost): Property{name, purchaseCost} {}
 
-void Gym::land(Player* p){
+void Gym::land(std::shared_ptr<Player> p){
     if (owner != nullptr){
         int firstdie = rollDie();
         int seconddie = rollDie();
@@ -35,37 +35,37 @@ void Gym::land(Player* p){
         // do execption here later
     } else {
         std::cout << "No owner";
-        throw PropertyError{};
+        throw PropertyException{};
     }
 }
 
-void Gym::buy(Player* p){
+void Gym::buy(std::shared_ptr<Player> p){
     if (owner == nullptr){
         owner = p;
         p->withdraw( purchaseCost );
     } else {
         std::cout << "Have an owner!";
-        throw PropertyError{};
+        throw PropertyException{};
     }
 }
 
-void Gym::mortgage(Player* p){
+void Gym::mortgage(std::shared_ptr<Player> p){
     if( owner == p ){
         morgaged = true;
         p->deposit( purchaseCost * 0.5 );
     } else {
         std::cout << "Wrong Owner!";
-        throw PropertyError{};
+        throw PropertyException{};
     }
 }
 
-void Gym::unmortgage(Player* p){
+void Gym::unmortgage(std::shared_ptr<Player> p){
     if(morgaged){
         morgaged = false;
         p->withdraw( purchaseCost * 0.6 );
     } else {
         std::cout << "Not Morgaged!";
-        throw PropertyError{};
+        throw PropertyException{};
     }
     
 }

@@ -12,10 +12,10 @@ class Res: public Property{
     public:
     Res(std::string name, int purchaseCost);
     
-    void land(Player* p) override;
-    void buy(Player* p) override;
-    void mortgage(Player* p) override;
-    void unmortgage(Player* p) override;
+    void land(std::shared_ptr<Player> p) override;
+    void buy(std::shared_ptr<Player> p) override;
+    void mortgage(std::shared_ptr<Player> p) override;
+    void unmortgage(std::shared_ptr<Player> p) override;
 
 };
 

@@ -1,10 +1,10 @@
 #include "GooseNesting.h"
 
 //
-GooseNesting::GooseNesting(std::string name) : NonProperty{name} {}
+GooseNesting::GooseNesting() : NonProperty{GOOSE_NESTING} {}
 
 //
-void GooseNesting::applyEffect(std::shared_ptr<Player> p){
+void GooseNesting::land(std::shared_ptr<Player> p){
     updateObservers("You are attacked by Mr.Goose!");
 }
 

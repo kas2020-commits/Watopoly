@@ -5,7 +5,7 @@
 class SLC : public NonProperty {
   public:
     SLC();
-    virtual void applyEffect(std::shared_ptr<Player>) override;
+    void land(std::shared_ptr<Player> p) override;
 };
 
 #endif

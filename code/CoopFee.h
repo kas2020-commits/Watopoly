@@ -6,7 +6,7 @@
 class CoopFee: public NonProperty{
   public:
     CoopFee();
-    void applyEffect(std::shared_ptr<Player> p) override;
+    void land(std::shared_ptr<Player> p) override;
 };
 
 #endif

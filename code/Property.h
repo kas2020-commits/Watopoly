@@ -1,8 +1,9 @@
 #ifndef __PROPERTY_H__
 #define __PROPERTY_H__
 #include "Tile.h"
+#include "Player.h"
 
-class PropertyException {};
+class PropertyException{};
 class Player;
 
 //
