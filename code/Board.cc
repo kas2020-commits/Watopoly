@@ -2,6 +2,7 @@
 
 Board::Board()
 	: tiles{std::array<std::shared_ptr<Tile>, MAX_TILES> {
+		std::make_shared<CollectOSAP>();
 		std::make_shared<AcademicBuilding>(AL,			ARTS1,	40 , 50 , 2 , 10 , 30 , 90  , 160 , 250 ),
 			std::make_shared<SLC>(),
 			std::make_shared<AcademicBuilding>(ML,		ARTS1,	60 , 50 , 4 , 20 , 60 , 180 , 320 , 450 ),

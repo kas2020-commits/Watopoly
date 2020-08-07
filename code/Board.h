@@ -17,6 +17,7 @@
 #include "GooseNesting.h"
 #include "GoToTims.h"
 #include "CoopFee.h"
+#include "CollectOSAP.h"
 
 class BoardException {};
 
