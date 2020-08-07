@@ -18,6 +18,7 @@ class Tile: public Subject{
     std::string getName();
     int getIndex();
     bool operator==(Tile &);
+    virtual bool isProperty() = 0;
 
 };
 
