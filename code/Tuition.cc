@@ -1,16 +1,16 @@
-#include "Tutition.h"
+#include "Tuition.h"
 #include <iostream>
 #include <string>
-Tutition::Tutition(): NonProperty{TUITION}{
+Tuition::Tuition(): NonProperty{TUITION}{
 
 }
-void Tutition::land(Player* p){
+void Tuition::land(Player* p){
     applyEffect(p);
 }
 
 
-void Tutition::applyEffect(Player* p){
-    updateObservers("You need to pay tutition, A for pay $300, B for 10% of you worth!");
+void Tuition::applyEffect(Player* p){
+    updateObservers("You need to pay Tuition, A for pay $300, B for 10% of you worth!");
     char temp; 
     while (true){
         std::cin >> temp;

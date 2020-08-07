@@ -1,10 +1,10 @@
-#ifndef TUTITION_H
-#define TUTITION_H
+#ifndef TUIION_H
+#define TUITION_H
 #include "NonProperty.h"
 #include "util.h"
-class Tutition: public NonProperty{
+class Tuition: public NonProperty{
  public:
-    Tutition();
+    Tuition();
     void land(Player* p) override;
     void applyEffect(Player* p) override;
 

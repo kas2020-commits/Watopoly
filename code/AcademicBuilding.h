@@ -1,6 +1,7 @@
 #ifndef ACADEMICBUILDING_H
 #define ACADEMICBUILDING_H
 #include "Property.h"
+#include <map>
 
 
 class AcademicBuilding: public Property{
