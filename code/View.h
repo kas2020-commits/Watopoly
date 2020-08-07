@@ -14,10 +14,10 @@ class View : public Observer {
     std::string view;
     std::vector<int> tileLoc;
     std::map<std::string, int> playerLoc;
-  public:
-    View(Game* g);
     void updatePlayer(Player* p);
     void updateImprovements(AcademicBuilding* a);
+  public:
+    View(Game* g);
     virtual void update(Subject* whoUpdated) override;
     virtual void update(std::string message) override;
     void display();
