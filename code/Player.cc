@@ -3,7 +3,8 @@
 int Player::totalTimsCups = 0;
 
 Player::Player(const std::string name, const char symbol, BoardIterator it)
-	: name{name}, symbol{symbol}, cash{500}, position{it},
+	:
+	name{name}, symbol{symbol}, cash{500}, position{it},
 	timsCups{0}, gymCount{0}, resCount{0}, // set counts to 0
 	blockCount{std::map<std::string, int>()} // create blockCount map
 {
@@ -30,7 +31,16 @@ void Player::move(int amount)
 
 void Player::move(const std::string name)
 {
-	position.moveTo(name);
+	const std::string oldLocation { (*position).getName() };
+	std::string midval;
+	while (true)
+	{
+		midval = (*position).getName();
+		if (midval.compare(name) == 0) break;
+		else if (midval.compare(oldLocation) == 0) throw PlayerException();
+		else ++position;
+	}
+	(*position).land(this);
 	updateObservers();
 }
 

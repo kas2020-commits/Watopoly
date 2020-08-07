@@ -1,3 +1,5 @@
+#ifndef __UTIL_H__
+#define __UTIL_H__
 #include <string>
 
 // Accademic buildings
@@ -54,3 +56,5 @@ const std::string ENV {"Env"};
 const std::string SCI1 {"Sci1"};
 const std::string SCI2 {"Sci2"};
 const std::string MATH {"Math"};
+
+#endif
