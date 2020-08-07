@@ -2,9 +2,7 @@
 #include <iostream>
 #include <string>
 
-Res::Res(std::string name, int purchaseCost): Property(name, purchaseCost){
-
-}
+Res::Res(std::string name, int purchaseCost): Property(name, purchaseCost){}
 
 void Res::land(std::shared_ptr<Player> p){
     if (owner != nullptr){

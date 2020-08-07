@@ -1,5 +1,5 @@
-#ifndef DCTIMSLINE_H
-#define DCTIMSLINE_H
+#ifndef __DCTIMSLINE_H__
+#define __DCTIMSLINE_H__
 #include "NonProperty.h"
 #include "util.h"
 

@@ -1,5 +1,5 @@
-#ifndef OSAP_H
-#define OSAP_H
+#ifndef __OSAP_H__
+#define __OSAP_H__
 #include "NonProperty.h"
 
 class CollectOSAP: public NonProperty{

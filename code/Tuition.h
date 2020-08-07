@@ -3,7 +3,6 @@
 #include "NonProperty.h"
 #include "util.h"
 
-//
 class Tuition: public NonProperty{
   public:
     Tuition();

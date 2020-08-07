@@ -1,5 +1,5 @@
-#ifndef RES_H
-#define RES_H
+#ifndef __RES_H__
+#define __RES_H__
 #include "Property.h"
 #include <string>
 

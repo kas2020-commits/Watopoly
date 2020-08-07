@@ -1,5 +1,5 @@
-#ifndef __COOP_FEE_H_
-#define __COOP_FEE_H_
+#ifndef __COOP_FEE_H__
+#define __COOP_FEE_H__
 #include "NonProperty.h"
 
 //

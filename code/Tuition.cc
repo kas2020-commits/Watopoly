@@ -3,7 +3,6 @@
 #include <string>
 Tuition::Tuition(): NonProperty{TUITION}{}
 
-
 void Tuition::land(std::shared_ptr<Player> p){
     updateObservers("You need to pay Tuition, A for pay $300, B for 10% of you worth!");
     char temp; 
