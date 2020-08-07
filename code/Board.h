@@ -18,6 +18,8 @@
 #include "GoToTims.h"
 #include "CoopFee.h"
 
+class BoardException {};
+
 class Board {
 	std::array<std::shared_ptr<Tile>, MAX_TILES> tiles;
 	public:
@@ -27,6 +29,11 @@ class Board {
 	// starts at either the first or last
 	BoardIterator begin(const bool isCyclic = false);
 	BoardIterator end();
+
+	// returns the tile with the same unique name given in argument. If
+	// non-unique string is given i.e. NeedlesHall or SLC, a BoardException is
+	// thrown.
+	Tile & at(const std::string);
 };
 
 #endif
