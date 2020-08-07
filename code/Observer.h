@@ -1,5 +1,5 @@
-#ifndef _OBSERVER_
-#define _OBSERVER_
+#ifndef __OBSERVER_H__
+#define __OBSERVER_H__
 
 #include <string>
 
