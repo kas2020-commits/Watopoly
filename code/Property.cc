@@ -2,7 +2,3 @@
 
 Property::Property(std::string name, int purchaseCost): purchaseCost{purchaseCost}, owner{nullptr}, morgaged{false}, Tile{name}{
 }
-
-bool Property::setIsProperty(){
-    isProperty = true;
-}

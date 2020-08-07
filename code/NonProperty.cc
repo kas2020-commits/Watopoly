@@ -3,6 +3,3 @@
 NonProperty::NonProperty(std::string name): Tile{name}{
 }
 
-bool NonProperty::setIsProperty(){
-    isProperty = false;
-}

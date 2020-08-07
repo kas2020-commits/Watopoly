@@ -1,14 +1,10 @@
 #include "NeedlesHall.h"
 
-NeedlesHall::NeedlesHall(): NonProperty{NEEDLES_HALL}{
-
-    
-}
+NeedlesHall::NeedlesHall(): NonProperty{NEEDLES_HALL}{}
 
 void NeedlesHall::land(Player* p){
     applyEffect(p);
 }
-
 
 void NeedlesHall::applyEffect(Player* p){
     int rutr = rand() % 100 + 1;

@@ -1,7 +1,7 @@
 #ifndef GYM_H
 #define GYM_H
 #include "Property.h"
-
+#include "util.h"
 
 class Gym: public Property{
     
