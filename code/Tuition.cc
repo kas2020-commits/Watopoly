@@ -1,15 +1,10 @@
 #include "Tuition.h"
 #include <iostream>
 #include <string>
-Tuition::Tuition(): NonProperty{TUITION}{
-
-}
-void Tuition::land(Player* p){
-    applyEffect(p);
-}
+Tuition::Tuition(): NonProperty{TUITION}{}
 
 
-void Tuition::applyEffect(Player* p){
+void Tuition::land(std::shared_ptr<Player> p){
     updateObservers("You need to pay Tuition, A for pay $300, B for 10% of you worth!");
     char temp; 
     while (true){

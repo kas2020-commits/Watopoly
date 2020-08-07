@@ -6,7 +6,7 @@ Res::Res(std::string name, int purchaseCost): Property(name, purchaseCost){
 
 }
 
-void Res::land(Player* p){
+void Res::land(std::shared_ptr<Player> p){
     if (owner != nullptr){
         if(p->getResCount() == 4){
             p->withdraw(200);
@@ -27,37 +27,37 @@ void Res::land(Player* p){
         }
     } else {
         std::cout << "No owner";
-        throw PropertyError{};
+        throw PropertyException{};
     }
 }
 
-void Res::buy(Player* p){
+void Res::buy(std::shared_ptr<Player> p){
     if (owner == nullptr){
         owner = p;
         p->withdraw( purchaseCost );
     } else {
         std::cout << "Have an owner!";
-        throw PropertyError{};
+        throw PropertyException{};
     }
 }
 
-void Res::mortgage(Player* p){
+void Res::mortgage(std::shared_ptr<Player> p){
     if( owner == p ){
         morgaged = true;
         p->deposit( purchaseCost * 0.5 );
     } else {
         std::cout << "Wrong Owner!";
-        throw PropertyError{};
+        throw PropertyException{};
     }
 }
 
-void Res::unmortgage(Player* p){
+void Res::unmortgage(std::shared_ptr<Player> p){
     if(morgaged){
         morgaged = false;
         p->withdraw( purchaseCost * 0.6 );
     } else {
         std::cout << "Not Morgaged!";
-        throw PropertyError{};
+        throw PropertyException{};
     }
     
 }

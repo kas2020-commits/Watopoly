@@ -2,11 +2,7 @@
 
 NeedlesHall::NeedlesHall(): NonProperty{NEEDLES_HALL}{}
 
-void NeedlesHall::land(Player* p){
-    applyEffect(p);
-}
-
-void NeedlesHall::applyEffect(Player* p){
+void NeedlesHall::land(std::shared_ptr<Player> p){
     int rutr = rand() % 100 + 1;
     if (rutr == 1){
         if(p->getTotalTimsCups() < 4){
