@@ -9,7 +9,7 @@
 // view class for user to interact with
 View::View(Game* game) : view{""} {
     // read in view template
-    std::ifstream viewTemplate{"test.txt"};
+    std::ifstream viewTemplate{"ViewTemplate.txt"};
     std::string line;
     while (std::getline(viewTemplate, line)) view += line + "\n";
 
@@ -64,10 +64,7 @@ void View::update(std::string message) {
 }
 
 // display the game board
-void View::display() {
-    std::cout << view;
-
-}
+void View::display() { std::cout << view; }
 
 // gets a command from the user
 std::string View::getCommand() {
