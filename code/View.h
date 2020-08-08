@@ -1,5 +1,5 @@
-#ifndef _VIEW_
-#define _VIEW_
+#ifndef __VIEW_H__
+#define __VIEW_H__
 
 #include <map>
 #include <string>

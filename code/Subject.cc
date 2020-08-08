@@ -25,6 +25,13 @@ void Subject::attachSelf(Observer* ob) {
     }
 }
 
+//
+void Subject::attachObservers(Subject* s) {
+    for (auto it = observers.begin(); it != observers.end(); it++) {
+        (*it)->attachTo(s);
+    }
+}
+
 // virtual method for attaching observer to subject's members
 void Subject::attachMembers(Observer* ob) {}
 

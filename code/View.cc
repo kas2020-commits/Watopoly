@@ -59,7 +59,7 @@ void View::update(Subject* whoUpdated) {
 }
 
 // prompts view to display a message from its subjects
-void update(std::string message) {
+void View::update(std::string message) {
     std::cout << message << "\n";
 }
 
