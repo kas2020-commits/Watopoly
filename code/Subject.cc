@@ -5,14 +5,14 @@ Subject::~Subject() {}
 
 // lets observer know the subject's stat has changed
 void Subject::updateObservers() {
-    for (auto &it = observers.begin(); it != observers.end(); it++) {
+    for (auto it = observers.begin(); it != observers.end(); it++) {
         (*it)->update(this);
     }
 }
 
 // sends a message to display in observer
 void Subject::updateObservers(std::string message) {
-    for (auto &it = observers.begin(); it != observers.end(); it++) {
+    for (auto it = observers.begin(); it != observers.end(); it++) {
         (*it)->update(message);
     }
 }
