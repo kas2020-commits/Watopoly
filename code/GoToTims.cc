@@ -1,7 +1,7 @@
 #include "GoToTims.h"
 
 //
-GoToTims::GoToTims(std::string name): NonProperty{name} {}
+GoToTims::GoToTims(): NonProperty{GO_TO_TIMS} {}
 
 //
 void GoToTims::land(Player* p) {

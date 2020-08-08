@@ -5,7 +5,7 @@
 //
 class GoToTims : public NonProperty {
   public:
-    GoToTims(std::string name);
+    GoToTims();
     void land(Player* p) override;
 };
 
