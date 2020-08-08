@@ -27,9 +27,9 @@ View::View(Game* game) : view{""} {
 }
 
 // updates a given player's location on the view
-void View::updatePlayer(Player* p) { 
+void View::updatePlayer(Player* p) {
     std::string name = p->getName();
-    int tileIdx = p->getPosition()->getIndex();
+    int tileIdx = p->getPosition().getIndex();
     if (playerLoc.count(name)) view[playerLoc[name]] = ' ';
     int playerZone = tileLoc[tileIdx] + 405;
     for (int i = playerZone; i < playerZone + 8; i++) {
@@ -66,7 +66,7 @@ void update(std::string message) {
 // display the game board
 void View::display() {
     std::cout << view;
-    
+
 }
 
 // gets a command from the user

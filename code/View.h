@@ -3,9 +3,10 @@
 
 #include <map>
 #include <string>
+#include <vector>
 #include "Observer.h"
 
-class AcadecmicBuidling;
+class AcademicBuilding;
 class Game;
 class Player;
 

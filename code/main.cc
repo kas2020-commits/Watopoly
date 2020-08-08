@@ -15,7 +15,7 @@ int main() {
     view.update("Welcome to watopoly!");
     while (true) {
         view.update("Enter number of players (min: 2, max: 8):");
-        try { 
+        try {
             numPlayers = std::stoi(view.getCommand());
             if (numPlayers < 2 || numPlayers > 8) throw std::invalid_argument("");
             break;
@@ -24,7 +24,7 @@ int main() {
             view.update("Invalid number of players.");
         }
     }
-    
+
     // add players to game
     for (int i = 0; i < numPlayers; i++) {
         while (true) {
@@ -74,7 +74,7 @@ int main() {
             if (!isProperty(receive)) {
 
             }
-            
+
             // get descision from other player
             bool accepted;
             while (true) {

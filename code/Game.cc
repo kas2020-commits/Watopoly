@@ -14,8 +14,8 @@ Game::~Game() {}
 
 // virtual override of subject class, attaches subject members to Observer
 void Game::attachMembers(Observer* ob) {
-    for (auto it = players.begin(); it != players.end(); it++) it->second->attach(ob);
-    for (auto it = board->begin(); it != board->end(); it++) it->attach(ob);
+    for (auto it = players.begin(); it != players.end(); ++it) it->second->attach(ob);
+    for (auto it = board->begin(); it != board->end(); ++it) it->attach(ob);
 }
 
 //
@@ -23,7 +23,7 @@ bool Game::isPlayer(std::string name) { return (players.count(name) > 0); }
 
 //
 bool Game::isProperty(std::string name) {
-    for (auto it = board->begin(); it != board->end(); it++) {
+    for (auto it = board->begin(); it != board->end(); ++it) {
         if (it->isProperty() && it->getName() == name) return true;
     }
     return false;
@@ -31,7 +31,7 @@ bool Game::isProperty(std::string name) {
 
 //
 bool Game::isAcademicBuilding(std::string name) {
-    for (auto it = board->begin(); it != board->end(); it++) {
+    for (auto it = board->begin(); it != board->end(); ++it) {
         if (it->isAcademicBuilding() && it->getName() == name) return true;
     }
     return false;
@@ -113,7 +113,7 @@ void Game::bankrupt() {
 
 //
 void Game::assets(std::string name) {
-    for (auto it = board->begin(); it != board->end(); it++) {
+    for (auto it = board->begin(); it != board->end(); ++it) {
         // implement this
     }
 }
