@@ -1,3 +1,4 @@
+#include <iostream>
 #include "AcademicBuilding.h"
 #include "Board.h"
 #include "Game.h"
@@ -67,6 +68,7 @@ void Game::next() {
         curPlayer++;
         if (curPlayer == players.end()) curPlayer = players.begin();
         if (!curPlayer->second->isBankrupt()) break;
+        std::cout << "yo\n";
     }
     rolled = false;
     updateObservers("Current turn: " + curPlayer->first);
