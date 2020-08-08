@@ -3,9 +3,12 @@
 #include <string>
 #include "Game.h"
 #include "View.h"
+#include <iostream>
 
 //
 int main() {
+	std::cin.exceptions(std::ios::failbit|std::ios::eofbit);
+	int readint;
 	//
 	Game game{};
 	View view{&game};
@@ -23,11 +26,13 @@ int main() {
 		catch (const std::invalid_argument&) {
 			view.update("Invalid number of players.");
 		}
+		catch (std::ios::failure) { return 0; }
 	}
 
 	// add players to game
 	for (int i = 0; i < numPlayers; ++i) {
 		while (true) {
+			view.update("Type the name of the player followed by the symbol you would like");
 			try {
 				std::stringstream playerInfo{view.getCommand()};
 				std::string name;
@@ -39,6 +44,7 @@ int main() {
 			catch (PlayerException) { // implement invalid player construction exception
 				view.update("Invalid player details.");
 			}
+			catch (std::ios::failure) { return 0; }
 		}
 	}
 
