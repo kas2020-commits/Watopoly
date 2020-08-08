@@ -7,14 +7,16 @@
 #include "Tile.h"
 #include "util.h"
 
-class Player;
-
 class PlayerException {};
+
+/* struct PlayerImpl; */
 
 class Player : public Subject {
 	// static fields
 	static int totalTimsCups;
 	static std::map<const char, bool> symbolChart;
+
+	/* std::unique_ptr<PlayerImpl> data; */
 
 	// fields
 	const std::string name;
@@ -27,6 +29,7 @@ class Player : public Subject {
 	std::map<std::string, int> blockCount;
 	bool bankrupt;
 	bool trapped;
+	int turnsTrapped;
 
 	public:
 	Player(const std::string name, const char symbol, BoardIterator);

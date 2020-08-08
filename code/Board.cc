@@ -2,12 +2,12 @@
 
 Board::Board()
 	: tiles{std::array<std::shared_ptr<Tile>, MAX_TILES> {
-		std::make_shared<CollectOSAP>();
+		std::make_shared<CollectOSAP>(),
 		std::make_shared<AcademicBuilding>(AL,			ARTS1,	40 , 50 , 2 , 10 , 30 , 90  , 160 , 250 ),
 			std::make_shared<SLC>(),
 			std::make_shared<AcademicBuilding>(ML,		ARTS1,	60 , 50 , 4 , 20 , 60 , 180 , 320 , 450 ),
 			std::make_shared<Tuition>(),
-			std::make_shared<Res>(MKV, 200),
+			std::make_shared<Residence>(MKV, 200),
 			std::make_shared<AcademicBuilding>(ECH,		ARTS2,	100, 50 , 6 , 30 , 90 , 270 , 400 , 550 ),
 			std::make_shared<NeedlesHall>(),
 			std::make_shared<AcademicBuilding>(PAS,		ARTS2,	100, 50 , 6 , 30 , 90 , 270 , 400 , 550 ),
@@ -17,7 +17,7 @@ Board::Board()
 			std::make_shared<Gym>(PAC, 150),
 			std::make_shared<AcademicBuilding>(DWE,		ENG,	140, 100, 10, 50 , 150, 450 , 625 , 750 ),
 			std::make_shared<AcademicBuilding>(CPH,		ENG,	160, 100, 12, 60 , 180, 500 , 700 , 900 ),
-			std::make_shared<Res>(UWP, 200),
+			std::make_shared<Residence>(UWP, 200),
 			std::make_shared<AcademicBuilding>(LHI,		HEALTH,	180, 100, 14, 70 , 200, 550 , 750 , 950 ),
 			std::make_shared<SLC>(),
 			std::make_shared<AcademicBuilding>(BMH,		HEALTH,	180, 100, 14, 70 , 200, 550 , 750 , 950 ),
@@ -27,7 +27,7 @@ Board::Board()
 			std::make_shared<NeedlesHall>(),
 			std::make_shared<AcademicBuilding>(EV2,		ENV,	220, 150, 18, 90 , 250, 700 , 875 , 1050),
 			std::make_shared<AcademicBuilding>(EV3,		ENV,	240, 150, 20, 100, 300, 750 , 925 , 1100),
-			std::make_shared<Res>(V1, 200),
+			std::make_shared<Residence>(V1, 200),
 			std::make_shared<AcademicBuilding>(PHYS,	SCI1,	260, 150, 22, 110, 330, 800 , 975 , 1150),
 			std::make_shared<AcademicBuilding>(B1,		SCI1,	260, 150, 22, 110, 330, 800 , 975 , 1150),
 			std::make_shared<Gym>(CIF, 150),
@@ -37,7 +37,7 @@ Board::Board()
 			std::make_shared<AcademicBuilding>(ESC,		SCI2,	300, 200, 26, 130, 390, 900 , 1100, 1275),
 			std::make_shared<SLC>(),
 			std::make_shared<AcademicBuilding>(C2,		SCI2,	320, 200, 28, 150, 450, 1000, 1200, 1400),
-			std::make_shared<Res>(REV, 200),
+			std::make_shared<Residence>(REV, 200),
 			std::make_shared<NeedlesHall>(),
 			std::make_shared<AcademicBuilding>(MC,		MATH,	350, 200, 35, 175, 500, 1100, 1300, 1500),
 			std::make_shared<CoopFee>(),
