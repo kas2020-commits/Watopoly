@@ -2,9 +2,8 @@
 
 BoardIterator::BoardIterator(std::array<std::shared_ptr<Tile>, MAX_TILES> & vec,
 		std::array<std::shared_ptr<Tile>, MAX_TILES>::iterator it, const bool isCyclic)
-	: tiles{vec}, isCyclic{isCyclic}, curTile{it}
-{
-}
+	: isCyclic{isCyclic}, curTile{it}, tiles{vec}
+{}
 
 BoardIterator &  BoardIterator::operator++()
 {
