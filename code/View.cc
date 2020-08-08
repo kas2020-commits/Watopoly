@@ -13,9 +13,6 @@ View::View(Game* game) : view{""} {
     std::string line;
     while (std::getline(viewTemplate, line)) view += line + "\n";
 
-    // attach view to game
-    game->attach(this);
-
     // set up tile location vector
     //  note: tiles are indexed 0-39 going clockwise from Collect OSAP
     //  note: the following coords represent the location of the top left of each tile
@@ -24,6 +21,9 @@ View::View(Game* game) : view{""} {
     for (int i = 50; i >=  5; i -= 5) tileLoc.emplace_back(getLoc( i,  0));
     for (int i =  0; i <= 81; i += 9) tileLoc.emplace_back(getLoc( 0,  i));
     for (int i =  0; i <= 45; i += 5) tileLoc.emplace_back(getLoc( i, 90));
+
+    // attach view to game
+    game->attach(this);
 }
 
 // updates a given player's location on the view
