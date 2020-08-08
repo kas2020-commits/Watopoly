@@ -36,9 +36,12 @@ Player::Player(const std::string name, const char symbol, BoardIterator it)
 			{{ARTS1, 0}, {ARTS2, 0}, {ENG, 0}, {HEALTH, 0}, {ENV, 0}, {SCI1, 0},
 				{SCI2, 0}, {MATH, 0}}}
 {
-	bool & isDup = symbolChart.find(symbol)->second;
-	if (isDup) throw PlayerException();
-	else isDup = false;
+	try {
+		bool & isDup = symbolChart.at(symbol);
+		if (isDup) throw PlayerException();
+		else isDup = true;
+	}
+	catch (std::out_of_range) { throw PlayerException(); };
 }
 
 // move player:
