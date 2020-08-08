@@ -11,7 +11,7 @@ std::map<const char, bool> Player::symbolChart {
 Player::Player(const std::string name, const char symbol, BoardIterator it)
 	:
 		name{name}, symbol{symbol}, cash{500}, position{it},
-		timsCups{0}, gymCount{0}, resCount{0}, // set counts to 0
+		timsCups{0}, gymCount{0}, resCount{0}, trapped{false}, // set counts to 0
 		blockCount{std::map<std::string, int>
 			{{ARTS1, 0}, {ARTS2, 0}, {ENG, 0}, {HEALTH, 0}, {ENV, 0}, {SCI1, 0},
 				{SCI2, 0}, {MATH, 0}}}
@@ -32,7 +32,7 @@ void Player::move(int amount)
 	updateObservers();
 }
 
-void Player::move(const std::string name)
+void Player::move(const std::string name, bool trap)
 {
 	const std::string oldLocation { position->getName() };
 	std::string midval;
@@ -44,6 +44,7 @@ void Player::move(const std::string name)
 		else ++position;
 	}
 	position->land(this);
+	trap = trapped;
 	updateObservers();
 }
 
@@ -62,6 +63,8 @@ void Player::changeTimsCups(const int amount) { timsCups += amount; }
 void Player::deposit(const int amount) { cash += amount; }
 void Player::withdraw(const int amount) { cash -= amount; }
 void Player::setBankrupt() { bankrupt = true; }
+void Player::untrap() { trapped = false; }
+void Player::trap() { trapped = true; }
 
 // static methods:
 int Player::getTotalTimsCups() { return totalTimsCups; }

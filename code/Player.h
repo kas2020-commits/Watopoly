@@ -26,13 +26,14 @@ class Player : public Subject {
 	int resCount;
 	std::map<std::string, int> blockCount;
 	bool bankrupt;
+	bool trapped;
 
 	public:
 	Player(const std::string name, const char symbol, BoardIterator);
 
 	// moves the player either by a number of tiles or to a location.
 	void move(const int);
-	void move(const std::string);
+	void move(const std::string, bool trap = false);
 
 	// getters:
 	int getResCount();
@@ -43,12 +44,15 @@ class Player : public Subject {
 	char getSymbol();
 	std::string getName();
 	Tile & getPosition();
+	bool isTrapped();
 
 	// setters:
 	void changeTimsCups(const int);
 	void deposit(const int);
 	void withdraw(const int);
 	void setBankrupt();
+	void untrap();
+	void trap();
 
 	// static methods
 	static int getTotalTimsCups();
