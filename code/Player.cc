@@ -30,7 +30,8 @@ std::map<const char, bool> Player::symbolChart {
 Player::Player(const std::string name, const char symbol, BoardIterator it)
 	:
 		name{name}, symbol{symbol}, cash{500}, position{it},
-		timsCups{0}, gymCount{0}, resCount{0}, trapped{false}, turnsTrapped{0}, // set counts to 0
+		timsCups{0}, gymCount{0}, resCount{0}, bankrupt{false},
+		trapped{false}, turnsTrapped{0},
 		blockCount{std::map<std::string, int>
 			{{ARTS1, 0}, {ARTS2, 0}, {ENG, 0}, {HEALTH, 0}, {ENV, 0}, {SCI1, 0},
 				{SCI2, 0}, {MATH, 0}}}

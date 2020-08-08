@@ -26,10 +26,10 @@ class Player : public Subject {
 	int timsCups;
 	int gymCount;
 	int resCount;
-	std::map<std::string, int> blockCount;
 	bool bankrupt;
 	bool trapped;
 	int turnsTrapped;
+	std::map<std::string, int> blockCount;
 
 	public:
 	Player(const std::string name, const char symbol, BoardIterator);
