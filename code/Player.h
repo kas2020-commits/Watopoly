@@ -2,6 +2,7 @@
 #define __PLAYER_H_
 #include <string>
 #include <map>
+#include <stdexcept>
 #include "Subject.h"
 #include "BoardIterator.h"
 #include "Tile.h"
