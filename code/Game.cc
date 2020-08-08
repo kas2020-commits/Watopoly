@@ -71,6 +71,7 @@ void Game::next() {
         std::cout << "yo\n";
     }
     rolled = false;
+    std::cout << "yo\n";
     updateObservers("Current turn: " + curPlayer->first);
 }
 
