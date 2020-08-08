@@ -19,16 +19,14 @@ void Subject::updateObservers(std::string message) {
 
 // attaches observer to self
 void Subject::attachSelf(Observer* ob) {
-    if (std::find(observers.begin(), observers.end(), ob) != observers.end()) {
-        observers.emplace_back(ob);
-        updateObservers();
-    }
+    observers.emplace_back(ob);
+    updateObservers();
 }
 
 //
 void Subject::attachObservers(Subject* s) {
     for (auto it = observers.begin(); it != observers.end(); it++) {
-        (*it)->attachTo(s);
+        s->attach(*it);
     }
 }
 

@@ -68,10 +68,8 @@ void Game::next() {
         curPlayer++;
         if (curPlayer == players.end()) curPlayer = players.begin();
         if (!curPlayer->second->isBankrupt()) break;
-        std::cout << "yo\n";
     }
     rolled = false;
-    std::cout << "yo\n";
     updateObservers("Current turn: " + curPlayer->first);
 }
 
