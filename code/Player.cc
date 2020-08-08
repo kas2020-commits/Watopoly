@@ -64,7 +64,8 @@ void Player::move(const std::string name, bool trap)
 		else if (midval.compare(oldLocation) == 0) throw PlayerException();
 		else ++position;
 	}
-	position->land(static_cast<std::shared_ptr<Player>>(this));
+	/* position->land(static_cast<std::shared_ptr<Player>>(this)); */
+	position->land(this);
 	trap = trapped;
 	updateObservers();
 }
