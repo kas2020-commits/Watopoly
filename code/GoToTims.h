@@ -6,7 +6,7 @@
 class GoToTims : public NonProperty {
   public:
     GoToTims(std::string name);
-    void applyEffect(std::shared_ptr<Player> p) override;
+    void land(Player* p) override;
 };
 
 #endif

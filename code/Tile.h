@@ -14,8 +14,9 @@ class Tile: public Subject{
     static int tileCount;
   public:
     Tile(std::string name);
-    virtual void land(std::shared_ptr<Player>) = 0;
-    virtual void pass(std::shared_ptr<Player>);
+    virtual void land(Player*);
+    virtual void pass(Player*);
+    virtual void leave(Player*);
     std::string getName();
     int getIndex();
     bool operator==(Tile &);

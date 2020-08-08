@@ -4,21 +4,25 @@
 int Tile::tileCount = 0;
 
 //
-Tile::Tile(std::string name) : name{name}, index{tileCount} {
-    tileCount += 1;
-}
+Tile::Tile(std::string name) : name{name}, index{tileCount} { ++tileCount; }
 
 //
-void Tile::pass(std::shared_ptr<Player> p) {}
+void Tile::land(Player* p) {}
 
 //
-std::string Tile::getName(){ return name; }
+void Tile::pass(Player* p) {}
 
 //
-int Tile::getIndex(){ return index; }
+void Tile::leave(Player* p) {}
 
 //
-bool Tile::operator==(Tile & t){ return this->index == t.index; }
+std::string Tile::getName() { return name; }
+
+//
+int Tile::getIndex() { return index; }
+
+//
+bool Tile::operator==(Tile & t) { return (this->index == t.index); }
 
 //
 bool Tile::isProperty() { return false; }

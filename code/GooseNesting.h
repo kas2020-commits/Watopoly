@@ -6,8 +6,7 @@
 class GooseNesting : public NonProperty{
   public:
     GooseNesting();
-    void land(std::shared_ptr<Player> p) override;
-
+    void land(Player* p) override;
 };
 
 #endif

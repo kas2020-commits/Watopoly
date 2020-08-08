@@ -6,10 +6,11 @@
 DCTimsLine::DCTimsLine(): NonProperty{DC_TIMS_LINE} {}
 
 //
-void DCTimsLine::land(std::shared_ptr<Player> p) {}
+void DCTimsLine::land(Player* p) {}
 
 //
-void DCTimsLine::applyEffect(std::shared_ptr<Player> p) {
+void DCTimsLine::applyEffect(Player* p) {
+    /*
     int die1, die2, counter;
     char temp;
     counter = 0;
@@ -59,4 +60,5 @@ void DCTimsLine::applyEffect(std::shared_ptr<Player> p) {
             }
         }
     }
+    */
 }

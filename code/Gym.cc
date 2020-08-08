@@ -2,9 +2,11 @@
 #include <iostream>
 #include <string>
 
+//
 Gym::Gym(std::string name, int purchaseCost): Property{name, purchaseCost} {}
 
-void Gym::land(std::shared_ptr<Player> p){
+//
+void Gym::land(Player* p){
     if (owner != nullptr){
         int firstdie = rollDie();
         int seconddie = rollDie();
@@ -39,7 +41,8 @@ void Gym::land(std::shared_ptr<Player> p){
     }
 }
 
-void Gym::buy(std::shared_ptr<Player> p){
+//
+void Gym::buy(Player* p){
     if (owner == nullptr){
         owner = p;
         p->withdraw( purchaseCost );
@@ -49,7 +52,8 @@ void Gym::buy(std::shared_ptr<Player> p){
     }
 }
 
-void Gym::mortgage(std::shared_ptr<Player> p){
+//
+void Gym::mortgage(Player* p){
     if( owner == p ){
         morgaged = true;
         p->deposit( purchaseCost * 0.5 );
@@ -59,7 +63,8 @@ void Gym::mortgage(std::shared_ptr<Player> p){
     }
 }
 
-void Gym::unmortgage(std::shared_ptr<Player> p){
+//
+void Gym::unmortgage(Player* p){
     if(morgaged){
         morgaged = false;
         p->withdraw( purchaseCost * 0.6 );

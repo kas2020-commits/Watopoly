@@ -5,7 +5,7 @@
 class SLC : public NonProperty {
   public:
     SLC();
-    void land(std::shared_ptr<Player> p) override;
+    void land(Player* p) override;
 };
 
 #endif

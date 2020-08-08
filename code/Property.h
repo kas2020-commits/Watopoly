@@ -10,13 +10,13 @@ class Player;
 class Property : public Tile{
   protected:
     int purchaseCost;
-    std::shared_ptr<Player> owner;
+    Player* owner;
     bool morgaged;
   public:
     Property(std::string name, int purchaseCost);
-    virtual void buy(std::shared_ptr<Player> p) = 0;
-    virtual void mortgage(std::shared_ptr<Player> p) = 0;
-    virtual void unmortgage(std::shared_ptr<Player> p) = 0;
+    virtual void buy(Player* p) = 0;
+    virtual void mortgage(Player* p) = 0;
+    virtual void unmortgage(Player* p) = 0;
     bool isProperty() override; 
 };
 

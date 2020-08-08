@@ -7,7 +7,7 @@
 class NeedlesHall:public NonProperty{
     public:
     NeedlesHall();
-    void land(std::shared_ptr<Player> p) override;
+    void land(Player* p) override;
 
 };
 

@@ -5,7 +5,8 @@
 //
 SLC::SLC(): NonProperty{SLC_S} {}
 
-void SLC::land(std::shared_ptr<Player> p){ 
+//
+void SLC::land(Player* p){ 
     int rutr = rand() % 100 + 1;
     if (rutr == 1 && p->getTotalTimsCups() < 4) {
         p->changeTimsCups(1);

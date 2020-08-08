@@ -1,10 +1,11 @@
 #include "Tuition.h"
 #include <iostream>
 #include <string>
+
 Tuition::Tuition(): NonProperty{TUITION} {}
 
-void Tuition::land(std::shared_ptr<Player> p){
-    updateObservers("You need to pay Tuition, A for pay $300, B for 10% of you worth!");
+void Tuition::land(Player* p){
+    /* updateObservers("You need to pay Tuition, A for pay $300, B for 10% of you worth!");
     char temp; 
     while (true){
         std::cin >> temp;
@@ -17,5 +18,5 @@ void Tuition::land(std::shared_ptr<Player> p){
         } else {
             updateObservers("Invalid input, try again!");
         }     
-    }
+    }*/
 }

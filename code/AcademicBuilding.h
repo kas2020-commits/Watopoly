@@ -4,26 +4,25 @@
 #include <map>
 
 
-class AcademicBuilding: public Property{
-
-    protected:
+class AcademicBuilding : public Property{
+  protected:
     int improvementCost;
     int improvementLevel;
     std::vector<int> tuitionAtLevels;
     std::string blockName;
-
-    public:
+  public:
     static std::map<const std::string, int> blockMap;
-    AcademicBuilding( std::string name, std::string blockName, int purchaseCost, int improvementCost,  int tutzero, int tutone, int tuttwo, int tutthree, int tutfour, int tutfive);
-    void land(std::shared_ptr<Player> p) override;
-    void buy(std::shared_ptr<Player> p) override;
-    void mortgage(std::shared_ptr<Player> p) override;
-    void unmortgage(std::shared_ptr<Player> p) override;
-    void buyImprovement(std::shared_ptr<Player> p);
-    void sellImprovement(std::shared_ptr<Player> p);
+    AcademicBuilding(std::string name, std::string blockName,
+        int purchaseCost, int improvementCost,  int tuit0,
+        int tuit1, int tuit2, int tuit3, int tuit4, int tuit5);
+    void land(Player* p) override;
+    void buy(Player* p) override;
+    void mortgage(Player* p) override;
+    void unmortgage(Player* p) override;
+    void buyImprovement(Player* p);
+    void sellImprovement(Player* p);
     int getImprovementLevel();
     bool isAcademicBuilding();
-
 };
 
 #endif
