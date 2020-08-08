@@ -83,26 +83,26 @@ void Game::trade(std::string name, int giveCash, std::string receiveProp) {}
 
 //
 void Game::mortgage(std::string name) {
-    Property& p = dynamic_cast<Property&>(board->at(name));
-    p.mortgage(curPlayer->second.get());
+    //Property& p = dynamic_cast<Property&>(board->at(name));
+    //p.mortgage(curPlayer->second.get());
 }
 
 //
 void Game::unmortgage(std::string name) {
-    Property& p = dynamic_cast<Property&>(board->at(name));
-    if (p) p.unmortgage(curPlayer->second.get());
+    //Property& p = dynamic_cast<Property&>(board->at(name));
+    //if (p) p.unmortgage(curPlayer->second.get());
 }
 
 //
 void Game::buyImprovement(std::string name) {
-    AcademicBuilding& ab = dynamic_cast<AcademicBuilding&>(board->at(name));
-    if (ab) ab.buyImprovement(curPlayer->second.get());
+    //AcademicBuilding& ab = dynamic_cast<AcademicBuilding&>(board->at(name));
+    //if (ab) ab.buyImprovement(curPlayer->second.get());
 }
 
 //
 void Game::sellImprovement(std::string name) {
-    AcademicBuilding& ab = dynamic_cast<AcademicBuilding&>(board->at(name));
-    if (ab) ab.sellImprovement(curPlayer->second.get());
+    //AcademicBuilding& ab = dynamic_cast<AcademicBuilding&>(board->at(name));
+    //if (ab) ab.sellImprovement(curPlayer->second.get());
 }
 
 //
