@@ -13,7 +13,7 @@
 #include "SLC.h"
 #include "DCTimsLine.h"
 #include "Gym.h"
-#include "Res.h"
+#include "Residence.h"
 #include "GooseNesting.h"
 #include "GoToTims.h"
 #include "CoopFee.h"
