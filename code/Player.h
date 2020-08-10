@@ -3,6 +3,7 @@
 #include <string>
 #include <map>
 #include <stdexcept>
+#include <memory>
 #include "Subject.h"
 #include "BoardIterator.h"
 #include "Tile.h"
@@ -15,23 +16,10 @@ class Player : public Subject {
 	static int totalTimsCups;
 	static std::map<const char, bool> symbolChart;
 
-	// data structure used for player. Mainly just for organization purposes.
-	struct Data {
-			const std::string name;
-			const char symbol;
-			BoardIterator position;
-			int cash;
-			int timsCups;
-			int gymCount;
-			int resCount;
-			bool bankrupt;
-			bool trapped;
-			int turnsTrapped;
-			Data(const std::string name, const char symbol, BoardIterator it);
-	};
+	struct PlayerImpl;
 
 	// fields
-	Data data;
+	std::shared_ptr<PlayerImpl> data;
 	std::map<std::string, int> blockCount;
 
 	public:
@@ -53,12 +41,16 @@ class Player : public Subject {
 	bool isTrapped();
 
 	// setters:
-	void changeTimsCups(const int);
 	void deposit(const int);
 	void withdraw(const int);
 	void setBankrupt();
 	void untrap();
 	void trap();
+
+	void setTimsCups(int);
+	void setGymCount(int);
+	void setResCount(int);
+	void setTurnsTrapped(int);
 
 	// static methods
 	static int getTotalTimsCups();

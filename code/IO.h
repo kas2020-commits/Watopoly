@@ -7,16 +7,14 @@
 #include <iostream>
 #include <sstream>
 #include "Game.h"
-
-struct IOImpl;
+#include <map>
 
 class IO {
+	struct IOImpl;
 	std::unique_ptr<IOImpl> list;
-	Game * game;
 	public:
-	void save(const std::string);
-	void load(const std::string);
-	IO(Game *);
+	void save(const std::string, std::unique_ptr<Game>);
+	std::unique_ptr<Game> load(const std::string);
 };
 
 #endif

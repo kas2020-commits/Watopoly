@@ -6,12 +6,12 @@ void NeedlesHall::land(Player* p){
     int rutr = rand() % 100 + 1;
     if (rutr == 1){
         if(p->getTotalTimsCups() < 4){
-            p->changeTimsCups(1);
+			p->setTimsCups(p->getTimsCups() + 1);
             updateObservers("You move forward two tiles");
         }
         // roll up the rim
     }
-    
+
     int v1 = rand() % 18 + 1;
     if( v1 == 1) {
         p->withdraw(200);

@@ -7,7 +7,24 @@ std::map<const char, bool> Player::symbolChart {
 		{'$', false}, {'L', false}, {'T', false}
 };
 
-Player::Data::Data(const std::string name, const char symbol, BoardIterator it)
+struct Player::PlayerImpl {
+	const std::string name;
+	const char symbol;
+	BoardIterator position;
+	int cash;
+	int timsCups;
+	int gymCount;
+	int resCount;
+	bool bankrupt;
+	bool trapped;
+	int turnsTrapped;
+	PlayerImpl(const std::string name, const char symbol, BoardIterator it);
+	~PlayerImpl();
+};
+
+Player::PlayerImpl::~PlayerImpl() {}
+
+Player::PlayerImpl::PlayerImpl(const std::string name, const char symbol, BoardIterator it)
 	: name{name}, symbol{symbol}, position{it}, cash{1500},
 	timsCups{0}, gymCount{0}, resCount{0}, bankrupt{false}, trapped{false}, turnsTrapped{0}
 {}
@@ -15,7 +32,7 @@ Player::Data::Data(const std::string name, const char symbol, BoardIterator it)
 // constructor
 Player::Player(const std::string name, const char symbol, BoardIterator it)
 	:
-		data{name, symbol, it},
+		data{std::make_shared<PlayerImpl>(name, symbol, it)},
 		blockCount{std::map<std::string, int>
 			{{ARTS1, 0}, {ARTS2, 0}, {ENG, 0}, {HEALTH, 0}, {ENV, 0}, {SCI1, 0},
 				{SCI2, 0}, {MATH, 0}}}
@@ -32,46 +49,50 @@ Player::Player(const std::string name, const char symbol, BoardIterator it)
 void Player::move(int amount)
 {
 	for (int i = 0; i < amount; ++i) {
-		++data.position;
-		data.position->pass(this);
+		++data->position;
+		data->position->pass(this);
 	}
-	data.position->land(this);
+	data->position->land(this);
 	updateObservers();
 }
 
 void Player::move(const std::string name, bool trap)
 {
-	const std::string oldLocation { data.position->getName() };
+	const std::string oldLocation { data->position->getName() };
 	std::string midval;
 	while (true)
 	{
-		data.position->getName();
+		data->position->getName();
 		if (midval.compare(name) == 0) break;
 		else if (midval.compare(oldLocation) == 0) throw PlayerException();
-		else ++data.position;
+		else ++data->position;
 	}
-	data.position->land(this);
-	trap = data.trapped;
+	data->position->land(this);
+	trap = data->trapped;
 	updateObservers();
 }
 
 // getters:
-int Player::getResCount() { return data.resCount; }
-int Player::getGymCount() { return data.gymCount; }
-int Player::getTimsCups() { return data.timsCups; }
+int Player::getResCount() { return data->resCount; }
+int Player::getGymCount() { return data->gymCount; }
+int Player::getTimsCups() { return data->timsCups; }
 int Player::getBlockCount(const std::string block) { return blockCount.find(block)->second; }
-bool Player::isBankrupt() { return data.bankrupt; }
-char Player::getSymbol() { return data.symbol; }
-std::string Player::getName() { return data.name; }
-Tile & Player::getPosition() { return *data.position; }
+bool Player::isBankrupt() { return data->bankrupt; }
+char Player::getSymbol() { return data->symbol; }
+std::string Player::getName() { return data->name; }
+Tile & Player::getPosition() { return *data->position; }
 
 // setters:
-void Player::changeTimsCups(const int amount) { data.timsCups += amount; }
-void Player::deposit(const int amount) { data.cash += amount; }
-void Player::withdraw(const int amount) { data.cash -= amount; }
-void Player::setBankrupt() { data.bankrupt = true; }
-void Player::untrap() { data.trapped = false; }
-void Player::trap() { data.trapped = true; }
+void Player::setTimsCups(int amount) { data->timsCups = amount; }
+void Player::setGymCount(int amount) { data->gymCount = amount; }
+void Player::setResCount(int amount) { data->resCount = amount; }
+void Player::setTurnsTrapped(int amount) { data->turnsTrapped = amount; }
+
+void Player::deposit(const int amount) { data->cash += amount; }
+void Player::withdraw(const int amount) { data->cash -= amount; }
+void Player::setBankrupt() { data->bankrupt = true; }
+void Player::untrap() { data->trapped = false; }
+void Player::trap() { data->trapped = true; }
 
 // static methods:
 int Player::getTotalTimsCups() { return totalTimsCups; }
