@@ -65,4 +65,58 @@ const std::string SCI1 {"Sci1"};
 const std::string SCI2 {"Sci2"};
 const std::string MATH {"Math"};
 
+// Colors
+
+const std::string RESET_All_COLORS = "\033[0m";
+
+const std::string BOLD       = "\033[1m";
+const std::string DIM        = "\033[2m";
+const std::string UNDERLINED = "\033[4m";
+const std::string BLINK      = "\033[5m";
+const std::string REVERSE    = "\033[7m";
+const std::string HIDDEN     = "\033[8m";
+
+const std::string RESET_BOLD       = "\033[21m";
+const std::string RESET_DIM        = "\033[22m";
+const std::string RESET_UNDERLINED = "\033[24m";
+const std::string RESET_BLINK      = "\033[25m";
+const std::string RESET_REVERSE    = "\033[27m";
+const std::string RESET_HIDDEN     = "\033[28m";
+
+const std::string DEFAULT      = "\033[39m";
+const std::string BLACK        = "\033[30m";
+const std::string RED          = "\033[31m";
+const std::string GREEN        = "\033[32m";
+const std::string YELLOW       = "\033[33m";
+const std::string BLUE         = "\033[34m";
+const std::string MAGENTA      = "\033[35m";
+const std::string CYAN         = "\033[36m";
+const std::string LIGHT_GRAY    = "\033[37m";
+const std::string DARKT_RAY     = "\033[90m";
+const std::string LIGHT_RED     = "\033[91m";
+const std::string LIGHT_GREEN   = "\033[92m";
+const std::string LIGHT_YELLOW  = "\033[93m";
+const std::string LIGHT_BLUE    = "\033[94m";
+const std::string LIGHT_MAGENTA = "\033[95m";
+const std::string LIGHT_CYAN    = "\033[96m";
+const std::string WHITE        = "\033[97m";
+
+const std::string BACKGROUND_DEFAULT      = "\033[49m";
+const std::string BACKGROUND_BLACK        = "\033[40m";
+const std::string BACKGROUND_RED          = "\033[41m";
+const std::string BACKGROUND_GREEN        = "\033[42m";
+const std::string BACKGROUND_YELLOW       = "\033[43m";
+const std::string BACKGROUND_BLUE         = "\033[44m";
+const std::string BACKGROUND_MAGENTA      = "\033[45m";
+const std::string BACKGROUND_CYAN         = "\033[46m";
+const std::string BACKGROUND_LIGHTGRAY    = "\033[47m";
+const std::string BACKGROUND_DARKGRAY     = "\033[100m";
+const std::string BACKGROUND_LIGHTRED     = "\033[101m";
+const std::string BACKGROUND_LIGHTGREEN   = "\033[102m";
+const std::string BACKGROUND_LIGHTYELLOW  = "\033[103m";
+const std::string BACKGROUND_LIGHTBLUE    = "\033[104m";
+const std::string BACKGROUND_LIGHTMAGENTA = "\033[105m";
+const std::string BACKGROUND_LIGHTCYAN    = "\033[106m";
+const std::string BACKGROUND_WHITE        = "\033[107m";
+
 #endif
