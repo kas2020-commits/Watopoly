@@ -1,8 +1,11 @@
 #include <iostream>
+#include <sstream>
 #include "AcademicBuilding.h"
 #include "Board.h"
 #include "Game.h"
+#include "Gym.h"
 #include "Property.h"
+#include "Residence.h"
 #include "util.h"
 
 // Constructor
@@ -84,26 +87,30 @@ void Game::trade(std::string name, int giveCash, std::string receiveProp) {}
 
 //
 void Game::mortgage(std::string name) {
-    //Property& p = dynamic_cast<Property&>(board->at(name));
-    //p.mortgage(curPlayer->second.get());
+    Property* pr = static_cast<Property*>(&(board->at(name)));
+    if (!pr) throw GameException("\"" + name + "\" is not a valid property.");
+    pr->mortgage(curPlayer->second.get());
 }
 
 //
 void Game::unmortgage(std::string name) {
-    //Property& p = dynamic_cast<Property&>(board->at(name));
-    //if (p) p.unmortgage(curPlayer->second.get());
+    Property* pr = static_cast<Property*>(&(board->at(name)));
+    if (!pr) throw GameException("\"" + name + "\" is not a valid property.");
+    pr->unmortgage(curPlayer->second.get());
 }
 
 //
 void Game::buyImprovement(std::string name) {
-    //AcademicBuilding& ab = dynamic_cast<AcademicBuilding&>(board->at(name));
-    //if (ab) ab.buyImprovement(curPlayer->second.get());
+    AcademicBuilding* ab = static_cast<AcademicBuilding*>(&(board->at(name)));
+    if (ab) throw GameException("\"" + name + "\" is not a valid academic building.");
+    ab->buyImprovement(curPlayer->second.get());
 }
 
 //
 void Game::sellImprovement(std::string name) {
-    //AcademicBuilding& ab = dynamic_cast<AcademicBuilding&>(board->at(name));
-    //if (ab) ab.sellImprovement(curPlayer->second.get());
+    AcademicBuilding* ab = static_cast<AcademicBuilding*>(&(board->at(name)));
+    if (!ab) throw GameException("\"" + name + "\" is not a valid academic building.");
+    ab->sellImprovement(curPlayer->second.get());
 }
 
 //
@@ -114,10 +121,65 @@ void Game::bankrupt() {
 
 //
 void Game::assets(std::string name) {
+    //
+    std::vector<AcademicBuilding*> ownedABs{};
+    std::vector<Residence*> ownedResidences{};
+    std::vector<Gym*> ownedGyms{};
+
+    //
     for (auto it = board->begin(); it != board->end(); ++it) {
-        // implement this
+        Property* pr = dynamic_cast<Property*>(&(*it));
+        if (!pr) continue; // cotinue to next tile if not a property
+        AcademicBuilding* ab = dynamic_cast<AcademicBuilding*>(pr);
+        if (ab) {
+            if (ab->getOwner()->getName() == name) ownedABs.emplace_back(ab);
+            continue;
+        }
+        Residence* r = dynamic_cast<Residence*>(pr);
+        if (r) {
+            if (r->getOwner()->getName() == name) ownedResidences.emplace_back(r);
+            continue;
+        }
+        Gym* g = dynamic_cast<Gym*>(pr);
+        if (g) {
+            if (g->getOwner()->getName() == name) ownedGyms.emplace_back(g);
+            continue;
+        }
     }
+
+    //
+    std::stringstream ss{""};
+    ss << "Player: " << name << "\n";
+    ss << "Total Tims Cups: " << players[name]->getTimsCups() << "\n";
+    ss << "Owned Academic Buildings:\n";
+    if (ownedABs.size() <= 0) ss << "\tNone\n";
+    else {
+        for (int i = 0; i < ownedABs.size(); i++) {
+            ss << "\t" << i + ". " << ownedABs[i]->getName() << "\n";
+            ss << "\t\tImprovements: " << ownedABs[i]->getImprovementLevel() << "\n";
+        }
+    }
+    ss << "Owned Residences:\n";
+    if (ownedResidences.size() <= 0) ss << "\tNone\n";
+    else {
+        for (int i = 0; i < ownedResidences.size(); i++) {
+            ss << "\t" << i << ". " << ownedResidences[i]->getName() << "\n";
+        }
+    }
+    ss << "Owned Gyms:\n";
+    if (ownedGyms.size() <= 0) ss << "\tNone\n";
+    else { 
+        for (int i = 0; i < ownedGyms.size(); i++) {
+            ss << "\t" << i << ". " << ownedGyms[i]->getName() << "\n";
+        }
+    }
+    
+    //
+    updateObservers(ss.str());
 }
+
+//
+void Game::assets() { assets(curPlayer->second->getName()); }
 
 //
 void Game::all() {

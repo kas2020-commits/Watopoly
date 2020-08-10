@@ -17,6 +17,7 @@ class Property : public Tile{
     virtual void buy(Player* p) = 0;
     virtual void mortgage(Player* p) = 0;
     virtual void unmortgage(Player* p) = 0;
+    Player* getOwner();
     bool isProperty() override; 
 };
 

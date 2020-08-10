@@ -18,12 +18,14 @@ class GameException {
 
 //
 class Game : public Subject {
+  friend class IO;
   private:
     std::unique_ptr<Board> board;
     std::map<std::string, std::shared_ptr<Player>> players;
     std::map<std::string, std::shared_ptr<Player>>::iterator curPlayer;
     bool started;
     bool rolled;
+    void assets(std::string name);
   public:
     Game();
     virtual ~Game();
@@ -43,7 +45,7 @@ class Game : public Subject {
     void buyImprovement(std::string ab);
     void sellImprovement(std::string ab);
     void bankrupt();
-    void assets(std::string name);
+    void assets();
     void all();
 };
 

@@ -133,9 +133,11 @@ int main() {
 		}
 		else if (action == "bankrupt") {
 
-		}
+		}*/
 		else if (action == "assets") {
-		game.assets();
+            game.assets();
+        }
+/*
 } else if (action == "all") {
 	game.all();
 } else if (action == "save") {

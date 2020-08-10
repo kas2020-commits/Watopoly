@@ -53,9 +53,15 @@ void View::updateImprovements(AcademicBuilding* a) {
 // notifies view that state of one of its subjects has changed
 void View::update(Subject* whoUpdated) {
     Player* p = dynamic_cast<Player*>(whoUpdated);
-    if (p) updatePlayer(p);
+    if (p) {
+        updatePlayer(p);
+        return;
+    }
     AcademicBuilding* a = dynamic_cast<AcademicBuilding*>(whoUpdated);
-    if (a) updateImprovements(a);
+    if (a) {
+        updateImprovements(a);
+        return;
+    }
 }
 
 // prompts view to display a message from its subjects

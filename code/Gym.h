@@ -1,5 +1,5 @@
 #ifndef __GYM_H__
-#define __YM_H__
+#define __GYM_H__
 #include "Property.h"
 #include "util.h"
 
