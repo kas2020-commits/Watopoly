@@ -8,7 +8,7 @@
 //
 int main() {
 	std::cin.exceptions(std::ios::failbit|std::ios::eofbit);
-	int readint;
+	/* int readint; */
 	//
 	Game game{};
 	View view{&game};
@@ -23,10 +23,10 @@ int main() {
 			if (numPlayers < 2 || numPlayers > 8) throw std::invalid_argument("");
 			break;
 		}
-		catch (const std::invalid_argument&) {
+		catch (const std::invalid_argument &) {
 			view.update("Invalid number of players.");
 		}
-		catch (std::ios::failure) { return 0; }
+		catch (std::ios::failure &) { return 0; }
 	}
 
 	// add players to game
@@ -41,10 +41,10 @@ int main() {
 				game.addPlayer(name, symbol);
 				break;
 			}
-			catch (PlayerException) { // implement invalid player construction exception
+			catch (PlayerException &) { // implement invalid player construction exception
 				view.update("Invalid player details.");
 			}
-			catch (std::ios::failure) { return 0; }
+			catch (std::ios::failure &) { return 0; }
 		}
 	}
 
