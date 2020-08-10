@@ -8,17 +8,18 @@ class Player;
 
 //
 class Property : public Tile{
-  protected:
-    int purchaseCost;
-    Player* owner;
-    bool morgaged;
-  public:
-    Property(std::string name, int purchaseCost);
-    virtual void buy(Player* p) = 0;
-    virtual void mortgage(Player* p) = 0;
-    virtual void unmortgage(Player* p) = 0;
-    Player* getOwner();
-    bool isProperty() override; 
+	protected:
+		int purchaseCost;
+		Player* owner;
+		bool morgaged;
+	public:
+		friend class IO;
+		Property(std::string name, int purchaseCost);
+		virtual void buy(Player* p) = 0;
+		virtual void mortgage(Player* p) = 0;
+		virtual void unmortgage(Player* p) = 0;
+		Player* getOwner();
+		bool isProperty() override;
 };
 
 #endif
