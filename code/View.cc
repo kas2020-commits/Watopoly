@@ -8,6 +8,9 @@
 
 // view class for user to interact with
 View::View(Game* game) : view{""} {
+    // set exception type for input
+    std::cin.exceptions(std::ios::failbit|std::ios::eofbit);
+
     // read in view template
     std::ifstream viewTemplate{"ViewTemplate.txt"};
     std::string line;
@@ -66,7 +69,7 @@ void View::update(Subject* whoUpdated) {
 
 // prompts view to display a message from its subjects
 void View::update(std::string message) {
-    std::cout << message << "\n";
+    std::cout << message;
 }
 
 // display the game board

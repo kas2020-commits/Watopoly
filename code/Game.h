@@ -14,6 +14,7 @@ class GameException {
     std::string message;
   public: 
     GameException(std::string message) : message{message} {}
+    std::string getMessage() { return message; }
 };
 
 //
@@ -21,8 +22,8 @@ class Game : public Subject {
   friend class IO;
   private:
     std::unique_ptr<Board> board;
-    std::map<std::string, std::shared_ptr<Player>> players;
-    std::map<std::string, std::shared_ptr<Player>>::iterator curPlayer;
+    std::map<std::string, std::unique_ptr<Player>> players;
+    std::map<std::string, std::unique_ptr<Player>>::iterator curPlayer;
     bool started;
     bool rolled;
     void assets(std::string name);
@@ -30,9 +31,6 @@ class Game : public Subject {
     Game();
     virtual ~Game();
     virtual void attachMembers(Observer* ob) override;
-    bool isPlayer(std::string name);
-    bool isProperty(std::string name);
-    bool isAcademicBuilding(std::string name);
     void addPlayer(std::string name, char symbol);
     void start(); // all players must be added before game started
     void roll();
