@@ -31,6 +31,10 @@ struct IOImpl {
 	head CURRENTPLAYER { "CURRENT PLAYER IS SAVED HERE" };
 };
 
+IO::IO(Game * game)
+	: list{std::make_unique<IOImpl>()}, game{game}
+{}
+
 void IO::load(const std::string filename)
 {
 	using namespace std;
@@ -111,7 +115,7 @@ void IO::load(const std::string filename)
 
 		}
 	}
-	catch (ios::failure) {}
+	catch (ios::failure &) {}
 	// TODO: CONSTRUCT THE GAME USING THE PERMENANT FIELDS HERE
 	file.close();
 }

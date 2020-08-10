@@ -25,7 +25,7 @@ Player::Player(const std::string name, const char symbol, BoardIterator it)
 		if (isDup) throw PlayerException();
 		else isDup = true;
 	}
-	catch (std::out_of_range) { throw PlayerException(); };
+	catch (std::out_of_range &) { throw PlayerException(); };
 }
 
 // move player:

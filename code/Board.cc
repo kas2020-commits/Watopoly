@@ -61,7 +61,7 @@ Tile & Board::at(const std::string name)
 		if (i->getName().compare(name) == 0)
 		{
 			isFound = true;
-			Tile & retval = *i;
+			retval = *i;
 			break;
 		}
 	}
