@@ -1,37 +1,5 @@
 #include "IO.h"
 
-/* Here is the structure of a player's save:
- * PLAYER
- * name
- * symbol position cash timsCups resCount turnsTrapped
- * index1 index2 index3 ... indexn // where each value is the index of the tile
- */
-
-/* Tile improvements are saved by using the index of the tile representing 1
- * improvement. Thus if tile with index 20 has 4 improvements then in the list
- * we will see the number 20 appear 4 times.
- *
- * Example:
- * IMPROVEMENTS
- * 12 22 20 20 20 20 9 3 9 32
- */
-
-/* The current player information is saved by recording the name of the
- * player. Here is an example as reference. Suppose player named Alex is current
- * player:
- *
- * CURRENTPLAYER
- * Alex
- */
-
-/* Game booleans are stored simply in bit representation, where a 0 is false and
- * a 1 is true.
- *
- * Example:
- * GAMEBOOLS
- * 1 1
- */
-
 struct IO::IOImpl {
 	typedef const std::string head;
 	head PLAYER { "PLAYER INFORMATION STARTS HERE" };
@@ -61,11 +29,12 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 	int tempResCount;
 	int tempTurnsTrapped;
 	int tempTileIndex;
+	int tempTileImprovements;
 	vector<int> indexList;
 
 	// permenant fields
-	vector<int> improvementList;
 	string currPlayerName;
+	map<int, pair<string, int>> improvementList;
 	map<string, shared_ptr<Player>> IOplayers;
 	bool permStarted;
 	bool permRolled;
@@ -85,13 +54,13 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 				// grab player name
 				getline(file, tempName);
 
-				// grab all static data fields
+				// grab all fixed data fields
 				getline(file, s);
 				istringstream iss{s};
 				iss >> tempSymbol >> tempPosition >> tempCash >> tempTimsCups >> tempGymCount >>
 					tempResCount >> tempTurnsTrapped;
 
-				// grab list of indicies to tiles owned by player
+				// Dealing with tiles
 				getline(file, s);
 				istringstream indicies{s};
 				while (true)
@@ -100,6 +69,11 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 					if (indicies.fail()) break;
 					indexList.push_back(tempTileIndex);
 				}
+				for (auto &i : indexList)
+				{
+					improvementList[i].first = tempName;
+				}
+
 				// Construct Player and push him into vector.
 				BoardIterator tempIt { game->board->begin(true) };
 				for (int i = 0; i < tempPosition; ++i) ++tempIt;
@@ -122,7 +96,12 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 				{
 					indicies >> tempTileIndex;
 					if (indicies.fail()) break;
-					improvementList.push_back(tempTileIndex);
+					auto tileCountFinder = improvementList.find(tempTileIndex);
+					if (tileCountFinder == improvementList.end())
+					{
+						improvementList[tempTileIndex].second = 1;
+					}
+					else improvementList[tempTileIndex].second += 1;
 				}
 			}
 
@@ -143,8 +122,30 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 		}
 	}
 	catch (ios::failure &) {}
-	// TODO: CONSTRUCT THE GAME USING THE PERMENANT FIELDS HERE
 	game->players = IOplayers;
+	for (auto &i : improvementList)
+	{
+		tempTileIndex = i.first;
+		tempName = i.second.first;
+		tempTileImprovements = i.second.second;
+		for (auto tempBoardIt = game->board->begin(); tempBoardIt != game->board->end(); ++tempBoardIt)
+		{
+			if (tempTileIndex == tempBoardIt->getIndex())
+			{
+				if (tempBoardIt->isAcademicBuilding())
+				{
+					auto tempAcademic = dynamic_cast<AcademicBuilding *>(&(*tempBoardIt));
+					tempAcademic->owner = IOplayers.find(tempName)->second.get();
+					tempAcademic->improvementLevel = tempTileImprovements;
+				}
+				else if (tempBoardIt->isProperty())
+				{
+					auto tempProperty = dynamic_cast<AcademicBuilding *>(&(*tempBoardIt));
+					tempProperty->owner = IOplayers.find(tempName)->second.get();
+				}
+			}
+		}
+	}
 	for (auto i = IOplayers.begin(); i != IOplayers.end(); ++i)
 	{
 		if (i->first.compare(currPlayerName) == 0)
