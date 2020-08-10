@@ -1,3 +1,7 @@
 #include "util.h"
 
-int rollDie() { return rand() % 6 + 1; }
+int rollDie()
+{
+	std::random_device randonum{};
+	return (randonum() % 6) + 1;
+}

@@ -1,7 +1,7 @@
 #ifndef __UTIL_H__
 #define __UTIL_H__
 #include <string>
-#include <cstdlib>
+#include <random>
 
 const int MAX_TILES {40};
 

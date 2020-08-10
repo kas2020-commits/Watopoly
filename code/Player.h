@@ -1,5 +1,5 @@
-#ifndef __PLAYER_H_
-#define __PLAYER_H_
+#ifndef __PLAYER_H__
+#define __PLAYER_H__
 #include <string>
 #include <map>
 #include <stdexcept>
@@ -10,26 +10,28 @@
 
 class PlayerException {};
 
-/* struct PlayerImpl; */
-
 class Player : public Subject {
 	// static fields
 	static int totalTimsCups;
 	static std::map<const char, bool> symbolChart;
 
-	/* std::unique_ptr<PlayerImpl> data; */
+	// data structure used for player. Mainly just for organization purposes.
+	struct Data {
+			const std::string name;
+			const char symbol;
+			BoardIterator position;
+			int cash;
+			int timsCups;
+			int gymCount;
+			int resCount;
+			bool bankrupt;
+			bool trapped;
+			int turnsTrapped;
+			Data(const std::string name, const char symbol, BoardIterator it);
+	};
 
 	// fields
-	const std::string name;
-	const char symbol;
-	int cash;
-	BoardIterator position;
-	int timsCups;
-	int gymCount;
-	int resCount;
-	bool bankrupt;
-	bool trapped;
-	int turnsTrapped;
+	Data data;
 	std::map<std::string, int> blockCount;
 
 	public:
