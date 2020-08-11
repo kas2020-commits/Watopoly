@@ -12,7 +12,7 @@
 class GameException {
   private:
     std::string message;
-  public: 
+  public:
     GameException(std::string message) : message{message} {}
     std::string getMessage() { return message; }
 };
@@ -22,8 +22,8 @@ class Game : public Subject {
   friend class IO;
   private:
     std::unique_ptr<Board> board;
-    std::map<std::string, std::unique_ptr<Player>> players;
-    std::map<std::string, std::unique_ptr<Player>>::iterator curPlayer;
+    std::map<std::string, std::shared_ptr<Player>> players;
+    std::map<std::string, std::shared_ptr<Player>>::iterator curPlayer;
     bool started;
     bool rolled;
     void assets(std::string name);
