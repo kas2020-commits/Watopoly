@@ -3,11 +3,11 @@
 #include <string>
 
 //
-Residence::Residence(std::string name, int purchaseCost):
+Residence::Residence(std::string name, int purchaseCost): 
   Property(name, purchaseCost){}
 
 //
-void Residence::land(Player*  p){
+void Residence::landEffect(Player*  p){
     /*if (owner != nullptr){
         if(p->getResCount() == 4){
             p->withdraw(200);
@@ -60,5 +60,3 @@ void Residence::unmortgage(Player* p){
         throw PropertyException{};
     }*/
 }
-
-bool Residence::isRes() { return true; }

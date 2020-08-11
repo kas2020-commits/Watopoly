@@ -1,13 +1,13 @@
 #ifndef __NEEDLESHALL_H__
 #define __NEEDLESHALL_H__
 #include <cstdlib>
-#include "NonProperty.h"
+#include "Tile.h"
 #include "util.h"
 
-class NeedlesHall:public NonProperty{
+class NeedlesHall:public Tile{
     public:
     NeedlesHall();
-    void land(Player* p) override;
+    void landEffect(Player* p) override;
 
 };
 

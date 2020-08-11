@@ -6,12 +6,12 @@
 Gym::Gym(std::string name, int purchaseCost): Property{name, purchaseCost} {}
 
 //
-void Gym::land(Player* p){
+void Gym::landEffect(Player* p){
     if (owner != nullptr){
         int firstdie = rollDie();
         int seconddie = rollDie();
         int total = firstdie + seconddie;
-
+    
         if(p->getGymCount() == 2){
             total = total * 10;
             std::string rollfirst = std::to_string(firstdie);
@@ -72,7 +72,5 @@ void Gym::unmortgage(Player* p){
         std::cout << "Not Morgaged!";
         throw PropertyException{};
     }
-
+    
 }
-
-bool Gym::isGym() { return true; }

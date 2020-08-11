@@ -1,11 +1,11 @@
 #ifndef __OSAP_H__
 #define __OSAP_H__
-#include "NonProperty.h"
+#include "Tile.h"
 
-class CollectOSAP: public NonProperty{
+class CollectOSAP: public Tile{
   public:
     CollectOSAP();
-    virtual void land(Player* p) override;
+    virtual void landEffect(Player* p) override;
     virtual void pass(Player* p) override;
 };
 
