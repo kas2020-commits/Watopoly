@@ -3,6 +3,9 @@
 #include <string>
 
 //
+TuitionPayment::TuitionPayment() : player{nullptr} {}
+
+//
 TuitionPayment::TuitionPayment(Player* p) : player{p} {}
 
 //

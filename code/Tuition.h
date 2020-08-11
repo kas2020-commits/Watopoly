@@ -8,6 +8,7 @@ class TuitionPayment {
   private:
     Player* player;
   public:
+    TuitionPayment();
     TuitionPayment(Player* p);
     void payCash();
     void payPercent();

@@ -97,8 +97,6 @@ void Controller::run() {
 	// main game loop for game logic
 	view->display();
     game->start();
-    std::stringstream command;
-    std::string action;
     int state = 0;
     /* state 0: regular turn, player has access to all basic commands
      * state 1: student must pay tuition, has access to trade and bankrupt
@@ -106,6 +104,9 @@ void Controller::run() {
      * 
      * 
      */
+    std::stringstream command;
+    std::string action;
+    TuitionPayment tuition;
 	while (true) {
 		//
 		command = std::stringstream{view->getCommand()};
@@ -163,7 +164,17 @@ void Controller::run() {
             }
             else if (action == "pay") {
                 if (state != 1) view->update("Nothing to pay.\n");
-                std:: amount;
+                std::string method;
+                command >> method;
+                if (method == "$300") {
+                    tuition.payCash();
+                    state = 0;
+                }
+                else if (method == "10%") {
+                    tuition.payPercent();
+                    state = 0;
+                }
+                else view->update("Not a valid tuition payment method.\n");
             }
 			else {
 				view->update("Invalid command.\n");
@@ -173,7 +184,8 @@ void Controller::run() {
 			view->update(e.getMessage());
 		}
 		catch (TuitionPayment& tp) {
-            
+            tuition = tp;
+            state = 1;
 		}
 	}
 }
