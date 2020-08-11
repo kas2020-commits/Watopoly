@@ -122,7 +122,8 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 		}
 	}
 	catch (ios::failure &) {}
-	game->players = IOplayers;
+
+	// Makes tiles actually know who their owner is. Also loads the improvements
 	for (auto &i : improvementList)
 	{
 		tempTileIndex = i.first;
@@ -146,6 +147,8 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 			}
 		}
 	}
+
+	// finds an itterator to the current player, then gives that to game.
 	for (auto i = IOplayers.begin(); i != IOplayers.end(); ++i)
 	{
 		if (i->first.compare(currPlayerName) == 0)
@@ -154,8 +157,12 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 			break;
 		}
 	}
+
+	// update game fields
 	game->started = permStarted;
 	game->rolled = permRolled;
+	game->players = IOplayers;
+
 	file.close();
 	return game;
 }
