@@ -18,7 +18,7 @@ class DCTimsLineTrapped : public Trapped, public Subject {
 class DCTimsLine : public Tile {
  public:
     DCTimsLine();
-    virtual void throwTrapped() override;
-}; 
+    virtual void throwTrapped(Player* p) override;
+};
 
 #endif

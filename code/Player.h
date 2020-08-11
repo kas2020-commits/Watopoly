@@ -57,8 +57,10 @@ class Player : public Subject {
 	void setTurnsTrapped(int);
 	void changeNetWorth(int);
 
+    //
 	void addTimsCup();
-	void removeTimsCup();
+    void removeTimsCup();
+    void decrementTurnsTrapped();
 };
 
 #endif

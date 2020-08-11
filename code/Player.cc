@@ -135,3 +135,5 @@ void Player::removeTimsCup()
 	--data->timsCups;
 	++totalTimsCups;
 }
+
+void Player::decrementTurnsTrapped() { data->turnsTrapped -= 1; }
