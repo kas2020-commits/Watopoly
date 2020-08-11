@@ -96,19 +96,29 @@ void Controller::run() {
 
 	// main game loop for game logic
 	view->display();
-	game->start();
-	std::string action;
+    game->start();
+    std::stringstream command;
+    std::string action;
+    int state = 0;
+    /* state 0: regular turn, player has access to all basic commands
+     * state 1: student must pay tuition, has access to trade and bankrupt
+     * 
+     * 
+     * 
+     */
 	while (true) {
 		//
-		std::stringstream command{view->getCommand()};
+		command = std::stringstream{view->getCommand()};
 		command >> action;
 
 		// game logic
 		try {
 			if (action == "roll") {
+                if (state != 0) view->update("Cannot roll right now.\n");
 				game->roll();
 			}
 			else if (action == "next") {
+                if (state != 0) view->update("Cannot end turn right now.\n");
 				view->display();
 				game->next();
 			}
@@ -118,6 +128,7 @@ void Controller::run() {
 				handleTrade(name, give, receive);
 			}
 			else if (action == "improve") {
+                if (state != 0) view->update("Cannot improve right now.\n");
 				std::string ab, action;
 				command >> ab >> action;
 				if (action == "buy") game->buyImprovement(ab);
@@ -125,11 +136,13 @@ void Controller::run() {
 				else view->update("Invalid command.\n");
 			}
 			else if (action == "mortgage") {
+                if (state != 0) view->update("Cannot mortgage right now.\n");
 				std::string prop;
 				command >> prop;
 				game->mortgage(prop);
 			}
 			else if (action == "unmortgage") {
+                if (state != 0) view->update("Cannot unmortgage right now.\n");
 				std::string prop;
 				command >> prop;
 				game->unmortgage(prop);
@@ -138,14 +151,19 @@ void Controller::run() {
 				game->bankrupt();
 			}
 			else if (action == "assets") {
+                if (state != 0) view->update("Cannot display assets right now.\n");
 				game->assets();
 			}
 			else if (action == "all") {
+                if (state != 0) view->update("Cannot display all assets right now.\n");
 				game->all();
 			}
 			else if (action == "save") {
 				// implement
-			}
+            }
+            else if (action == "pay") {
+                if (state != 1) view->update("Nothing to pay.\n");
+            }
 			else {
 				view->update("Invalid command.\n");
 			}
@@ -153,8 +171,8 @@ void Controller::run() {
 		catch (GameException& e) {
 			view->update(e.getMessage());
 		}
-		catch (...) {
-
+		catch (TuitionPayment& tp) {
+            
 		}
 	}
 }

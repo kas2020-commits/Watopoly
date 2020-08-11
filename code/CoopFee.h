@@ -1,12 +1,12 @@
 #ifndef __COOP_FEE_H__
 #define __COOP_FEE_H__
-#include "NonProperty.h"
+#include "Tile.h"
 
 //
-class CoopFee: public NonProperty{
+class CoopFee: public Tile {
   public:
     CoopFee();
-    void land(Player* p) override;
+    void landEffect(Player* p) override;
 };
 
 #endif

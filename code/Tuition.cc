@@ -2,21 +2,24 @@
 #include <iostream>
 #include <string>
 
-Tuition::Tuition(): NonProperty{TUITION} {}
+//
+TuitionPayment::TuitionPayment(Player* p) : player{p} {}
 
-void Tuition::land(Player* p){
-    /* updateObservers("You need to pay Tuition, A for pay $300, B for 10% of you worth!");
-    char temp; 
-    while (true){
-        std::cin >> temp;
-        if(temp == 'A'){
-            p->withdraw(300);
-            break;
-        } else if (temp == 'B'){
-            p->withdraw(0.1 * p->displayTotalWorth()); // need to be updated 
-            break;
-        } else {
-            updateObservers("Invalid input, try again!");
-        }     
-    }*/
+//
+void TuitionPayment::payCash() {
+    player->withdraw(300);
+}
+
+//
+void TuitionPayment::payPercent() {
+    int netWorth = player->getNetWorth();
+    player->withdraw(netWorth / 10);
+}
+
+//
+Tuition::Tuition() : Tile{TUITION} {}
+
+//
+void Tuition::landEffect(Player* p){
+    throw TuitionPayment(p);
 }

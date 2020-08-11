@@ -1,20 +1,24 @@
 #ifndef __TILE_H__
 #define __TILE_H__
-#include "Subject.h"
+
 #include <memory>
 #include <string>
+#include "Player.h"
+#include "Subject.h"
+#include "util.h"
 
 class Player; // forward declaration
 
 //
-class Tile: public Subject{
+class Tile: public Subject {
   protected:
     std::string name;
     int index;
     static int tileCount;
+    virtual void landEffect(Player*);
   public:
     Tile(std::string name);
-    virtual void land(Player*);
+    void land(Player*);
     virtual void pass(Player*);
     virtual void leave(Player*);
     std::string getName();
@@ -22,6 +26,8 @@ class Tile: public Subject{
     bool operator==(Tile &);
     virtual bool isProperty();
     virtual bool isAcademicBuilding();
+    virtual bool isGym();
+    virtual bool isRes();
 };
 
 #endif

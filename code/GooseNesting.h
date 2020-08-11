@@ -1,12 +1,13 @@
 #ifndef __GOOSE_NESTING_H__
 #define __GOOSE_NESTING_H__
-#include "NonProperty.h"
+
+#include "Tile.h"
 
 //
-class GooseNesting : public NonProperty{
+class GooseNesting : public Tile {
   public:
     GooseNesting();
-    void land(Player* p) override;
+    void landEffect(Player* p) override;
 };
 
 #endif

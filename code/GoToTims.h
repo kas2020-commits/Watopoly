@@ -1,12 +1,12 @@
 #ifndef __GO_TO_TIMS_H__
 #define __GO_TO_TIMS_H__
-#include "NonProperty.h"
+#include "Tile.h"
 
 //
-class GoToTims : public NonProperty {
+class GoToTims : public Tile {
   public:
     GoToTims();
-    void land(Player* p) override;
+    void landEffect(Player* p) override;
 };
 
 #endif

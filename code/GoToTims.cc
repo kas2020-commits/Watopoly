@@ -1,11 +1,11 @@
 #include "GoToTims.h"
 
 //
-GoToTims::GoToTims(): NonProperty{GO_TO_TIMS} {}
+GoToTims::GoToTims(): Tile{GO_TO_TIMS} {}
 
 //
-void GoToTims::land(Player* p) {
-    p->move("DC Tims Line");
+void GoToTims::landEffect(Player* p) {
+    p->move(DC_TIMS_LINE);
     updateObservers("You Go To Tims Line!");
 }
 

@@ -1,24 +1,23 @@
 #ifndef __TUITION_H__
 #define __TUITION_H__
-#include "NonProperty.h"
+#include "Tile.h"
 #include "util.h"
 
-/*
-class PayTuition {
+//
+class TuitionPayment {
   private:
     Player* player;
-    Tuition* tuition;
   public:
+    TuitionPayment(Player* p);
     void payCash();
     void payPercent();
 };
-*/
 
 //
-class Tuition: public NonProperty{
+class Tuition: public Tile {
   public:
     Tuition();
-    void land(Player* p) override;
+    void landEffect(Player* p) override;
 };
 
 #endif

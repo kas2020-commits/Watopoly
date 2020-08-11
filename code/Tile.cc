@@ -7,7 +7,13 @@ int Tile::tileCount = 0;
 Tile::Tile(std::string name) : name{name}, index{tileCount} { ++tileCount; }
 
 //
-void Tile::land(Player* p) {}
+void Tile::landEffect(Player* p) {}
+
+// template function
+void Tile::land(Player* p) {
+    updateObservers("Landed on tile: " + name + "\n");
+    landEffect(p);
+}
 
 //
 void Tile::pass(Player* p) {}
@@ -29,3 +35,7 @@ bool Tile::isProperty() { return false; }
 
 //
 bool Tile::isAcademicBuilding() { return false; }
+
+bool Tile::isGym() { return false; }
+
+bool Tile::isRes() { return false; }

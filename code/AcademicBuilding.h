@@ -16,7 +16,7 @@ class AcademicBuilding : public Property{
 		AcademicBuilding(std::string name, std::string blockName,
 				int purchaseCost, int improvementCost,  int tuit0,
 				int tuit1, int tuit2, int tuit3, int tuit4, int tuit5);
-		virtual void land(Player* p) override;
+		virtual void landEffect(Player* p) override;
 		virtual void buy(Player* p) override;
 		virtual void mortgage(Player* p) override;
 		virtual void unmortgage(Player* p) override;

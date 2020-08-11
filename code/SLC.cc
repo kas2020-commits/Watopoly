@@ -3,10 +3,10 @@
 #include "util.h"
 
 //
-SLC::SLC(): NonProperty{SLC_S} {}
+SLC::SLC(): Tile{SLC_S} {}
 
 //
-void SLC::land(Player* p){
+void SLC::landEffect(Player* p){
 	int rutr = rand() % 100 + 1;
 	if (rutr == 1 && p->getTotalTimsCups() < 4) {
 		p->setTimsCups(p->getTimsCups() + 1);

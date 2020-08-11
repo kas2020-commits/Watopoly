@@ -41,8 +41,13 @@ void Game::start() {
 //
 void Game::roll() {
     if (rolled) throw GameException{"Already rolled.\n"};
-    int distance = rollDie() + rollDie();
-    curPlayer->second->move(distance);
+    int die1 = rollDie();
+    int die2 = rollDie();
+    int total = die1 + die2;
+    std::stringstream ss{"You rolled: "};
+    ss << die1 << "+" << die2 << "=" << total << "\n";
+    updateObservers(ss.str());
+    curPlayer->second->move(die1 + die2);
     rolled = true;
 }
 
@@ -55,6 +60,7 @@ void Game::next() {
     }
     rolled = false;
     updateObservers("Current turn: " + curPlayer->first + "\n");
+    // if (curPlayer->second->isTrapped()) do something
 }
 
 //

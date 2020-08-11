@@ -31,6 +31,7 @@ View::View(Game* game) : view{""} {
 
 // updates a given player's location on the view
 void View::updatePlayer(Player* p) {
+    // check bankruptcy !!!!!
     std::string name = p->getName();
     int tileIdx = p->getPosition().getIndex();
     if (playerLoc.count(name)) view[playerLoc[name]] = ' ';
