@@ -18,6 +18,7 @@ struct Player::PlayerImpl {
 	bool bankrupt;
 	bool trapped;
 	int turnsTrapped;
+	int netWorth;
 	PlayerImpl(const std::string name, const char symbol, BoardIterator it);
 	~PlayerImpl();
 };
@@ -26,7 +27,8 @@ Player::PlayerImpl::~PlayerImpl() {}
 
 Player::PlayerImpl::PlayerImpl(const std::string name, const char symbol, BoardIterator it)
 	: name{name}, symbol{symbol}, position{it}, cash{1500},
-	timsCups{0}, gymCount{0}, resCount{0}, bankrupt{false}, trapped{false}, turnsTrapped{0}
+	timsCups{0}, gymCount{0}, resCount{0}, bankrupt{false}, trapped{false}, turnsTrapped{0},
+	netWorth{1500}
 {}
 
 // constructor
@@ -83,13 +85,33 @@ std::string Player::getName() { return data->name; }
 Tile & Player::getPosition() { return *data->position; }
 
 // setters:
-void Player::setTimsCups(int amount) { data->timsCups = amount; }
+void Player::setTimsCups(int amount)
+{
+	totalTimsCups -= data->timsCups;
+	data->timsCups = amount;
+	totalTimsCups += data->timsCups;
+}
 void Player::setGymCount(int amount) { data->gymCount = amount; }
 void Player::setResCount(int amount) { data->resCount = amount; }
 void Player::setTurnsTrapped(int amount) { data->turnsTrapped = amount; }
 
-void Player::deposit(const int amount) { data->cash += amount; }
-void Player::withdraw(const int amount) { data->cash -= amount; }
+void Player::deposit(const int amount)
+{
+	data->cash += amount;
+	data->netWorth += amount;
+}
+
+void Player::withdraw(const int amount)
+{
+	data->cash -= amount;
+	data->netWorth -= amount;
+}
+
+void Player::changeNetWorth(int amount)
+{
+	data->netWorth += amount;
+}
+
 void Player::setBankrupt() { data->bankrupt = true; }
 void Player::untrap() { data->trapped = false; }
 void Player::trap() { data->trapped = true; }
