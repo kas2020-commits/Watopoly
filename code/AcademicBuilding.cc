@@ -16,7 +16,7 @@ AcademicBuilding::AcademicBuilding(std::string name, std::string blockName,
 {}
 
 //
-void AcademicBuilding::land(Player* p){
+void AcademicBuilding::landEffect(Player* p){
 	/*
 	   p->withdraw(tuitionAtLevels.at(improvementLevel));
 	   owner->deposit(tuitionAtLevels.at(improvementLevel));

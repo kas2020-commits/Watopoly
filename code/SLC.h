@@ -1,11 +1,11 @@
 #ifndef __SLC_H__
 #define __SLC_H__
-#include "NonProperty.h"
+#include "Tile.h"
 
-class SLC : public NonProperty {
+class SLC : public Tile {
   public:
     SLC();
-    void land(Player* p) override;
+    void landEffect(Player* p) override;
 };
 
 #endif

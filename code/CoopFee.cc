@@ -1,11 +1,10 @@
 #include "CoopFee.h"
 
 //
-CoopFee::CoopFee() : NonProperty{COOP_FEE} {}
+CoopFee::CoopFee() : Tile{COOP_FEE} {}
 
 //
-void CoopFee::land(Player* p) {
+void CoopFee::landEffect(Player* p) {
     p->withdraw(150);
     updateObservers("You Paid $150 for coop!");
 }
-

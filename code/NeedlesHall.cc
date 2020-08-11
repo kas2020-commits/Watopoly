@@ -1,11 +1,11 @@
 #include "NeedlesHall.h"
 
-NeedlesHall::NeedlesHall(): NonProperty{NEEDLES_HALL}{}
+NeedlesHall::NeedlesHall(): Tile{NEEDLES_HALL}{}
 
-void NeedlesHall::land(Player* p){
+void NeedlesHall::landEffect(Player* p){
     int rutr = rand() % 100 + 1;
     if (rutr == 1){
-        if(p->getTotalTimsCups() < 4){
+        if(p->getTimsCups() < 4){
 			p->setTimsCups(p->getTimsCups() + 1);
             updateObservers("You move forward two tiles");
         }

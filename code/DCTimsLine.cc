@@ -3,13 +3,10 @@
 #include <iostream>
 
 //
-DCTimsLine::DCTimsLine(): NonProperty{DC_TIMS_LINE} {}
+DCTimsLine::DCTimsLine(): Tile{DC_TIMS_LINE} {}
 
 //
-void DCTimsLine::land(Player* p) {}
-
-//
-void DCTimsLine::applyEffect(Player* p) {
+void DCTimsLine::landEffect(Player* p) {
     /*
     int die1, die2, counter;
     char temp;
