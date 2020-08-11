@@ -116,11 +116,11 @@ void Controller::run() {
 		try {
 			if (action == "roll") {
                 if (state != 0) view->update("Cannot roll right now.\n");
-				game->roll();
+                game->roll();
 			}
 			else if (action == "next") {
-                if (state != 0) view->update("Cannot end turn right now.\n");
-				view->display();
+            if (state != 0) view->update("Cannot end turn right now.\n");
+                view->display();
 				game->next();
 			}
 			else if (action == "trade") {
@@ -130,7 +130,7 @@ void Controller::run() {
 			}
 			else if (action == "improve") {
                 if (state != 0) view->update("Cannot improve right now.\n");
-				std::string ab, action;
+                std::string ab, action;
 				command >> ab >> action;
 				if (action == "buy") game->buyImprovement(ab);
 				else if (action == "sell") game->sellImprovement(ab);
@@ -138,13 +138,13 @@ void Controller::run() {
 			}
 			else if (action == "mortgage") {
                 if (state != 0) view->update("Cannot mortgage right now.\n");
-				std::string prop;
+                std::string prop;
 				command >> prop;
 				game->mortgage(prop);
 			}
 			else if (action == "unmortgage") {
                 if (state != 0) view->update("Cannot unmortgage right now.\n");
-				std::string prop;
+                std::string prop;
 				command >> prop;
 				game->unmortgage(prop);
 			}
@@ -153,11 +153,11 @@ void Controller::run() {
 			}
 			else if (action == "assets") {
                 if (state != 0) view->update("Cannot display assets right now.\n");
-				game->assets();
+                game->assets();
 			}
 			else if (action == "all") {
                 if (state != 0) view->update("Cannot display all assets right now.\n");
-				game->all();
+                game->all();
 			}
 			else if (action == "save") {
 				// implement
