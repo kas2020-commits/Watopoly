@@ -163,6 +163,7 @@ void Controller::run() {
             }
             else if (action == "pay") {
                 if (state != 1) view->update("Nothing to pay.\n");
+                std:: amount;
             }
 			else {
 				view->update("Invalid command.\n");

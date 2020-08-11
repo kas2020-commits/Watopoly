@@ -36,6 +36,8 @@ bool Tile::isProperty() { return false; }
 //
 bool Tile::isAcademicBuilding() { return false; }
 
+//
 bool Tile::isGym() { return false; }
 
+//
 bool Tile::isRes() { return false; }
