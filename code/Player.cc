@@ -76,6 +76,7 @@ void Player::move(const std::string name, bool trap)
 
 // getters:
 int Player::getResCount() { return data->resCount; }
+int Player::getCash() { return data->cash; }
 int Player::getGymCount() { return data->gymCount; }
 int Player::getTimsCups() { return data->timsCups; }
 int Player::getBlockCount(const std::string block) { return blockCount.find(block)->second; }
@@ -83,6 +84,7 @@ bool Player::isBankrupt() { return data->bankrupt; }
 char Player::getSymbol() { return data->symbol; }
 std::string Player::getName() { return data->name; }
 Tile & Player::getPosition() { return *data->position; }
+int Player::getTurnsTrapped() { return data->turnsTrapped; }
 
 // setters:
 void Player::setTimsCups(int amount)

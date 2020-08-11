@@ -45,7 +45,7 @@ class IO {
 	struct IOImpl;
 	std::unique_ptr<IOImpl> list;
 	public:
-	void save(const std::string, std::unique_ptr<Game>);
+	void save(const std::string, Game *);
 	std::unique_ptr<Game> load(const std::string);
 };
 

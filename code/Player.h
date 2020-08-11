@@ -39,6 +39,8 @@ class Player : public Subject {
 	Tile & getPosition();
 	bool isTrapped();
 	int getNetWorth();
+	int getCash();
+	int getTurnsTrapped();
 
 	// setters:
 	// deposit and withdraw automatically change the player's net worth, so do

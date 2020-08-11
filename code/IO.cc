@@ -2,10 +2,12 @@
 
 struct IO::IOImpl {
 	typedef const std::string head;
-	head PLAYER { "PLAYER INFORMATION STARTS HERE" };
-	head IMPROVEMENTS { "TILE IMPROVEMENT INFORMATION STARTS HERE" };
-	head CURRENTPLAYER { "CURRENT PLAYER IS SAVED HERE" };
-	head GAMEBOOLS { "GAME BOOLS ARE SAVED HERE" };
+	head PLAYER { "PLAYER INFORMATION STARTS" };
+	head IMPROVEMENTS { "TILE IMPROVEMENT INFORMATION" };
+	head CURRENTPLAYER { "CURRENT PLAYER" };
+	head GAMEBOOLS { "GAME BOOLS ARE" };
+	head ACADEEMIC { "ACADEEMIC BUILDING"};
+	head PROPERTY { "GENERIC PROPERTY" };
 };
 
 std::unique_ptr<Game> IO::load(const std::string filename)
@@ -119,6 +121,7 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 				bools >> permStarted >> permRolled;
 			}
 
+			else break;
 		}
 	}
 	catch (ios::failure &) {}
@@ -167,9 +170,53 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 	return game;
 }
 
-void IO::save(const std::string filename, std::unique_ptr<Game> game)
+void IO::save(const std::string filename, Game * game)
 {
-	std::ofstream file {filename};
-	// TODO: Create the template code for saving a game.
+	using namespace std;
+	ofstream file {filename};
+
+	// save the player's data fields in the order agreed on in the spec
+	for (auto it = game->players.begin(); it != game->players.end(); ++it)
+	{
+		file << list->PLAYER << endl;
+		file << it->first << endl;
+		file << it->second->getSymbol() << " "
+			<< it->second->getPosition().getIndex() << " "
+			<< it->second->getCash() << " "
+			<< it->second->getTimsCups() << " "
+			<< it->second->getResCount() << " "
+			<< it->second->getResCount() << " "
+			<< it->second->getTurnsTrapped() << " "
+			;
+	}
+
+	// go through all tiles in the board. If it is a property, list improvement
+	// level as well as name;
+	for (auto it = game->board->begin(); it != game->board->end(); ++it)
+	{
+		if (it->isAcademicBuilding())
+		{
+			auto tempAcademic = dynamic_cast<AcademicBuilding *>(&(*it));
+			int tempTileIndex = tempAcademic->getIndex();
+			file << list->ACADEEMIC << endl;
+			if (tempAcademic->getOwner() != nullptr)
+			{
+				file << tempAcademic->getIndex() << " " << tempAcademic->getOwner()->getName();
+			}
+			file << endl;
+		}
+		else if (it->isProperty())
+		{
+			auto tempProperty = dynamic_cast<Property *>(&(*it));
+			int tempTileIndex = tempProperty->getIndex();
+			file << list->PROPERTY << endl;
+			if (tempProperty->getOwner() != nullptr)
+			{
+				file << tempProperty->getOwner()->getName();
+			}
+		}
+
+	}
+
 	file.close();
 }

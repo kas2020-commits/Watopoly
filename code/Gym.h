@@ -10,6 +10,7 @@ class Gym: public Property{
     void buy(Player* p) override;
     void mortgage(Player* p) override;
     void unmortgage(Player* p) override;
+	bool isGym() override;
 
 };
 
