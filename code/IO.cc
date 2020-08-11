@@ -88,6 +88,13 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 				IOplayers[tempName] = tempPlayer;
 			}
 
+			/* else if (s.compare(list->ACADEEMIC) == 0) */
+			/* { */
+			/* 	// grab list of indicies to tiles owned by player */
+			/* 	getline(file, s); */
+			/* 	istringstream iss{s}; */
+			/* } */
+
 			// Improvements are saved in the improvementList variable
 			else if (s.compare(list->IMPROVEMENTS) == 0)
 			{

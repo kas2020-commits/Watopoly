@@ -44,8 +44,8 @@ void Game::roll() {
     int die1 = rollDie();
     int die2 = rollDie();
     int total = die1 + die2;
-    std::stringstream ss{""};
-    ss << "You" << " " << "rolled: " << die1 << "+" << die2 << "=" << total << "\n";
+    std::ostringstream ss{""};
+    ss << "You rolled: " << die1 << "+" << die2 << "=" << total << "\n";
     updateObservers(ss.str());
     curPlayer->second->move(die1 + die2);
     rolled = true;
@@ -135,28 +135,28 @@ void Game::assets(std::string name) {
     }
 
     //
-    std::stringstream ss{""};
+    std::ostringstream ss{""};
     ss << "Player: " << name << "\n";
     ss << "\tTotal Tims Cups: " << players[name]->getTimsCups() << "\n";
     ss << "\tOwned Academic Buildings:\n";
     if (ownedABs.size() <= 0) ss << "\t\tNone\n";
     else {
-        for (unsigned int i = 0; i < ownedABs.size(); i++) {
-            ss << "\t\t" << i + ". " << ownedABs[i]->getName() << "\n";
+        for (size_t i = 0; i < ownedABs.size(); i++) {
+            ss << "\t\t" << i <<  ". " << ownedABs[i]->getName() << "\n";
             ss << "\t\t\tImprovements: " << ownedABs[i]->getImprovementLevel() << "\n";
         }
     }
     ss << "\tOwned Residences:\n";
     if (ownedResidences.size() <= 0) ss << "\t\tNone\n";
     else {
-        for (unsigned int i = 0; i < ownedResidences.size(); i++) {
+        for (size_t i = 0; i < ownedResidences.size(); i++) {
             ss << "\t\t" << i << ". " << ownedResidences[i]->getName() << "\n";
         }
     }
     ss << "\tOwned Gyms:\n";
     if (ownedGyms.size() <= 0) ss << "\t\tNone\n";
     else {
-        for (unsigned int i = 0; i < ownedGyms.size(); i++) {
+        for (size_t i = 0; i < ownedGyms.size(); i++) {
             ss << "\t\t" << i << ". " << ownedGyms[i]->getName() << "\n";
         }
     }
