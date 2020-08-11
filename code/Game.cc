@@ -45,7 +45,7 @@ void Game::roll() {
     int die2 = rollDie();
     int total = die1 + die2;
     std::ostringstream ss{""};
-    ss << "You rolled: " << die1 << "+" << die2 << "=" << total << "\n";
+    ss << "You rolled: " << die1 << " + " << die2 << " = " << total << "\n";
     updateObservers(ss.str());
     curPlayer->second->move(die1 + die2);
     rolled = true;

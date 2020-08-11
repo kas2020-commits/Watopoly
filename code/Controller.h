@@ -9,7 +9,8 @@
 class Controller {
   private:
 	Game* game;
-	View* view;
+    View* view;
+    IO io;
 	void addPlayers();
 	void handleTrade(std::string name, std::string give, std::string receive);
   public:

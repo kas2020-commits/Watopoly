@@ -1,11 +1,12 @@
 #include <sstream>
 #include <stdexcept>
 #include "Controller.h"
+#include "IO.h"
 
 #include <iostream> // for debugging
 
 //
-Controller::Controller(Game* game, View* view) : game{game}, view{view} {}
+Controller::Controller(Game* game, View* view) : game{game}, view{view}, io{IO{}} {}
 
 //
 Controller::~Controller() {}
@@ -183,7 +184,10 @@ void Controller::run() {
                 game->all();
 			}
 			else if (action == "save") {
-				// implement
+                std::string fileName;
+                command >> fileName;
+                io.save(fileName, game);
+                view->update("Cannot display all assets right now.\n");
             }
             else if (action == "pay") {
                 if (state != 1) {

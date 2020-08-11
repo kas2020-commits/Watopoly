@@ -20,10 +20,17 @@ void DCTimsLineTrapped::payCash() {
 
 //
 void DCTimsLineTrapped::roll() {
-    int die1 = rollDie();
+    /*int die1 = rollDie();
     int die2 = rollDie();
-    std::ostringstream os{""};
-    if (die1 == die2) player->untrap();
+    std::ostringstream ss{""};
+    ss << "You rolled: " << die1 << " & " << die2 << ".\n";
+    if (die1 == die2) {
+        ss << "You rolled a double (rolled " << die1 << "&" << die2 << ")";
+        player->untrap();
+    }
+    else {
+
+    }*/
 }
 
 //
