@@ -1,7 +1,6 @@
 #include <sstream>
 #include <stdexcept>
 #include "Controller.h"
-#include "IO.h"
 
 #include <iostream> // for debugging
 
@@ -48,7 +47,7 @@ void Controller::addPlayers() {
 
 // handles the different types of trades
 void Controller::handleTrade(std::string name, std::string give, std::string receive) {
-	// 
+	//
 	bool cashForProp{false};
 	bool propForCash{false};
 	bool propForProp{false};
@@ -101,9 +100,9 @@ void Controller::run() {
     int state = 0;
     /* state 0: regular turn, player has access to all basic commands
      * state 1: student must pay tuition, has access to trade and bankrupt
-     * 
-     * 
-     * 
+     *
+     *
+     *
      */
     std::stringstream command;
     std::string action;
@@ -138,7 +137,7 @@ void Controller::run() {
 				handleTrade(name, give, receive);
 			}
 			else if (action == "improve") {
-                if (state != 0) { 
+                if (state != 0) {
                     view->update("Cannot improve right now.\n");
                     continue;
                 }
@@ -187,7 +186,8 @@ void Controller::run() {
                 std::string fileName;
                 command >> fileName;
                 io.save(fileName, game);
-                view->update("Cannot display all assets right now.\n");
+                view->update(std::string {
+						"Game has been saved to file: " + fileName + "\n"});
             }
             else if (action == "pay") {
                 if (state != 1) {
