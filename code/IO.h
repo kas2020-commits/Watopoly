@@ -58,8 +58,9 @@
 
 class IO {
 	struct IOImpl;
-	std::unique_ptr<IOImpl> list;
+	std::shared_ptr<IOImpl> list;
 	public:
+	IO();
 	void save(const std::string, Game *);
 	std::unique_ptr<Game> load(const std::string);
 };

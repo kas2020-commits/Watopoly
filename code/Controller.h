@@ -4,6 +4,7 @@
 #include <string>
 #include "Game.h"
 #include "View.h"
+#include "IO.h"
 
 //
 class Controller {

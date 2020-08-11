@@ -10,6 +10,21 @@ struct IO::IOImpl {
 	head PROPERTY { "GENERIC PROPERTY" };
 };
 
+struct AcademicInfo {
+	std::string name;
+	std::string blockName;
+	int improvementLevel;
+	AcademicInfo(std::string name, std::string blockName, int improvementLevel);
+};
+
+IO::IO()
+	: list{ std::make_shared<IOImpl>() }
+{}
+
+AcademicInfo::AcademicInfo(std::string name, std::string blockName, int improvementLevel)
+	: name{name}, blockName{blockName}, improvementLevel{improvementLevel}
+{}
+
 std::unique_ptr<Game> IO::load(const std::string filename)
 {
 	using namespace std;
@@ -41,15 +56,6 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 	// permenant fields
 	string currPlayerName;
 	map<int, string> propertyList;
-
-	struct AcademicInfo {
-		string name;
-		string blockName;
-		int improvementLevel;
-		AcademicInfo(string name, string blockName, int improvementLevel)
-			: name{name}, blockName{blockName}, improvementLevel{improvementLevel}
-		{}
-	};
 	map<int, AcademicInfo> academicList;
 
 	map<string, shared_ptr<Player>> IOplayers;
@@ -95,7 +101,8 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 				getline(file, s);
 				istringstream soop{s};
 				soop >> tempTileIndex >> tempName >>  tempBlockName >> tempTileImprovements;
-				academicList[tempTileIndex] = AcademicInfo(tempName, tempBlockName, tempTileImprovements);
+				academicList.insert( pair<int, AcademicInfo>(tempTileIndex,
+							AcademicInfo(tempName, tempBlockName, tempTileImprovements)));
 			}
 
 			// handle a property
@@ -205,7 +212,7 @@ void IO::save(const std::string filename, Game * game)
 			<< it->second->getResCount() << " "
 			<< it->second->getResCount() << " "
 			<< it->second->getTurnsTrapped() << " "
-			;
+			<< endl;
 	}
 
 	// go through all tiles in the board. If it is a property, list improvement
@@ -215,7 +222,6 @@ void IO::save(const std::string filename, Game * game)
 		if (it->isAcademicBuilding())
 		{
 			auto tempAcademic = dynamic_cast<AcademicBuilding *>(&(*it));
-			int tempTileIndex = tempAcademic->getIndex();
 			if (tempAcademic->getOwner() != nullptr)
 			{
 				file<< list->ACADEEMIC << endl
@@ -227,7 +233,6 @@ void IO::save(const std::string filename, Game * game)
 		else if (it->isProperty())
 		{
 			auto tempProperty = dynamic_cast<Property *>(&(*it));
-			int tempTileIndex = tempProperty->getIndex();
 			if (tempProperty->getOwner() != nullptr)
 			{
 				file<< list->PROPERTY << endl
@@ -241,7 +246,7 @@ void IO::save(const std::string filename, Game * game)
 	file << list->CURRENTPLAYER << endl << game->curPlayer->second->getName() << endl;
 
 	// save game bools
-	file << list->GAMEBOOLS << endl << game->started << game->rolled << endl;
+	file << list->GAMEBOOLS << endl << game->started << " " << game->rolled << endl;
 
 	// fin
 	file.close();
