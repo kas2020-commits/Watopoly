@@ -3,12 +3,15 @@
 #include <string>
 #include <random>
 
-const int MAX_TILES {40};
+const int MAX_TILES = 40;
 
 // rollDie will roll 1 die only, and return the value. If 2 dice need to be
 // rolled make sure to call this method twice. The range of values is 1 through
 // 6 inclusive.
 extern int rollDie();
+
+// get a random number between min and max
+extern int getRand(int min, int max);
 
 // Accademic buildings
 const std::string AL {"AL"};

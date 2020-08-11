@@ -55,6 +55,9 @@ class Player : public Subject {
 	void setResCount(int);
 	void setTurnsTrapped(int);
 	void changeNetWorth(int);
+
+	void addTimsCup();
+	void removeTimsCup();
 };
 
 #endif

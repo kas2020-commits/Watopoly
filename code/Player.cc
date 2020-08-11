@@ -122,3 +122,16 @@ void Player::trap() { data->trapped = true; }
 // static methods:
 int Player::getTotalTimsCups() { return totalTimsCups; }
 
+void Player::addTimsCup()
+{
+	if (data->timsCups + 1 > 4 || totalTimsCups + 1 > 4) throw PlayerException();
+	++data->timsCups;
+	--totalTimsCups;
+}
+
+void Player::removeTimsCup()
+{
+	if (data->timsCups - 1 < 0 || totalTimsCups - 1 < 0) throw PlayerException();
+	--data->timsCups;
+	++totalTimsCups;
+}
