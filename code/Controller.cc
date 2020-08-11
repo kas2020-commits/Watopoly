@@ -41,7 +41,6 @@ void Controller::addPlayers() {
 			catch (PlayerException &) { // implement invalid player construction exception
 				view->update("Invalid player details.\n");
 			}
-			catch (std::ios::failure &) { return 0; }
 		}
 	}
 }
@@ -81,7 +80,7 @@ void Controller::handleTrade(std::string name, std::string give, std::string rec
 		if (decision == "accept") return;
 		else if (decision == "reject") {
 			if (cashForProp) game->trade(name, receive, giveCash);
-			else if (cashForProp) game->trade(name, receiveCash, give);
+			else if (propForCash) game->trade(name, receiveCash, give);
 			else if (propForProp) game->trade(name, receive, give);
 			return;
 		}
@@ -114,9 +113,9 @@ void Controller::run() {
 				game->next();
 			}
 			else if (action == "trade") {
-				std::string name, giveItem, receiveItem;
-				command >> name >> giveItem >> receiveItem;
-				handleTrade(name, giveItem, receiveItem);
+				std::string name, give, receive;
+				command >> name >> give >> receive;
+				handleTrade(name, give, receive);
 			}
 			else if (action == "improve") {
 				std::string ab, action;
