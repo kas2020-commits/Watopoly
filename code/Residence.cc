@@ -3,7 +3,7 @@
 #include <string>
 
 //
-Residence::Residence(std::string name, int purchaseCost): 
+Residence::Residence(std::string name, int purchaseCost):
   Property(name, purchaseCost){}
 
 //
@@ -60,3 +60,5 @@ void Residence::unmortgage(Player* p){
         throw PropertyException{};
     }*/
 }
+
+bool Residence::isRes() { return true; }

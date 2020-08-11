@@ -45,8 +45,7 @@ void Game::roll() {
     int die2 = rollDie();
     int total = die1 + die2;
     std::stringstream ss{""};
-    ss << "You rolled: " << die1 << "+" << die2 << "=" << total << "\n";
-    std::cout << ss.str();
+    ss << "You" << " " << "rolled: " << die1 << "+" << die2 << "=" << total << "\n";
     updateObservers(ss.str());
     curPlayer->second->move(die1 + die2);
     rolled = true;
@@ -156,12 +155,12 @@ void Game::assets(std::string name) {
     }
     ss << "\tOwned Gyms:\n";
     if (ownedGyms.size() <= 0) ss << "\t\tNone\n";
-    else { 
+    else {
         for (unsigned int i = 0; i < ownedGyms.size(); i++) {
             ss << "\t\t" << i << ". " << ownedGyms[i]->getName() << "\n";
         }
     }
-    
+
     //
     updateObservers(ss.str());
 }

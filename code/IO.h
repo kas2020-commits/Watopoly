@@ -34,7 +34,7 @@
  */
 
 /* Game booleans are stored simply in bit representation, where a 0 is false and
- * a 1 is true.
+ * a 1 is true. Order is started and then rolled.
  *
  * Example:
  * GAMEBOOLS

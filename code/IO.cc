@@ -178,9 +178,9 @@ void IO::save(const std::string filename, Game * game)
 	// save the player's data fields in the order agreed on in the spec
 	for (auto it = game->players.begin(); it != game->players.end(); ++it)
 	{
-		file << list->PLAYER << endl;
-		file << it->first << endl;
-		file << it->second->getSymbol() << " "
+		file << list->PLAYER << endl
+			<< it->second->getName() << endl
+			<< it->second->getSymbol() << " "
 			<< it->second->getPosition().getIndex() << " "
 			<< it->second->getCash() << " "
 			<< it->second->getTimsCups() << " "
@@ -201,9 +201,10 @@ void IO::save(const std::string filename, Game * game)
 			file << list->ACADEEMIC << endl;
 			if (tempAcademic->getOwner() != nullptr)
 			{
-				file << tempAcademic->getIndex() << " " << tempAcademic->getOwner()->getName();
+				file << tempAcademic->getIndex() << " "
+					<< tempAcademic->getOwner()->getName() << " "
+					<< tempAcademic->getImprovementLevel() << endl;
 			}
-			file << endl;
 		}
 		else if (it->isProperty())
 		{
@@ -212,11 +213,18 @@ void IO::save(const std::string filename, Game * game)
 			file << list->PROPERTY << endl;
 			if (tempProperty->getOwner() != nullptr)
 			{
-				file << tempProperty->getOwner()->getName();
+				file << tempProperty->getIndex() << " "
+					<< tempProperty->getOwner()->getName() << endl;
 			}
 		}
-
 	}
+
+	// save current player
+	file << list->CURRENTPLAYER << endl << game->curPlayer->second->getName() << endl;
+
+	// save game bools
+	file << list->GAMEBOOLS << endl << game->started << game->rolled << endl;
 
 	file.close();
 }
+

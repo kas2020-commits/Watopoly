@@ -85,6 +85,7 @@ char Player::getSymbol() { return data->symbol; }
 std::string Player::getName() { return data->name; }
 Tile & Player::getPosition() { return *data->position; }
 int Player::getTurnsTrapped() { return data->turnsTrapped; }
+int Player::getNetWorth() { return data->netWorth; }
 
 // setters:
 void Player::setTimsCups(int amount)
