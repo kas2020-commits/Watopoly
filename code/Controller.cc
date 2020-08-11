@@ -94,7 +94,7 @@ void Controller::run() {
 	view->update("Welcome to watopoly!\n");
 	addPlayers();
 
-	// main game loop for game logic
+	// main game loop setup
 	view->display();
     game->start();
     int state = 0;
@@ -107,6 +107,8 @@ void Controller::run() {
     std::stringstream command;
     std::string action;
     TuitionPayment tuition;
+
+    // main game loop for game logic
 	while (true) {
 		//
 		command = std::stringstream{view->getCommand()};
@@ -115,11 +117,17 @@ void Controller::run() {
 		// game logic
 		try {
 			if (action == "roll") {
-                if (state != 0) view->update("Cannot roll right now.\n");
+                if (state != 0) {
+                    view->update("Cannot roll right now.\n");
+                    continue;
+                }
                 game->roll();
 			}
 			else if (action == "next") {
-            if (state != 0) view->update("Cannot end turn right now.\n");
+                if (state != 0) {
+                    view->update("Cannot end turn right now.\n");
+                    continue;
+                }
                 view->display();
 				game->next();
 			}
@@ -129,7 +137,10 @@ void Controller::run() {
 				handleTrade(name, give, receive);
 			}
 			else if (action == "improve") {
-                if (state != 0) view->update("Cannot improve right now.\n");
+                if (state != 0) { 
+                    view->update("Cannot improve right now.\n");
+                    continue;
+                }
                 std::string ab, action;
 				command >> ab >> action;
 				if (action == "buy") game->buyImprovement(ab);
@@ -137,13 +148,19 @@ void Controller::run() {
 				else view->update("Invalid command.\n");
 			}
 			else if (action == "mortgage") {
-                if (state != 0) view->update("Cannot mortgage right now.\n");
+                if (state != 0) {
+                    view->update("Cannot mortgage right now.\n");
+                    continue;
+                }
                 std::string prop;
 				command >> prop;
 				game->mortgage(prop);
 			}
 			else if (action == "unmortgage") {
-                if (state != 0) view->update("Cannot unmortgage right now.\n");
+                if (state != 0) {
+                    view->update("Cannot unmortgage right now.\n");
+                    continue;
+                }
                 std::string prop;
 				command >> prop;
 				game->unmortgage(prop);
@@ -152,18 +169,27 @@ void Controller::run() {
 				game->bankrupt();
 			}
 			else if (action == "assets") {
-                if (state != 0) view->update("Cannot display assets right now.\n");
+                if (state != 0) {
+                    view->update("Cannot display assets right now.\n");
+                    continue;
+                }
                 game->assets();
 			}
 			else if (action == "all") {
-                if (state != 0) view->update("Cannot display all assets right now.\n");
+                if (state != 0) {
+                    view->update("Cannot display all assets right now.\n");
+                    continue;
+                }
                 game->all();
 			}
 			else if (action == "save") {
 				// implement
             }
             else if (action == "pay") {
-                if (state != 1) view->update("Nothing to pay.\n");
+                if (state != 1) {
+                    view->update("Nothing to pay.\n");
+                    continue;
+                }
                 std::string method;
                 command >> method;
                 if (method == "$300") {

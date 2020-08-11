@@ -28,6 +28,7 @@ class Tile: public Subject {
     virtual bool isAcademicBuilding();
     virtual bool isGym();
     virtual bool isRes();
+    virtual void throwTrapped();
 };
 
 #endif
