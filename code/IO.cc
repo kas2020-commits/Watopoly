@@ -20,6 +20,10 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 
 	unique_ptr<Game> game {};
 
+	// useful constants
+	const auto boardStart = game->board->begin();
+	const auto boardEnd = game->board->end();
+
 	// temp fields
 	string s;
 	string tempName;
@@ -32,11 +36,22 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 	int tempTurnsTrapped;
 	int tempTileIndex;
 	int tempTileImprovements;
-	vector<int> indexList;
+	string tempBlockName;
 
 	// permenant fields
 	string currPlayerName;
-	map<int, pair<string, int>> improvementList;
+	map<int, string> propertyList;
+
+	struct AcademicInfo {
+		string name;
+		string blockName;
+		int improvementLevel;
+		AcademicInfo(string name, string blockName, int improvementLevel)
+			: name{name}, blockName{blockName}, improvementLevel{improvementLevel}
+		{}
+	};
+	map<int, AcademicInfo> academicList;
+
 	map<string, shared_ptr<Player>> IOplayers;
 	bool permStarted;
 	bool permRolled;
@@ -62,20 +77,6 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 				iss >> tempSymbol >> tempPosition >> tempCash >> tempTimsCups >> tempGymCount >>
 					tempResCount >> tempTurnsTrapped;
 
-				// Dealing with tiles
-				getline(file, s);
-				istringstream indicies{s};
-				while (true)
-				{
-					indicies >> tempTileIndex;
-					if (indicies.fail()) break;
-					indexList.push_back(tempTileIndex);
-				}
-				for (auto &i : indexList)
-				{
-					improvementList[i].first = tempName;
-				}
-
 				// Construct Player and push him into vector.
 				BoardIterator tempIt { game->board->begin(true) };
 				for (int i = 0; i < tempPosition; ++i) ++tempIt;
@@ -88,30 +89,22 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 				IOplayers[tempName] = tempPlayer;
 			}
 
-			/* else if (s.compare(list->ACADEEMIC) == 0) */
-			/* { */
-			/* 	// grab list of indicies to tiles owned by player */
-			/* 	getline(file, s); */
-			/* 	istringstream iss{s}; */
-			/* } */
-
-			// Improvements are saved in the improvementList variable
-			else if (s.compare(list->IMPROVEMENTS) == 0)
+			// handle an academic building
+			else if (s.compare(list->ACADEEMIC) == 0)
 			{
-				// grab list of indicies to tiles owned by player
 				getline(file, s);
-				istringstream indicies{s};
-				while (true)
-				{
-					indicies >> tempTileIndex;
-					if (indicies.fail()) break;
-					auto tileCountFinder = improvementList.find(tempTileIndex);
-					if (tileCountFinder == improvementList.end())
-					{
-						improvementList[tempTileIndex].second = 1;
-					}
-					else improvementList[tempTileIndex].second += 1;
-				}
+				istringstream soop{s};
+				soop >> tempTileIndex >> tempName >>  tempBlockName >> tempTileImprovements;
+				academicList[tempTileIndex] = AcademicInfo(tempName, tempBlockName, tempTileImprovements);
+			}
+
+			// handle a property
+			else if (s.compare(list->PROPERTY) == 0)
+			{
+				getline(file, s);
+				istringstream soop{s};
+				soop >> tempTileIndex >> tempName;
+				propertyList[tempTileIndex] = tempName;
 			}
 
 			// grabs the current player's name
@@ -129,36 +122,53 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 			}
 
 			else break;
-		}
-	}
+		} // while
+	} // try
 	catch (ios::failure &) {}
 
-	// Makes tiles actually know who their owner is. Also loads the improvements
-	for (auto &i : improvementList)
+	// fix players' blockCount datafield
+	for (auto &i : IOplayers)
 	{
-		tempTileIndex = i.first;
-		tempName = i.second.first;
-		tempTileImprovements = i.second.second;
-		for (auto tempBoardIt = game->board->begin(); tempBoardIt != game->board->end(); ++tempBoardIt)
+		string tempPlayerName = i.second->getName();
+		for (auto &j : academicList)
 		{
-			if (tempTileIndex == tempBoardIt->getIndex())
+			if (j.second.name == tempPlayerName)
 			{
-				if (tempBoardIt->isAcademicBuilding())
-				{
-					auto tempAcademic = dynamic_cast<AcademicBuilding *>(&(*tempBoardIt));
-					tempAcademic->owner = IOplayers.find(tempName)->second.get();
-					tempAcademic->improvementLevel = tempTileImprovements;
-				}
-				else if (tempBoardIt->isProperty())
-				{
-					auto tempProperty = dynamic_cast<AcademicBuilding *>(&(*tempBoardIt));
-					tempProperty->owner = IOplayers.find(tempName)->second.get();
-				}
+				i.second->blockCount[j.second.blockName] += 1;
 			}
 		}
 	}
 
-	// finds an itterator to the current player, then gives that to game.
+	// fix the academic tiles
+	for (auto &i : academicList)
+	{
+		tempTileIndex = i.first;
+		tempName = i.second.name;
+		tempTileImprovements = i.second.improvementLevel;
+		for (auto tempBoardIt = boardStart; tempBoardIt != boardEnd; ++ tempBoardIt)
+		{
+			if (tempTileIndex == tempBoardIt->getIndex())
+			{
+				auto tempAcademic = dynamic_cast<AcademicBuilding *>(&(*tempBoardIt));
+				tempAcademic->owner = IOplayers.find(tempName)->second.get();
+				tempAcademic->improvementLevel = tempTileImprovements;
+			}
+		}
+	}
+
+	// fix the other property tiles
+	for (auto &i : propertyList)
+	{
+		tempTileIndex = i.first;
+		tempName = i.second;
+		for (auto tempBoardIt = boardStart; tempBoardIt != boardEnd; ++ tempBoardIt)
+		{
+			auto tempProperty = dynamic_cast<AcademicBuilding *>(&(*tempBoardIt));
+			tempProperty->owner = IOplayers.find(tempName)->second.get();
+		}
+	}
+
+	// Update game fields.
 	for (auto i = IOplayers.begin(); i != IOplayers.end(); ++i)
 	{
 		if (i->first.compare(currPlayerName) == 0)
@@ -167,15 +177,16 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 			break;
 		}
 	}
-
-	// update game fields
 	game->started = permStarted;
 	game->rolled = permRolled;
 	game->players = IOplayers;
 
+	// fin
 	file.close();
 	return game;
 }
+
+///////////////////////////////////////////////////////////////////////////////
 
 void IO::save(const std::string filename, Game * game)
 {
@@ -205,10 +216,10 @@ void IO::save(const std::string filename, Game * game)
 		{
 			auto tempAcademic = dynamic_cast<AcademicBuilding *>(&(*it));
 			int tempTileIndex = tempAcademic->getIndex();
-			file << list->ACADEEMIC << endl;
 			if (tempAcademic->getOwner() != nullptr)
 			{
-				file << tempAcademic->getIndex() << " "
+				file<< list->ACADEEMIC << endl
+					<< tempAcademic->getIndex() << " "
 					<< tempAcademic->getOwner()->getName() << " "
 					<< tempAcademic->getImprovementLevel() << endl;
 			}
@@ -217,10 +228,10 @@ void IO::save(const std::string filename, Game * game)
 		{
 			auto tempProperty = dynamic_cast<Property *>(&(*it));
 			int tempTileIndex = tempProperty->getIndex();
-			file << list->PROPERTY << endl;
 			if (tempProperty->getOwner() != nullptr)
 			{
-				file << tempProperty->getIndex() << " "
+				file<< list->PROPERTY << endl
+					<< tempProperty->getIndex() << " "
 					<< tempProperty->getOwner()->getName() << endl;
 			}
 		}
@@ -232,6 +243,7 @@ void IO::save(const std::string filename, Game * game)
 	// save game bools
 	file << list->GAMEBOOLS << endl << game->started << game->rolled << endl;
 
+	// fin
 	file.close();
 }
 

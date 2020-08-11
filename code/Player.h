@@ -21,6 +21,7 @@ class Player : public Subject {
 	std::map<std::string, int> blockCount;
 
 	public:
+	friend class IO;
 	Player(const std::string name, const char symbol, BoardIterator);
 
 	// moves the player either by a number of tiles or to a location.
