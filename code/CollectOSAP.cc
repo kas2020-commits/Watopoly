@@ -1,7 +1,7 @@
 #include "CollectOSAP.h"
 
 //
-CollectOSAP::CollectOSAP() : NonProperty{COLLECT_OSAP} {}
+CollectOSAP::CollectOSAP() : Tile{COLLECT_OSAP} {}
 
 //
 void CollectOSAP::landEffect(Player* p) {
