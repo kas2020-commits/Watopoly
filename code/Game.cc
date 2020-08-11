@@ -26,7 +26,7 @@ void Game::attachMembers(Observer* ob) {
 void Game::addPlayer(std::string name, char symbol) {
     if (started) throw GameException{"Can't add players after game has started.\n"};
     auto p = std::make_shared<Player>(name, symbol, board->begin(true));
-    players[name] = std::move(p);
+    players[name] = p;
     attachObservers(p.get());
 }
 
