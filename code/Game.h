@@ -1,7 +1,6 @@
 #ifndef __GAME_H__
 #define __GAME_H__
 
-#include <map>
 #include <memory>
 #include <string>
 #include "Subject.h"
@@ -22,10 +21,9 @@ class Game : public Subject {
   friend class IO;
   private:
     std::unique_ptr<Board> board;
-    std::map<std::string, std::shared_ptr<Player>> players;
-    std::map<std::string, std::shared_ptr<Player>>::iterator curPlayer;
+    std::vector<std::shared_ptr<Player>> players;
+    std::vector<std::shared_ptr<Player>>::iterator curPlayer;
     bool started;
-    bool rolled;
     void assets(std::string name);
   public:
     Game();

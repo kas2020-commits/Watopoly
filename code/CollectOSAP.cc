@@ -5,8 +5,8 @@ CollectOSAP::CollectOSAP() : Tile{COLLECT_OSAP} {}
 
 //
 void CollectOSAP::landEffect(Player* p) {
-    p->deposit(200);
-    updateObservers("You get another $200 for landing on OSAP!");
+    p->deposit(400);
+    updateObservers("You get $400 for landing on OSAP!");
 }
 
 //

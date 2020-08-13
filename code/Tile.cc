@@ -43,4 +43,4 @@ bool Tile::isGym() { return false; }
 bool Tile::isRes() { return false; }
 
 //
-void Tile::throwTrapped(Player* p) {}
+void Tile::throwTrap(Player* p) {}

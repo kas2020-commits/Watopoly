@@ -2,13 +2,13 @@
 #define __DCTIMSLINE_H__
 
 #include "Tile.h"
-#include "Trapped.h"
-#include "util.h"
 
 //
-class DCTimsLineTrapped : public Trapped, public Subject {
+class DCTimsLineTrap {
+  private:
+    Player* player;
   public:
-    DCTimsLineTrapped(Player* p);
+    DCTimsLineTrap(Player* p);
     void useTimsCup();
     void payCash();
     void roll();
@@ -16,9 +16,9 @@ class DCTimsLineTrapped : public Trapped, public Subject {
 
 //
 class DCTimsLine : public Tile {
- public:
+  public:
     DCTimsLine();
-    virtual void throwTrapped(Player* p) override;
+    virtual void throwTrap(Player* p) override;
 };
 
 #endif

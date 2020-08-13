@@ -18,7 +18,7 @@ Game::~Game() {}
 
 // virtual override of subject class, attaches subject members to Observer
 void Game::attachMembers(Observer* ob) {
-    for (auto it = players.begin(); it != players.end(); ++it) it->second->attach(ob);
+    for (auto it = players.begin(); it != players.end(); ++it) (*it)->attach(ob);
     for (auto it = board->begin(); it != board->end(); ++it) it->attach(ob);
 }
 
@@ -26,7 +26,7 @@ void Game::attachMembers(Observer* ob) {
 void Game::addPlayer(std::string name, char symbol) {
     if (started) throw GameException{"Can't add players after game has started.\n"};
     auto p = std::make_shared<Player>(name, symbol, board->begin(true));
-    players[name] = p;
+    players.emplace_back(p);
     attachObservers(p.get());
 }
 
@@ -40,15 +40,9 @@ void Game::start() {
 
 //
 void Game::roll() {
-    if (rolled) throw GameException{"Already rolled.\n"};
-    int die1 = rollDie();
-    int die2 = rollDie();
-    int total = die1 + die2;
-    std::ostringstream ss{""};
-    ss << "You rolled: " << die1 << " + " << die2 << " = " << total << "\n";
-    updateObservers(ss.str());
-    curPlayer->second->move(die1 + die2);
-    rolled = true;
+    if ((*curPlayer)->hasRolled())
+        throw GameException{"Already rolled.\n"};
+    (*curPlayer)->rollAndMove();
 }
 
 //
@@ -56,11 +50,12 @@ void Game::next() {
     while (true) {
         curPlayer++;
         if (curPlayer == players.end()) curPlayer = players.begin();
-        if (!curPlayer->second->isBankrupt()) break;
+        if (!(*curPlayer)->isBankrupt()) break;
     }
-    rolled = false;
-    updateObservers("Current turn: " + curPlayer->first + "\n");
-    // if (curPlayer->second->isTrapped()) do something
+    (*curPlayer)->startTurn();
+    updateObservers("Current turn: " + (*curPlayer)->getName() + "\n");
+    if ((*curPlayer)->isTrapped())
+        (*curPlayer)->getPosition().throwTrap();
 }
 
 //
@@ -76,38 +71,40 @@ void Game::trade(std::string name, int giveCash, std::string receiveProp) {}
 void Game::mortgage(std::string name) {
     Property* pr = static_cast<Property*>(&(board->at(name)));
     if (!pr) throw GameException("\"" + name + "\" is not a valid property.\n");
-    pr->mortgage(curPlayer->second.get());
+    pr->mortgage(curPlayer->get());
 }
 
 //
 void Game::unmortgage(std::string name) {
     Property* pr = static_cast<Property*>(&(board->at(name)));
     if (!pr) throw GameException("\"" + name + "\" is not a valid property.\n");
-    pr->unmortgage(curPlayer->second.get());
+    pr->unmortgage(curPlayer->get());
 }
 
 //
 void Game::buyImprovement(std::string name) {
     AcademicBuilding* ab = static_cast<AcademicBuilding*>(&(board->at(name)));
     if (ab) throw GameException("\"" + name + "\" is not a valid academic building.\n");
-    ab->buyImprovement(curPlayer->second.get());
+    ab->buyImprovement(curPlayer->get());
 }
 
 //
 void Game::sellImprovement(std::string name) {
     AcademicBuilding* ab = static_cast<AcademicBuilding*>(&(board->at(name)));
     if (!ab) throw GameException("\"" + name + "\" is not a valid academic building.\n");
-    ab->sellImprovement(curPlayer->second.get());
+    ab->sellImprovement(curPlayer->get());
 }
 
 //
 void Game::bankrupt() {
-    curPlayer->second->setBankrupt();
+    (*curPlayer)->setBankrupt();
     next();
 }
 
 //
-void Game::assets(std::string name) {
+void Game::assets(std::shared_ptr<Player> p) {
+    std::string name = p->getName();
+
     //
     std::vector<AcademicBuilding*> ownedABs{};
     std::vector<Residence*> ownedResidences{};
@@ -116,20 +113,20 @@ void Game::assets(std::string name) {
     //
     for (auto it = board->begin(); it != board->end(); ++it) {
         auto pr = dynamic_cast<Property*>(&(*it));
-        if (!pr || !pr->getOwner()) continue; // cotinue to next tile if not a property
+        if (!pr || pr->hasOwner()) continue; // cotinue to next tile if not a property
         AcademicBuilding* ab = dynamic_cast<AcademicBuilding*>(pr);
         if (ab) {
-            if (ab->getOwner()->getName() == name) ownedABs.emplace_back(ab);
+            if (ab->isOwner(p)) ownedABs.emplace_back(ab);
             continue;
         }
         Residence* r = dynamic_cast<Residence*>(pr);
         if (r) {
-            if (r->getOwner()->getName() == name) ownedResidences.emplace_back(r);
+            if (r->isOwner(p) == name) ownedResidences.emplace_back(r);
             continue;
         }
         Gym* g = dynamic_cast<Gym*>(pr);
         if (g) {
-            if (g->getOwner()->getName() == name) ownedGyms.emplace_back(g);
+            if (g->isOwner(p) == name) ownedGyms.emplace_back(g);
             continue;
         }
     }
@@ -137,7 +134,7 @@ void Game::assets(std::string name) {
     //
     std::ostringstream ss{""};
     ss << "Player: " << name << "\n";
-    ss << "\tTotal Tims Cups: " << players[name]->getTimsCups() << "\n";
+    ss << "\tTotal Tims Cups: " << p->getTimsCups() << "\n";
     ss << "\tOwned Academic Buildings:\n";
     if (ownedABs.size() <= 0) ss << "\t\tNone\n";
     else {
@@ -166,11 +163,11 @@ void Game::assets(std::string name) {
 }
 
 //
-void Game::assets() { assets(curPlayer->second->getName()); }
+void Game::assets() { assets(*curPlayer); }
 
 //
 void Game::all() {
     for (auto it = players.begin(); it != players.end(); it++) {
-        assets(it->first);
+        assets(*it);
     }
 }

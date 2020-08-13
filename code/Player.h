@@ -9,8 +9,10 @@
 #include "Tile.h"
 #include "util.h"
 
+//
 class PlayerException {};
 
+//
 class Player : public Subject {
 	// static fields
 	static int totalTimsCups;
@@ -25,8 +27,10 @@ class Player : public Subject {
 	Player(const std::string name, const char symbol, BoardIterator);
 
 	// moves the player either by a number of tiles or to a location.
-	void move(const int);
-	void move(const std::string, bool trap = false);
+	Roll roll(moreInfo = false);
+	void move(const std::string);
+	void rollAndMove();
+	void startTurn();
 
 	// getters:
 	static int getTotalTimsCups();
@@ -41,7 +45,7 @@ class Player : public Subject {
 	bool isTrapped();
 	int getNetWorth();
 	int getCash();
-	int getTurnsTrapped();
+	bool hasRolled();
 
 	// setters:
 	// deposit and withdraw automatically change the player's net worth, so do
@@ -54,10 +58,9 @@ class Player : public Subject {
 	void setTimsCups(int);
 	void setGymCount(int);
 	void setResCount(int);
-	void setTurnsTrapped(int);
 	void changeNetWorth(int);
 
-    //
+    // incrementers / decrementers
 	void addTimsCup();
     void removeTimsCup();
     void decrementTurnsTrapped();

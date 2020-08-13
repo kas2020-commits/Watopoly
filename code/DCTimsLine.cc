@@ -1,50 +1,31 @@
-#include <sstream>
-#include <string>
 #include "DCTimsLine.h"
 
 //
-DCTimsLineTrapped::DCTimsLineTrapped(Player* p) : 
-  Trapped {p, ""} {
-    p->decrementTurnsTrapped();
-    std::ostringstream ss{""};
-    ss << "You are trapped in the DC Tims line (for max ";
-    ss << p->getTurnsTrapped() << " more turns).";
-    message = ss.str();
-}
+DCTimsLineTrap::DCTimsLineTrap(Player* p) :
+  player{p} {}
 
 //
-void DCTimsLineTrapped::useTimsCup() {
+void DCTimsLineTrap::useTimsCup() {
     player->removeTimsCup();
     player->untrap();
 }
 
 //
-void DCTimsLineTrapped::payCash() {
+void DCTimsLineTrap::payCash() {
     player->withdraw(50);
     player->untrap();
 }
 
 //
-void DCTimsLineTrapped::roll() {
-    int die1 = rollDie();
-    int die2 = rollDie();
-    std::ostringstream ss{""};
-    ss << "You rolled: " << die1 << " & " << die2 << ".\n";
-    if (die1 == die2) {
-        ss << "You rolled a double (rolled " << die1 << "&" << die2 << ")";
-        updateObservers(ss.str());
-        player->untrap();
-    }
-    else {
-        ss << "You didn't roll a double (rolled " << die1 << "&" << die2 << ")";
-        updateObservers(ss.str());
-    }
+void DCTimsLineTrap::roll() {
+    Roll r = p->roll(true);
+    if (r.isDouble()) player->untrap();
 }
 
 //
 DCTimsLine::DCTimsLine() : Tile{DC_TIMS_LINE} {}
 
 //
-void DCTimsLine::throwTrapped(Player* p) {
-    throw DCTimsLineTrapped{p};
+void DCTimsLine::throwTrap(Player* p) {
+    throw DCTimsLineTrap trap{p};
 }

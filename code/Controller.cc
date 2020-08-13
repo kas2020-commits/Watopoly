@@ -100,13 +100,14 @@ void Controller::run() {
     int state = 0;
     /* state 0: regular turn, player has access to all basic commands
      * state 1: student must pay tuition, has access to trade and bankrupt
-     *
+     * state 2: student trapped
      *
      *
      */
     std::stringstream command;
     std::string action;
     TuitionPayment tuition;
+	DCTimsLineTrap dcTrap;
 
     // main game loop for game logic
 	while (true) {
@@ -206,6 +207,9 @@ void Controller::run() {
                 }
                 else view->update("Not a valid tuition payment method.\n");
             }
+			else if () {
+
+			}
 			else {
 				view->update("Invalid command.\n");
 			}
@@ -216,6 +220,10 @@ void Controller::run() {
 		catch (TuitionPayment& tp) {
             tuition = tp;
             state = 1;
+		}
+		catch (DCTimsLineTrap& dct) {
+			dcTrap = dct;
+			state = 2;
 		}
 	}
 }
