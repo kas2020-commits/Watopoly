@@ -3,10 +3,10 @@
 #include "util.h"
 
 //
-Roll nextRoll = Roll{};
+Roll Roll::nextRoll = Roll{};
 
 //
-bool nextRollLoaded = false;
+bool Roll::nextRollLoaded = false;
 
 //
 Roll::Roll() {

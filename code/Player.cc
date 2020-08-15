@@ -122,6 +122,9 @@ bool Player::isTrapped() { return (data.turnsTrapped > 0); }
 //
 int Player::getNetWorth() { return data.netWorth; }
 
+//
+bool Player::hasRolled() { return data.rolled; }
+
 // setters:
 void Player::setTimsCups(int amount) {
 	totalTimsCups -= data.timsCups;

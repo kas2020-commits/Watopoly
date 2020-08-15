@@ -61,7 +61,6 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 	vector<shared_ptr<Player>> IOplayers;
 	/* map<string, shared_ptr<Player>> IOplayers; */
 	bool permStarted;
-	bool permRolled;
 
 	try {
 		while (1)
