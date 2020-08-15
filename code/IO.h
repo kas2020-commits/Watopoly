@@ -62,7 +62,7 @@ class IO {
 	public:
 	IO();
 	void save(const std::string, Game *);
-	std::unique_ptr<Game> load(const std::string);
+	void load(const std::string, Game *);
 };
 
 #endif

@@ -25,15 +25,13 @@ AcademicInfo::AcademicInfo(std::string name, std::string blockName, int improvem
 	: name{name}, blockName{blockName}, improvementLevel{improvementLevel}
 {}
 
-std::unique_ptr<Game> IO::load(const std::string filename)
+void IO::load(const std::string filename, Game * game)
 {
 	using namespace std;
 	ifstream file {filename};
 	istringstream iss;
 	iss.exceptions(ios::failbit);
 	file.exceptions(ios::failbit|ios::eofbit);
-
-	unique_ptr<Game> game {};
 
 	// useful constants
 	const auto boardStart = game->board->begin();
@@ -204,7 +202,6 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 
 	// fin
 	file.close();
-	return game;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

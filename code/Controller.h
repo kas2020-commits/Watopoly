@@ -26,7 +26,7 @@ class Controller {
   public:
 	Controller(Game* game, View* view, bool testing = false);
 	virtual ~Controller();
-	void run();
+	void run(bool init = true);
 };
 
 #endif
