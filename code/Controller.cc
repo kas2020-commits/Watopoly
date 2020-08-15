@@ -128,12 +128,22 @@ void Controller::run(bool init) {
 	// main game loop for game logic
 	while (true) {
 		//
+		view->update("For a list of all the commands you can use, type \"help\"\n");
 		command = std::stringstream{view->getCommand()};
 		command >> action;
 
 		// game logic
 		try {
-			if (action == "roll") {
+			if (action == "help") {
+				view->update("Here is a list of all the commands you can use:\n");
+				view->update("roll: roll dice\n");
+				view->update("next: end your turn\n");
+				view->update("trade <name> <give> <receive>: offers a trade to name with the current player\n offering give and requesting receive, where give and receive are either amounts of money or a property name. Responses are accept and reject.\n");
+				view->update("improve <property> buy/sell: Attempts to buy or sell an improvement for property\n");
+				view->update("improve <property> buy/sell: Attempts to buy or sell an improvement for property\n");
+				view->update("mortgae <Property>: Attempts to mortgage property\n");
+			}
+			else if (action == "roll") {
 				if (state == 0) {
 					if (!testing) game->roll();
 					else {
