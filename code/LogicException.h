@@ -4,12 +4,8 @@
 
 //
 class LogicException {
-  private:
-    std::string message;
   public:
-    LogicException() : message{""} {}
-    void setMessage(std::string m) { message = m; }
-    std::string getMessage() { return message; }
+    virtual std::string getMessage() { return ""; }
 };
 
 #endif

@@ -22,7 +22,8 @@ class Auction : public LogicException {
     void bid(std::string name, int amount);
     void addBidder(std::string name, Player* p);
     void end();
-    std::string getPropertyName();
+    std::string getMessage();
+    std::string getConclusion();
 };
 
 #endif
