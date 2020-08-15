@@ -8,3 +8,4 @@ void CoopFee::landEffect(Player* p) {
     p->withdraw(150);
     updateObservers("You Paid $150 for coop!");
 }
+

@@ -48,3 +48,4 @@ std::string Roll::getMessage(bool moreInfo) {
     else ss << ", not a double.\n";
     return ss.str();
 }
+

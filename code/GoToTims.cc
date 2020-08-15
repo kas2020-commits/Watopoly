@@ -9,3 +9,4 @@ void GoToTims::landEffect(Player* p) {
     p->move(DC_TIMS_LINE);
     p->trap(4);
 }
+

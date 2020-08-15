@@ -49,3 +49,4 @@ class BoardIterator {
 };
 
 #endif
+

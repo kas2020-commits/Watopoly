@@ -35,3 +35,4 @@ Tuition::Tuition() : Tile{TUITION} {}
 void Tuition::landEffect(Player* p){
     throw TuitionPayment(p);
 }
+

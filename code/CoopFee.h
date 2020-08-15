@@ -11,3 +11,4 @@ class CoopFee: public Tile {
 };
 
 #endif
+

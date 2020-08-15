@@ -74,3 +74,4 @@ BoardIterator Board::end()
 	BoardIterator retval {tiles, tiles.end()};
 	return retval;
 }
+

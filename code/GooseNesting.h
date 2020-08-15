@@ -11,3 +11,4 @@ class GooseNesting : public Tile {
 };
 
 #endif
+

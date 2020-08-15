@@ -11,3 +11,4 @@ class GoToTims : public Tile {
 };
 
 #endif
+

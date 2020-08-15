@@ -77,3 +77,4 @@ std::string View::getCommand() {
     getline(std::cin, command);
     return command;
 }
+

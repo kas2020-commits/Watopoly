@@ -47,3 +47,4 @@ DCTimsLine::DCTimsLine() : Tile{DC_TIMS_LINE} {}
 void DCTimsLine::throwTrap(Player* p) {
     throw DCTimsLineTrap{p};
 }
+

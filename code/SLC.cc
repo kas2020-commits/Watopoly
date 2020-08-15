@@ -47,3 +47,4 @@ void SLC::landEffect(Player* p){
 		updateObservers("You move Collect OSAP");
 	}
 }
+

@@ -44,3 +44,4 @@ bool Tile::isRes() { return false; }
 
 //
 void Tile::throwTrap(Player* p) {}
+

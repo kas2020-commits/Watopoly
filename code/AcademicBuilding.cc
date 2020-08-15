@@ -76,3 +76,4 @@ int AcademicBuilding::getImprovementLevel(){ return improvementLevel; }
 
 //
 bool AcademicBuilding::isAcademicBuilding() { return true; }
+

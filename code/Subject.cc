@@ -40,3 +40,4 @@ void Subject::attach(Observer* ob) {
     attachSelf(ob);
     attachMembers(ob);
 }
+

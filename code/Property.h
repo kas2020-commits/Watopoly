@@ -46,3 +46,4 @@ class Property : public Tile {
 };
 
 #endif
+

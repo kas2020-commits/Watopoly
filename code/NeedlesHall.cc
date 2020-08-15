@@ -36,3 +36,4 @@ void NeedlesHall::landEffect(Player* p){
         updateObservers("You win $200 \n");
     }
 }
+

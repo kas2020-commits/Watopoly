@@ -21,3 +21,4 @@ class Roll {
 };
 
 #endif
+

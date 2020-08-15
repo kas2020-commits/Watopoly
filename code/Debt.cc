@@ -26,3 +26,4 @@ void Debt::bankrupt() {
     //otherwise, allow bankruptcy
     owedFrom->setBankrupt();
 }
+

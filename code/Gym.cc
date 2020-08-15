@@ -29,3 +29,4 @@ void Gym::losePropEffect() { owner->decrementGymCount(); }
 
 //
 bool Gym::isGym() { return true; }
+

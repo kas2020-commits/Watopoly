@@ -31,3 +31,4 @@ class AcademicBuilding : public Property {
 };
 
 #endif
+

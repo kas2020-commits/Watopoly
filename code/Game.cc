@@ -242,3 +242,4 @@ void Game::populateAuction(Auction& au) {
 		au.addBidder((*it)->getName(), it->get());
 	}
 }
+

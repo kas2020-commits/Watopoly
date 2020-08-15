@@ -31,3 +31,4 @@ void Residence::losePropEffect() { owner->decrementResCount(); }
 
 //
 bool Residence::isRes() { return true; }
+

@@ -82,3 +82,4 @@ void Property::setOwner(Player* p) {
 
 //
 bool Property::isProperty() { return true; }
+
