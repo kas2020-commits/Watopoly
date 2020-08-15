@@ -38,4 +38,12 @@ void Auction::end() {
 }
 
 //
-std::string Auction::getPropertyName() { return property->getName(); }
+std::string Auction::getMessage() {/*
+    if (!highestBid) return "Auction for \"" + property->getName() "\""
+    return "Highest "*/
+}
+
+//
+std::string Auction::getConclusion() {
+    if (!ended) return "";
+}
