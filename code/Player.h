@@ -10,30 +10,26 @@
 #include "util.h"
 #include "Roll.h"
 
-
 //
 class Player : public Subject {
 	// static fields
 	static int totalTimsCups;
 	static std::map<const char, bool> symbolChart;
 
-	// private structure
-	struct PlayerData {
-		const std::string name;
-		const char symbol;
-		BoardIterator position;
-		int cash;
-		int timsCups;
-		int gymCount;
-		int resCount;
-		bool bankrupt;
-		int turnsTrapped;
-		int netWorth;
-		int rolled;
-		PlayerData(const std::string name, const char symbol, BoardIterator it);
-	};
+	// fields
 
-	PlayerData data;
+	const std::string name;
+	const char symbol;
+	BoardIterator position;
+	int cash;
+	int timsCups;
+	int gymCount;
+	int resCount;
+	bool bankrupt;
+	int turnsTrapped;
+	int netWorth;
+	int rolled;
+
 	std::map<std::string, int> blockCount;
 
 	public:

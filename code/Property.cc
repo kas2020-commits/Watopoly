@@ -59,7 +59,7 @@ void Property::landEffect(Player* p) {
 bool Property::isOwner(Player* p) { return (p == owner); }
 
 //
-bool Property::hasOwner() { return (owner == nullptr); }
+bool Property::hasOwner() { return owner != nullptr; }
 
 //
 void Property::setOwner(Player* p) {

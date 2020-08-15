@@ -46,7 +46,7 @@ std::shared_ptr<Player> Game::getPlayer(std::string name) {
 // starts "game", all players must be added before game started
 void Game::start() {
 	if (started) throw GameException{"Game already started.\n"};
-	curPlayer = players.end();
+	curPlayer = players.end() - 1;
 	started = true;
 	next();
 }

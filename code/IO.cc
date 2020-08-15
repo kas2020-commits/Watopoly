@@ -88,10 +88,10 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 				for (int i = 0; i < tempPosition; ++i) ++tempIt;
 				shared_ptr<Player> tempPlayer = make_shared<Player>(tempName, tempSymbol, tempIt);
 				tempPlayer->deposit(tempCash);
-				tempPlayer->data.timsCups = tempTimsCups;
-				tempPlayer->data.resCount = tempResCount;
-				tempPlayer->data.gymCount = tempGymCount;
-				tempPlayer->data.turnsTrapped = tempTurnsTrapped;
+				tempPlayer->timsCups = tempTimsCups;
+				tempPlayer->resCount = tempResCount;
+				tempPlayer->gymCount = tempGymCount;
+				tempPlayer->turnsTrapped = tempTurnsTrapped;
 
 				IOplayers.push_back(tempPlayer);
 			}
@@ -218,14 +218,14 @@ void IO::save(const std::string filename, Game * game)
 	for (auto it = game->players.begin(); it != game->players.end(); ++it)
 	{
 		file << list->PLAYER << endl
-			<< it->get()->data.name << endl
-			<< it->get()->data.symbol << " "
-			<< it->get()->data.position->getIndex() << " "
-			<< it->get()->data.cash << " "
-			<< it->get()->data.timsCups << " "
-			<< it->get()->data.resCount << " "
-			<< it->get()->data.resCount << " "
-			<< it->get()->data.turnsTrapped << " "
+			<< it->get()->name << endl
+			<< it->get()->symbol << " "
+			<< it->get()->position->getIndex() << " "
+			<< it->get()->cash << " "
+			<< it->get()->timsCups << " "
+			<< it->get()->resCount << " "
+			<< it->get()->resCount << " "
+			<< it->get()->turnsTrapped << " "
 			<< endl;
 	}
 
