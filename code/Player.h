@@ -40,6 +40,7 @@ class Player : public Subject {
 	std::string getName();
 	Tile & getPosition();
 	bool isTrapped();
+	int getTurnsTrapped();
 	int getNetWorth();
 	int getCash();
 	bool hasRolled();

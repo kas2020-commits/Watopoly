@@ -13,7 +13,8 @@ void Gym::applyFee(Player* p) {
     if (owner->getGymCount() == 1) int payment *= 4;
     if (owner->getGymCount() == 2) int payment *= 10;
     // else throw exception possibly?
-    p->withdraw(payment);
+    try { p->withdraw(payment); }
+    catch (GameException&) { throw Debt{p, owner, payment}; }
     owner->deposit(payment);
     ss << payment << " to gym's owner: \""
     ss << owner->getName() << "\"\n";

@@ -5,7 +5,7 @@
 #include <iostream> // for debugging
 
 //
-Controller::Controller(Game* game, View* view, testing) : game{game}, view{view}, 
+Controller::Controller(Game* game, View* view, testing = false) : game{game}, view{view}, 
   state{0}, testing{testing} {}
 
 //
@@ -78,7 +78,10 @@ void Controller::handleTrade(std::string name, std::string give, std::string rec
 		std::stringstream command{view->getCommand()};
 		std::string decision;
 		command >> decision;
-		if (decision == "accept") return;
+		if (decision == "accept") {
+			// message view->update("");
+			return;
+		}
 		else if (decision == "reject") {
 			if (cashForProp) game->trade(name, receive, giveCash);
 			else if (propForCash) game->trade(name, receiveCash, give);
@@ -116,7 +119,32 @@ void Controller::run() {
 		// game logic
 		try {
 			if (action == "roll") {
-                if (state == 0) game->roll();
+                if (state == 0) {
+					if (!testing) game->roll();
+					else {
+						int die1, die2;
+						try { command >> die1 >> die2; }
+						catch () { 
+							game->roll();
+							continue;
+						}
+						game->roll(die1, die2);
+					}
+				}
+				else if (state == 2) {
+					if (!testing) game->roll();
+					else {
+						int die1, die2;
+						try { command >> die1 >> die2; }
+						catch () {
+							dct->roll();
+							state = 0;
+							continue;
+						}
+						dct->roll(die1, die2);
+						state = 0;
+					}
+				}
 				else {
 					view->update("Cannot roll right now.\n");
                     continue;

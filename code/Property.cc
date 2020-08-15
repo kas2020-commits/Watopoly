@@ -1,4 +1,5 @@
 #include "Auction.h"
+#include "Debt.h"
 #include "GameException.h"
 #include "Property.h"
 
@@ -62,13 +63,17 @@ bool Property::hasOwner() { return (owner == nullptr); }
 
 //
 bool Property::setOwner(Player* p) {
-	if (hasOwner() && !owner->isBankrupt()) {
+	if (hasOwner()) {
 		losePropEffect();
 		owner->changeNetWorth(purchaseCost);
 	}
 	owner = p;
 	gainPropEffect();
 	owner->changeNetWorth(purchaseCost);
+	if (mortgaged) {
+		try { owner->withdraw(0.1 * purchaseCost); }
+		catch (GameException& e) { throw Debt{this, 0.1 * purchaseCost}; }
+	}
 }
 
 //

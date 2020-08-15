@@ -14,6 +14,7 @@ class TuitionPayment : public LogicException {
     TuitionPayment(Player* p);
     void payCash();
     void payPercent();
+    void bankrupt();
 };
 
 //

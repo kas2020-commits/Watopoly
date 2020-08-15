@@ -15,6 +15,7 @@ class Debt : public LogicException {
     Debt(Player* owedFrom, int owed);
     Debt(Player* owedFrom, Player* owedTo, int owed);
     void pay();
+    void bankrupt();
 };
 
 #endif

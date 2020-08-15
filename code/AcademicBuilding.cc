@@ -26,7 +26,8 @@ void AcademicBuilding::applyFee(Player* p){
 	int payment;
 	if (ownerHasMonopoly() && improvementLevel == 0) payment = tuitionAtLevels[0] * 2;
 	else payment = tuitionAtLevels[improvementLevel];
-	p->withdraw(payment);
+	try { p->withdraw(payment); } // of lack of funds, throw debt
+	catch (GameException&) { throw Debt{p, owner, payment}; }
 	owner->deposit(payment);
 }
 

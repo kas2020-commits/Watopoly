@@ -82,7 +82,14 @@ Roll Player::roll(moreInfo = false) {
 //
 void startTurn() {
 	data->rolled = false;
-	if (isTrapped) decrementTurnsTrapped();
+	if (isTrapped()) {
+		decrementTurnsTrapped();
+		std::ostringstream ss{"You are trapped in "};
+    	ss << position->getName() << "(for max. ";
+    	ss << data->turnsTrapped << " more turns).\n";
+		updateObservers(ss.str());
+		position->throwTrap(this);
+	}
 	// reset any other turn related logic vars
 }
 
@@ -118,6 +125,9 @@ int Player::getTurnsTrapped() { return data->turnsTrapped; }
 
 //
 bool Player::isTrapped() { return (turnsTrapped > 0); }
+
+//
+int Player::getTurnsTrapped() { return turnsTrapped; }
 
 //
 int Player::getNetWorth() { return data->netWorth; }
@@ -176,14 +186,7 @@ void Player::trap(int turns) {
 
 //
 void Player::decrementTurnsTrapped() {
-	--(data->turnsTrapped)
-	if (turnsTrapped <= 0) untrap(); // start fresh
-	else {
-		std::ostringstream ss{"You are sill trapped in "};
-    	ss << position->getName() << "(for max. ";
-    	ss << data->turnsTrapped << " more turns).\n";
-		updateObservers(ss.str());
-	}
+	if (turnsTrapped <= 0) --(data->turnsTrapped);
 }
 
 // static methods:
@@ -191,7 +194,7 @@ int Player::getTotalTimsCups() { return totalTimsCups; }
 
 //
 void Player::incrementTimsCups() {
-	if (data->timsCups + 1 > 4 || totalTimsCups + 1 > 4)
+	if (totalTimsCups <= 0)
 		throw GameException{"Tims cups at max. capacity."};
 	++(data->timsCups);
 	--totalTimsCups;
@@ -199,7 +202,7 @@ void Player::incrementTimsCups() {
 
 //
 void Player::decrementTimsCups() {
-	if (data->timsCups - 1 < 0 || totalTimsCups - 1 < 0)
+	if (data->timsCups <= 0)
 		throw PlayerException{"No Tims cups."};
 	--(data->timsCups);
 	++totalTimsCups;

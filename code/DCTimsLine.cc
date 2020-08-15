@@ -1,4 +1,5 @@
 #include "DCTimsLine.h"
+#include "Roll.h"
 
 //
 DCTimsLineTrap::DCTimsLineTrap(Player* p) : player{p} {}
@@ -20,8 +21,24 @@ void DCTimsLineTrap::payCash() {
 
 //
 void DCTimsLineTrap::roll() {
-    Roll r = p->roll(true);
+    if (player->getTurnsTrpped() == 0) {
+        throw GameException{"Must leave Tim's line 
+          this turn, pay or use Tims cup.\n"};
+    }
+    else if (player->hasRolled()) 
+        throw GameException{"Already rolled.\n"};
+    Roll r = player->roll(true);
     if (r.isDouble()) player->untrap();
+}
+
+//
+void DCTimsLineTrap::roll(int die1, int die2) {
+    Roll::loadNextRoll(die1, die2);
+    try () { roll(); }
+    catch (GameException& e) { 
+        Roll::discardNextRoll();
+        throw e;
+    }
 }
 
 //

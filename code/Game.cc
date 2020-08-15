@@ -58,7 +58,10 @@ void Game::roll() {
 void Game::roll(int die1, int die2) {
     Roll::loadNextRoll(die1, die2);
     try () { roll(); }
-    catch (GameException& e) { Roll::discardNextRoll(); }
+    catch (GameException& e) { 
+        Roll::discardNextRoll();
+        throw e;
+    }
 }
 
 //
@@ -68,10 +71,8 @@ void Game::next() {
         if (curPlayer == players.end()) curPlayer = players.begin();
         if (!(*curPlayer)->isBankrupt()) break;
     }
-    (*curPlayer)->startTurn();
     updateObservers("Current turn: " + (*curPlayer)->getName() + "\n");
-    if ((*curPlayer)->isTrapped())
-        (*curPlayer)->getPosition().throwTrap();
+    (*curPlayer)->startTurn();
 }
 
 //

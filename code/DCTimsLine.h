@@ -14,6 +14,7 @@ class DCTimsLineTrap : public LogicException {
     void useTimsCup();
     void payCash();
     void roll();
+    void roll(int die1, int die2); // for testing
 };
 
 //

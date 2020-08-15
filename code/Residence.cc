@@ -15,7 +15,8 @@ void Residence::landEffect(Player*  p){
         else if(p->getResCount() == 3) payment = 100;
         else if(p->getResCount() == 4) payment = 200;
         // else throw exception possibly?
-        p->withdraw(payment);
+        try { p->withdraw(payment); }
+        catch (GameException&) { throw Debt{p, owner, payment}; }
         owner->deposit(payment);
         std::ostringstream ss{"Payed $"};
         ss << payment << " for rent to land lord: \""
