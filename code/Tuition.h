@@ -1,10 +1,12 @@
 #ifndef __TUITION_H__
 #define __TUITION_H__
+
+#include "LogicException.h"
 #include "Tile.h"
 #include "util.h"
 
 //
-class TuitionPayment {
+class TuitionPayment : public LogicException {
   private:
     Player* player;
   public:

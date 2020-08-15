@@ -155,7 +155,9 @@ void Player::changeNetWorth(int amount) {
 }
 
 //
-void Player::setBankrupt() { data->bankrupt = true; }
+void Player::setBankrupt() {
+	data->bankrupt = true;
+}
 
 //
 void Player::untrap() { 

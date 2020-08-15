@@ -4,18 +4,25 @@
 #include <map>
 #include <string>
 
+#include "LogicException.h"
 #include "Player.h"
 #include "Property.h"
 
 //
-class Auction {
+class Auction : public LogicException {
   private:
     Property* property;
     std::map<std::string, Player*> bidders;
+    Player* p highestBidder;
+    int highestBid;
+    bool ended;
   public:
+    Auction();
     Auction(Property* pr);
-    bid(std::string name, int amount);
-    addBidder(std::string name, Player* p)
+    void bid(std::string name, int amount);
+    void addBidder(std::string name, Player* p);
+    void end();
+    std::string getPropertyName();
 };
 
 #endif

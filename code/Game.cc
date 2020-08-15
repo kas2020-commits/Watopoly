@@ -7,6 +7,7 @@
 #include "Gym.h"
 #include "Property.h"
 #include "Residence.h"
+#include "Roll.h"
 #include "util.h"
 
 // Constructor
@@ -52,6 +53,12 @@ void Game::start() {
 void Game::roll() {
     if ((*curPlayer)->hasRolled()) throw GameException{"Already rolled.\n"};
     (*curPlayer)->rollAndMove();
+}
+
+void Game::roll(int die1, int die2) {
+    Roll::loadNextRoll(die1, die2);
+    try () { roll(); }
+    catch (GameException& e) { Roll::discardNextRoll(); }
 }
 
 //
@@ -148,12 +155,6 @@ void Game::sellImprovement(std::string name) {
 }
 
 //
-void Game::bankrupt() {
-    (*curPlayer)->setBankrupt();
-    next();
-}
-
-//
 void Game::assets(std::shared_ptr<Player> p) {
     std::string name = p->getName();
 
@@ -221,5 +222,12 @@ void Game::assets() { assets(*curPlayer); }
 void Game::all() {
     for (auto it = players.begin(); it != players.end(); it++) {
         assets(*it);
+    }
+}
+
+//
+void populateAuction(Auction& au) {
+    for (auto it = players.begin(); it != player.end(); it++) {
+        au.addBidder((*it)->getName(), it->get());
     }
 }

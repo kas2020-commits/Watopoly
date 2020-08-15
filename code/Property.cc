@@ -1,9 +1,23 @@
+#include "Auction.h"
 #include "GameException.h"
 #include "Property.h"
 
 //
-Property::Property(std::string name, int purchaseCost)
-	:Tile{name}, purchaseCost{purchaseCost}, owner{nullptr}, morgaged{false} {}
+PurchaseOption::PurchaseOption(Property* pr, Player* p) : property{pr},
+  player{p} {}
+
+//
+PurchaseOption::PurchaseOption() : property{nullptr}, player{nullptr} {}
+
+//
+void PurchaseOption::buy() { property->buy(Player); }
+
+//
+void PurchaseOption::pass() { throw Auction{property}; }
+
+//
+Property::Property(std::string name, int purchaseCost) :
+  Tile{name}, purchaseCost{purchaseCost}, owner{nullptr}, morgaged{false} {}
 
 //
 void Property::buy(Player* p) {
@@ -34,7 +48,8 @@ bool Property::otherMortgageExcepts() {}
 
 //
 void Property::landEffect(Player* p) {
-	if (mortgaged) 
+	if (!isOwned()) throw PurchaseOption(this, p);
+	else if (mortgaged) 
 		updateObservers("Lucky you, \"" + name + "\" is mortgaged.");
 	else applyFee(p);
 }

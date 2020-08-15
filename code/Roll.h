@@ -6,8 +6,12 @@
 // a struct of 2 die rolls
 extern class Roll {
   private:
-    std::string message;
+    static Roll nextRoll;
+    static bool nextRollLoaded;
+    Roll(int die1, int die2);
   public:
+    static void loadNextRoll();
+    static void discardNextRoll();
     int die1;
     int die2;
     int total;

@@ -5,7 +5,8 @@
 #include <iostream> // for debugging
 
 //
-Controller::Controller(Game* game, View* view) : game{game}, view{view}, io{IO{}} {}
+Controller::Controller(Game* game, View* view, testing) : game{game}, view{view}, 
+  state{0}, testing{testing} {}
 
 //
 Controller::~Controller() {}
@@ -95,20 +96,17 @@ void Controller::run() {
 	addPlayers();
 
 	// main game loop setup
-	view->display();
     game->start();
-    int state = 0;
+	view->display();
     /* state 0: regular turn, player has access to all basic commands
      * state 1: student must pay tuition, has access to trade and bankrupt
      * state 2: student trapped
-     *
-     *
+     * state 3: student must decide where or not to buy a property
+     * state 4: auction
+	 * state 5: student in debt
      */
     std::stringstream command;
     std::string action;
-    TuitionPayment tuition;
-	DCTimsLineTrap dcTrap;
-
     // main game loop for game logic
 	while (true) {
 		//
@@ -118,19 +116,18 @@ void Controller::run() {
 		// game logic
 		try {
 			if (action == "roll") {
-                if (state != 0) {
-                    view->update("Cannot roll right now.\n");
+                if (state == 0) game->roll();
+				else {
+					view->update("Cannot roll right now.\n");
                     continue;
-                }
-                game->roll();
+				}
 			}
 			else if (action == "next") {
-                if (state != 0) {
-                    view->update("Cannot end turn right now.\n");
+                if (state == 0) game->next();
+				else {
+					view->update("Cannot end turn right now.\n");
                     continue;
-                }
-                view->display();
-				game->next();
+				}
 			}
 			else if (action == "trade") {
 				std::string name, give, receive;
@@ -138,91 +135,164 @@ void Controller::run() {
 				handleTrade(name, give, receive);
 			}
 			else if (action == "improve") {
-                if (state != 0) {
-                    view->update("Cannot improve right now.\n");
-                    continue;
+                if (state == 0) {
+                    std::string ab, action;
+					command >> ab >> action;
+					if (action == "buy") game->buyImprovement(ab);
+					else if (action == "sell") game->sellImprovement(ab);
+					else {
+						view->update("Invalid command.\n");
+						continue;
+					}
                 }
-                std::string ab, action;
-				command >> ab >> action;
-				if (action == "buy") game->buyImprovement(ab);
-				else if (action == "sell") game->sellImprovement(ab);
-				else view->update("Invalid command.\n");
+				else {
+					view->update("Cannot improve right now.\n");
+                    continue;
+				}
 			}
 			else if (action == "mortgage") {
-                if (state != 0) {
-                    view->update("Cannot mortgage right now.\n");
-                    continue;
+                if (state == 0) {
+                    std::string prop;
+					command >> prop;
+					game->mortgage(prop); // will throw if any issues
                 }
-                std::string prop;
-				command >> prop;
-				game->mortgage(prop);
+				else {
+					view->update("Cannot mortgage right now.\n");
+                    continue;
+				}
 			}
 			else if (action == "unmortgage") {
-                if (state != 0) {
-                    view->update("Cannot unmortgage right now.\n");
-                    continue;
+                if (state == 0) {
+                    std::string prop;
+					command >> prop;
+					game->unmortgage(prop); // will throw if any issues
                 }
-                std::string prop;
-				command >> prop;
-				game->unmortgage(prop);
+				else {
+					view->update("Cannot unmortgage right now.\n");
+                    continue;
+				}
 			}
 			else if (action == "bankrupt") {
-				game->bankrupt();
+				// implement through exceptions
 			}
 			else if (action == "assets") {
-                if (state != 0) {
-                    view->update("Cannot display assets right now.\n");
-                    continue;
+                if (state != 1) {
+					game->assets();
                 }
-                game->assets();
+				else {
+					view->update("Cannot display assets right now.\n");
+                    continue;
+				}
 			}
 			else if (action == "all") {
-                if (state != 0) {
-                    view->update("Cannot display all assets right now.\n");
-                    continue;
+                if (state != 1) {
+					game->all();
                 }
-                game->all();
+				else {
+					view->update("Cannot display all assets right now.\n");
+                    continue;
+				}
 			}
 			else if (action == "save") {
                 std::string fileName;
                 command >> fileName;
                 io.save(fileName, game);
-                view->update(std::string {
-						"Game has been saved to file: " + fileName + "\n"});
+                view->update(std::string {"Game has been saved to file: \"" + fileName + "\"\n"});
             }
             else if (action == "pay") {
-                if (state != 1) {
-                    view->update("Nothing to pay.\n");
+                if (state == 1) {
+                    std::string method;
+					command >> method;
+					if (method == "$300") {
+						tuition.payCash();
+						state = 0;
+					}
+					else if (method == "10%") {
+						tuition.payPercent();
+						state = 0;
+					}
+					else view->update("Not a valid tuition payment method.\n");
+                }
+				else if (state == 5) { // pay debt
+					db.pay(); // will throw if lack of funds
+					state = 0;
+				}
+                else {
+					view->update("Nothing to pay.\n");
                     continue;
-                }
-                std::string method;
-                command >> method;
-                if (method == "$300") {
-                    tuition.payCash();
-                    state = 0;
-                }
-                else if (method == "10%") {
-                    tuition.payPercent();
-                    state = 0;
-                }
-                else view->update("Not a valid tuition payment method.\n");
+				}
             }
-			else if () {
-
+			else if (action == "buy") {
+				if (state == 3) {
+					po.buy(); // may throw if lack of funds
+					state = 0;
+				}
+				else {
+					view->update("Nothing to buy.\n");
+                    continue;
+				}
+			}
+			else if (action == "pass") {
+				if (state == 3) po.pass(); // will throw auction
+				else {
+					view->update("Nothing to pass.\n");
+                    continue;
+				}
+			}
+			else if (action == "bid") {
+				if (state == 4) {
+					std::string name;
+					command >> name;
+					int bid;
+					try { command >> bid; }
+					catch (...) { view->update("Not a valid bid.\n"); }
+					au.bid(name, bid);
+					continue;
+				}
+				else {
+					view->update("No auction currently going on.\n");
+                    continue;
+				}
+			}
+			else if (action == "end") {
+				if (state == 4) {
+					au.end();
+					// print results
+					state = 0;
+				}
+				else {
+					view->update("No auction to end.\n");
+                    continue;
+				}
 			}
 			else {
 				view->update("Invalid command.\n");
+				continue;
 			}
+			view->display();
 		}
 		catch (GameException& e) {
 			view->update(e.getMessage());
 		}
-		catch (TuitionPayment& tp) {
-            tuition = tp;
+		catch (PurchaseOption& e) {
+			po = e;
+			state = 3;
+		}
+		catch (Auction& e) {
+			au = e;
+			game->populateAuction(au);
+			state = 4;
+		}
+		catch (Debt& e) {
+			db = e;
+			state = 5;
+		}
+		catch (TuitionPayment& e) {
+            tp = e;
             state = 1;
 		}
-		catch (DCTimsLineTrap& dct) {
-			dcTrap = dct;
+		catch (DCTimsLineTrap& e) {
+			dct = e;
 			state = 2;
 		}
 	}

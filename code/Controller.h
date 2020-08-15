@@ -12,10 +12,18 @@ class Controller {
 	Game* game;
     View* view;
     IO io;
+	int state;
+	PurchaseOption po;
+	Auction au;
+	Debt db;
+	TuitionPayment tp;
+	DCTimsLineTrap dct;
+	bool testing;
 	void addPlayers();
-	void handleTrade(std::string name, std::string give, std::string receive);
+	void handleTrade(std::string name, 
+	  std::string give, std::string receive);
   public:
-	Controller(Game* game, View* view);
+	Controller(Game* game, View* view, testing = false);
 	virtual ~Controller();
 	void run();
 };

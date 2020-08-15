@@ -1,14 +1,27 @@
 #ifndef __PROPERTY_H__
 #define __PROPERTY_H__
 
-#include "Tile.h"
+#include "LogicException.h"
 #include "Player.h"
+#include "Tile.h"
 
-class PropertyException{};
+// forward declaration
 class Player;
 
 //
-class Property : public Tile{
+class PurchaseOption : public LogicException {
+  private:
+	Property* property;
+	Player* player;
+  public:
+    PurchaseOption();
+    PurchaseOption(Property* pr, Player* p);
+	void buy();
+	void pass();
+};
+
+//
+class Property : public Tile {
   protected:
 	int purchaseCost;
 	Player* owner;

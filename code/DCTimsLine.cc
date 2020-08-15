@@ -1,8 +1,10 @@
 #include "DCTimsLine.h"
 
 //
-DCTimsLineTrap::DCTimsLineTrap(Player* p) :
-  player{p} {}
+DCTimsLineTrap::DCTimsLineTrap(Player* p) : player{p} {}
+
+//
+DCTimsLineTrap::DCTimsLineTrap() : player{nullptr} {}
 
 //
 void DCTimsLineTrap::useTimsCup() {

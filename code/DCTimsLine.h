@@ -1,13 +1,15 @@
 #ifndef __DCTIMSLINE_H__
 #define __DCTIMSLINE_H__
 
+#include "LogicException.h"
 #include "Tile.h"
 
 //
-class DCTimsLineTrap {
+class DCTimsLineTrap : public LogicException {
   private:
     Player* player;
   public:
+    DCTimsLineTrap();
     DCTimsLineTrap(Player* p);
     void useTimsCup();
     void payCash();

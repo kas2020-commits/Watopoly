@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <string>
+#include "Auction.h"
 #include "Subject.h"
 #include "Player.h"
 #include "Board.h"
@@ -24,6 +25,7 @@ class Game : public Subject {
     void addPlayer(std::string name, char symbol);
     void start(); // all players must be added before game started
     void roll();
+    void roll(int die1, int die2);
     void next();
     void trade(std::string name, std::string giveProp, std::string receiveProp);
     void trade(std::string name, std::string giveProp, int receiveCash);
@@ -32,9 +34,9 @@ class Game : public Subject {
     void unmortgage(std::string prop);
     void buyImprovement(std::string ab);
     void sellImprovement(std::string ab);
-    void bankrupt();
     void assets();
     void all();
+    void populateAuction(Auction& au);
 };
 
 #endif
