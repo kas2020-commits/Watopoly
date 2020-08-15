@@ -4,11 +4,13 @@
 #include <map>
 #include <stdexcept>
 #include <memory>
+
 #include "Subject.h"
 #include "BoardIterator.h"
 #include "Tile.h"
 #include "util.h"
 #include "Roll.h"
+#include "PlayerException.h"
 
 //
 class Player : public Subject {
@@ -33,6 +35,7 @@ class Player : public Subject {
 	std::map<std::string, int> blockCount;
 
 	public:
+
 	friend class IO;
 	Player(const std::string name, const char symbol, BoardIterator);
 
@@ -58,6 +61,10 @@ class Player : public Subject {
 	int getNetWorth();
 	int getCash();
 	bool hasRolled();
+
+	// prudces a string of available symbols with whitespace in between each
+	// character
+	static std::string getAvailableSymbols();
 
 	// setters:
 	// deposit and withdraw automatically change the player's net worth, so do
