@@ -6,45 +6,46 @@
 
 //
 Controller::Controller(Game* game, View* view, bool testing) : game{game}, view{view},
-	state{0}, testing{testing} {}
+	state{0}, testing{testing}
+{}
 
-	//
-	Controller::~Controller() {}
+//
+Controller::~Controller() {}
 
-	// adds desired amount of players to game
-	void Controller::addPlayers() {
-		// gets the number of players from view
-		int numPlayers;
+// adds desired amount of players to game
+void Controller::addPlayers() {
+	// gets the number of players from view
+	int numPlayers;
+	while (true) {
+		view->update("Enter number of players (min: 2, max: 8):\n");
+		try {
+			numPlayers = std::stoi(view->getCommand());
+			if (numPlayers < 2 || numPlayers > 8) throw std::invalid_argument("");
+			break;
+		}
+		catch (std::invalid_argument&) {
+			view->update("Invalid number of players.\n");
+		}
+	}
+
+	// add players to game
+	for (int i = 0; i < numPlayers; ++i) {
 		while (true) {
-			view->update("Enter number of players (min: 2, max: 8):\n");
+			view->update("Type the name of the player followed by the symbol you would like\n");
 			try {
-				numPlayers = std::stoi(view->getCommand());
-				if (numPlayers < 2 || numPlayers > 8) throw std::invalid_argument("");
+				std::stringstream playerInfo{view->getCommand()};
+				std::string name;
+				char symbol;
+				playerInfo >> name >> symbol;
+				game->addPlayer(name, symbol);
 				break;
 			}
-			catch (std::invalid_argument&) {
-				view->update("Invalid number of players.\n");
-			}
-		}
-
-		// add players to game
-		for (int i = 0; i < numPlayers; ++i) {
-			while (true) {
-				view->update("Type the name of the player followed by the symbol you would like\n");
-				try {
-					std::stringstream playerInfo{view->getCommand()};
-					std::string name;
-					char symbol;
-					playerInfo >> name >> symbol;
-					game->addPlayer(name, symbol);
-					break;
-				}
-				catch (GameException &) { // implement invalid player construction exception
-					view->update("Invalid player details.\n");
-				}
+			catch (GameException &) { // implement invalid player construction exception
+				view->update("Invalid player details.\n");
 			}
 		}
 	}
+}
 
 // handles the different types of trades
 void Controller::handleTrade(std::string name, std::string give, std::string receive) {
