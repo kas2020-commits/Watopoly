@@ -167,12 +167,11 @@ void Game::assets(std::shared_ptr<Player> p) {
 	std::vector<AcademicBuilding*> ownedABs{};
 	std::vector<Residence*> ownedResidences{};
 	std::vector<Gym*> ownedGyms{};
-	std::cout << p.get() << "\n";
 
 	//
 	for (auto it = board->begin(); it != board->end(); ++it) {
 		auto pr = dynamic_cast<Property*>(&(*it));
-		if (!pr || pr->hasOwner()) continue; // continue to next tile if not a property
+		if (!pr || !pr->hasOwner()) continue; // continue to next tile if not a property
 		AcademicBuilding* ab = dynamic_cast<AcademicBuilding*>(pr);
 		if (ab) {
 			if (ab->isOwner(p.get())) ownedABs.emplace_back(ab);

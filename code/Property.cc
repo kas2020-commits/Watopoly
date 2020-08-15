@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Auction.h"
 #include "Debt.h"
 #include "GameException.h"
@@ -12,11 +11,7 @@ PurchaseOption::PurchaseOption(Property* pr, Player* p) : property{pr},
 PurchaseOption::PurchaseOption() : property{nullptr}, player{nullptr} {}
 
 //
-void PurchaseOption::buy() { 
-	std::cout << player << "\n";
-	std::cout << property << "\n";
-	property->buy(player); 
-}
+void PurchaseOption::buy() { property->buy(player); }
 
 //
 void PurchaseOption::pass() { throw Auction{property}; }
@@ -28,7 +23,6 @@ Property::Property(std::string name, int purchaseCost) :
 //
 void Property::buy(Player* p) {
 	p->withdraw(purchaseCost);
-	std::cout << p << "\n";
 	setOwner(p);
 	updateObservers("Bought \"" + name + "\"!\n");
 }
