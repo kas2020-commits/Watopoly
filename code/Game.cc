@@ -66,6 +66,11 @@ void Game::roll(int die1, int die2) {
 	}
 }
 
+std::string Game::getAvailablePlayerSymbols()
+{
+	return Player::getAvailableSymbols() + "\n";
+}
+
 //
 void Game::next() {
 	while (true) {

@@ -30,18 +30,30 @@ void Controller::addPlayers() {
 
 	// add players to game
 	for (int i = 0; i < numPlayers; ++i) {
+		std::string name;
+		char symbol;
+		view->update("Type the name of the player\n");
 		while (true) {
-			view->update("Type the name of the player followed by the symbol you would like\n");
 			try {
 				std::stringstream playerInfo{view->getCommand()};
-				std::string name;
-				char symbol;
-				playerInfo >> name >> symbol;
-				game->addPlayer(name, symbol);
+				playerInfo >> name;
 				break;
 			}
 			catch (GameException &) { // implement invalid player construction exception
-				view->update("Invalid player details.\n");
+				view->update("Invalid name.\n");
+			}
+		}
+		view->update("Great name! Now pick a symbol from this list:\n");
+		while (true) {
+			try {
+				view->update(game->getAvailablePlayerSymbols());
+				std::stringstream playerInfo{view->getCommand()};
+				playerInfo >> symbol;
+				game->addPlayer(name, symbol);
+				break;
+			}
+			catch (GameException & fne) {
+				view->update(fne.getMessage());
 			}
 		}
 	}

@@ -1,7 +1,5 @@
 #include <sstream>
-#include "GameException.h"
 #include "Player.h"
-
 
 // static member construction
 int Player::totalTimsCups {0};
@@ -12,28 +10,26 @@ std::map<const char, bool> Player::symbolChart
 		{'$', false}, {'L', false}, {'T', false}
 };
 
-/* // */
-/* PlayerData::PlayerData (const std::string name, const char symbol, BoardIterator it) */
-/* 	: name{name}, symbol{symbol}, position{it}, cash{1500}, */
-/* 	timsCups{0}, gymCount{0}, resCount{0}, bankrupt{false}, turnsTrapped{0}, */
-/* 	netWorth{1500}, rolled{false} */
-/* {} */
-
 // constructor
 Player::Player(const std::string name, const char symbol, BoardIterator it)
 	:
 		// simple fields
 		name{name}, symbol{symbol}, position{it}, cash{1500},
-	timsCups{0}, gymCount{0}, resCount{0}, bankrupt{false}, turnsTrapped{0},
-	netWorth{1500}, rolled{false},
+		timsCups{0}, gymCount{0}, resCount{0}, bankrupt{false}, turnsTrapped{0},
+		netWorth{1500}, rolled{false},
 
-	// blockCount
-	blockCount{std::map<std::string, int> {
-		{ARTS1, 0}, {ARTS2, 0}, {ENG, 0}, {HEALTH, 0}, {ENV, 0}, {SCI1, 0}, {SCI2, 0}, {MATH, 0}}}
+		// blockCount
+		blockCount{std::map<std::string, int> {
+			{ARTS1, 0}, {ARTS2, 0}, {ENG, 0}, {HEALTH, 0}, {ENV, 0}, {SCI1, 0}, {SCI2, 0}, {MATH, 0}}}
 {
-	bool & isDup = symbolChart.at(symbol);
-	if (isDup) throw GameException{"Symbol already in use."};
-	else isDup = true;
+	try {
+		bool & isDup = symbolChart.at(symbol);
+		if (isDup) throw PlayerException{"Symbol already in use.\n"};
+		else isDup = true;
+	}
+	catch (std::out_of_range&) {
+		throw PlayerException{"Not a valid symbol.\n"};
+	}
 }
 
 // move player:
@@ -67,7 +63,7 @@ void Player::move(const std::string name) {
 		++newPosition;
 		if (newPosition->getName() == name) break;
 		if (newPosition == position)
-			throw GameException{"Fatal Error Occured."};
+			throw PlayerException{"Fatal Error Occured."};
 	}
 	position = newPosition;
 	position->land(this);
@@ -157,7 +153,7 @@ void Player::deposit(const int amount) {
 //
 void Player::withdraw(const int amount) {
 	if (cash < amount)
-		throw GameException{"Insufficient Funds."};
+		throw PlayerException{"Insufficient Funds."};
 	cash -= amount;
 	netWorth -= amount;
 }
@@ -198,7 +194,7 @@ int Player::getTotalTimsCups() { return totalTimsCups; }
 //
 void Player::incrementTimsCups() {
 	if (totalTimsCups <= 0)
-		throw GameException{"Tims cups at max. capacity."};
+		throw PlayerException{"Tims cups at max. capacity."};
 	++timsCups;
 	--totalTimsCups;
 }
@@ -206,7 +202,7 @@ void Player::incrementTimsCups() {
 //
 void Player::decrementTimsCups() {
 	if (timsCups <= 0)
-		throw GameException{"No Tims cups."};
+		throw PlayerException{"No Tims cups."};
 	--timsCups;
 	++totalTimsCups;
 }
@@ -231,5 +227,19 @@ void Player::incrementBlockCount(std::string name) {
 //
 void Player::decrementBlockCount(std::string name) {
 	--(blockCount[name]);
+}
+
+std::string Player::getAvailableSymbols()
+{
+	std::string s { "Avaible symbols: " };
+	for (auto &i : symbolChart)
+	{
+		if (!i.second)
+		{
+			s += i.first;
+			s += " ";
+		}
+	}
+	return s;
 }
 

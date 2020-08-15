@@ -39,6 +39,7 @@ class Game : public Subject {
     void assets();
     void all();
     void populateAuction(Auction& au);
+	std::string getAvailablePlayerSymbols();
 };
 
 #endif
