@@ -1,5 +1,6 @@
 #ifndef __PROPERTY_H__
 #define __PROPERTY_H__
+
 #include "Tile.h"
 #include "Player.h"
 
@@ -12,15 +13,20 @@ class Property : public Tile{
 	int purchaseCost;
 	Player* owner;
 	bool morgaged;
+	virtual void landEffect(Player* p) override;
+	virtual void applyFee(Player* p) = 0;
+	virtual void gainPropEffect() = 0;
+	virtual void losePropEffect() = 0;
+	virtual void otherMortgageExcepts();
   public:
 	friend class IO;
 	Property(std::string name, int purchaseCost);
-	virtual void buy(Player* p) = 0;
-	virtual void mortgage(Player* p) = 0;
-	virtual void unmortgage(Player* p) = 0;
+	void buy(Player* p);
+	virtual void mortgage();
+	virtual void unmortgage();
 	bool isOwner(Player* p);
 	bool hasOwner();
-	void setOwner(Player* p);
+	virtual void setOwner(Player* p);
 	bool isProperty() override;
 };
 

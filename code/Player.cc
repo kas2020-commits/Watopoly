@@ -1,5 +1,8 @@
 #include <sstream>
+
+#include "GameException.h"
 #include "Player.h"
+
 
 // static member construction
 int Player::totalTimsCups {0};
@@ -32,23 +35,15 @@ Player::PlayerImpl::~PlayerImpl() {}
 Player::PlayerImpl::PlayerImpl(const std::string name, const char symbol, BoardIterator it)
 	: name{name}, symbol{symbol}, position{it}, cash{1500},
 	timsCups{0}, gymCount{0}, resCount{0}, bankrupt{false}, turnsTrapped{0},
-	netWorth{1500}, rolled{false}
-{}
+	netWorth{1500}, rolled{false} {}
 
 // constructor
-Player::Player(const std::string name, const char symbol, BoardIterator it)
-	:
-		data{std::make_shared<PlayerImpl>(name, symbol, it)},
-		blockCount{std::map<std::string, int>
-			{{ARTS1, 0}, {ARTS2, 0}, {ENG, 0}, {HEALTH, 0}, {ENV, 0}, {SCI1, 0},
-				{SCI2, 0}, {MATH, 0}}}
-{
-	try {
-		bool & isDup = symbolChart.at(symbol);
-		if (isDup) throw PlayerException();
-		else isDup = true;
-	}
-	catch (std::out_of_range &) { throw PlayerException(); };
+Player::Player(const std::string name, const char symbol, BoardIterator it) :
+  data{std::make_shared<PlayerImpl>(name, symbol, it)}, blockCount{std::map<std::string, int> {
+  {ARTS1, 0}, {ARTS2, 0}, {ENG, 0}, {HEALTH, 0}, {ENV, 0}, {SCI1, 0}, {SCI2, 0}, {MATH, 0}}} {
+	bool & isDup = symbolChart.at(symbol);
+	if (isDup) throw GameException{"Symbol already in use."};
+	else isDup = true;
 }
 
 // move player:
@@ -64,22 +59,22 @@ void Player::rollAndMove() {
 
 //
 void Player::move(const std::string name) {
-	const std::string oldLocation { data->position->getName() };
-	std::string midval;
+	BoardIterator newPosition = data->position;
 	while (true) {
-		data->position->getName();
-		if (midval.compare(name) == 0) break;
-		else if (midval.compare(oldLocation) == 0) throw PlayerException();
-		else ++data->position;
+		++newPosition;
+		if (newPosition->getName() == name) break;
+		if (newPosition == data->position)
+			throw GameException{"Fatal Error Occured."};
 	}
+	data->position = newPosition;
 	data->position->land(this);
 	updateObservers();
 }
 
 //
 Roll Player::roll(moreInfo = false) {
-	data->rolled = true;
 	Roll r{};
+	data->rolled = true;
 	updateObservers(r.getMessage(moreInfo));
 	return r;
 }
@@ -144,14 +139,14 @@ void Player::setResCount(int amount) { data->resCount = amount; }
 void Player::deposit(const int amount) {
 	data->cash += amount;
 	data->netWorth += amount;
-	updateObservers("Gave $" + amount + " to " + name + ".");
 }
 
 //
 void Player::withdraw(const int amount) {
+	if (data->cash < amount)
+		throw GameException{"Insufficient Funds."};
 	data->cash -= amount;
 	data->netWorth -= amount;
-	updateObservers("Withdrew $" + amount + " from " + name + ".");
 }
 
 //
@@ -193,15 +188,42 @@ void Player::decrementTurnsTrapped() {
 int Player::getTotalTimsCups() { return totalTimsCups; }
 
 //
-void Player::addTimsCup() {
-	if (data->timsCups + 1 > 4 || totalTimsCups + 1 > 4) throw PlayerException();
-	++data->timsCups;
+void Player::incrementTimsCups() {
+	if (data->timsCups + 1 > 4 || totalTimsCups + 1 > 4)
+		throw GameException{"Tims cups at max. capacity."};
+	++(data->timsCups);
 	--totalTimsCups;
 }
 
 //
-void Player::removeTimsCup() {
-	if (data->timsCups - 1 < 0 || totalTimsCups - 1 < 0) throw PlayerException();
-	--data->timsCups;
+void Player::decrementTimsCups() {
+	if (data->timsCups - 1 < 0 || totalTimsCups - 1 < 0)
+		throw PlayerException{"No Tims cups."};
+	--(data->timsCups);
 	++totalTimsCups;
 }
+
+//
+void Player::incrementGymCount() { ++(data->gymCount); }
+
+//
+void Player::decrementGymCount() { --(data->gymCount); }
+
+//
+void Player::incrementResCount() { ++(data->resCount); }
+
+//
+void Player::decrementResCount() { --(data->resCount); }
+
+//
+void Player::incrementBlockCount(std::string name) { 
+	++(data->blockCount[name]);
+}
+
+//
+void Player::decrementBlockCount(std::string name) {
+	--(data->blockCount[name]);
+}
+
+//
+void Player::decrementTurnsTrapped() { --(data->turnsTrapped); }

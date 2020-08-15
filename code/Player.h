@@ -10,9 +10,6 @@
 #include "util.h"
 
 //
-class PlayerException {};
-
-//
 class Player : public Subject {
 	// static fields
 	static int totalTimsCups;
@@ -61,9 +58,15 @@ class Player : public Subject {
 	void changeNetWorth(int);
 
     // incrementers / decrementers
-	void addTimsCup();
-    void removeTimsCup();
-    void decrementTurnsTrapped();
+	void incrementTimsCups();
+    void decrementTimsCups();
+	void incrementGymCount();
+	void decrementGymCount();
+	void incrementResCount();
+	void decrementResCount();
+	void incrementBlockCount(std::string name);
+	void decrementBlockCount(std::string name);
+	void decrementTurnsTrapped();
 };
 
 #endif

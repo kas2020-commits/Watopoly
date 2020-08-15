@@ -6,7 +6,7 @@ DCTimsLineTrap::DCTimsLineTrap(Player* p) :
 
 //
 void DCTimsLineTrap::useTimsCup() {
-    player->removeTimsCup();
+    player->decrementTimsCup();
     player->untrap();
 }
 

@@ -8,15 +8,6 @@
 #include "Board.h"
 
 //
-class GameException {
-  private:
-    std::string message;
-  public:
-    GameException(std::string message) : message{message} {}
-    std::string getMessage() { return message; }
-};
-
-//
 class Game : public Subject {
   friend class IO;
   private:
@@ -25,6 +16,7 @@ class Game : public Subject {
     std::vector<std::shared_ptr<Player>>::iterator curPlayer;
     bool started;
     void assets(std::string name);
+    std::shared_ptr<Player> getPlayer(std::string name);
   public:
     Game();
     virtual ~Game();

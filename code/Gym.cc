@@ -1,78 +1,34 @@
 #include "Gym.h"
-#include <iostream>
-#include <string>
+#include <sstream>
 
 //
 Gym::Gym(std::string name, int purchaseCost): Property{name, purchaseCost} {}
 
 //
-void Gym::landEffect(Player* p){
-    if (owner != nullptr){
-        int firstdie = rollDie();
-        int seconddie = rollDie();
-        int total = firstdie + seconddie;
-
-        if(p->getGymCount() == 2){
-            total = total * 10;
-            std::string rollfirst = std::to_string(firstdie);
-            std::string rollsecond = std::to_string(seconddie);
-            updateObservers("First dice is " + rollfirst );
-            updateObservers("Second dice is " + rollsecond );
-            std::string str= std::to_string(total);
-            updateObservers("Pay a total of " + str +"dollars!");
-            p->withdraw(total);
-            owner->deposit(total);
-        } else if (p->getGymCount() == 1){
-            total = total * 4;
-            std::string rollfirst = std::to_string(firstdie);
-            std::string rollsecond = std::to_string(seconddie);
-            updateObservers("First dice is " + rollfirst );
-            updateObservers("Second dice is " + rollsecond );
-            std::string str= std::to_string(total);
-            updateObservers("Pay a total of " + str +"dollars!");
-            p->withdraw(total);
-            owner->deposit(total);
-        }
-
-        // do execption here later
-    } else {
-        std::cout << "No owner";
-        throw PropertyException{};
+void Gym::applyFee(Player* p) {
+    if (hasOwner()){
+        std::ostringstream ss{"Payed $"};
+        Roll r = p->roll();
+        int payment{r.total};
+        if (owner->getGymCount() == 1) int payment *= 4;
+        if (owner->getGymCount() == 2) int payment *= 10;
+        // else throw exception possibly?
+        p->withdraw(payment);
+        owner->deposit(payment);
+        ss << payment << " to gym's owner: \""
+        ss << owner->getName() << "\"\n";
+        updateObservers(ss.str());
+    }
+    else {
+        // throw buy option
     }
 }
 
 //
-void Gym::buy(Player* p){
-    if (owner == nullptr){
-        owner = p;
-        p->withdraw( purchaseCost );
-    } else {
-        std::cout << "Have an owner!";
-        throw PropertyException{};
-    }
-}
+void Gym::gainPropEffect() { owner->incrementGymCount(); }
 
 //
-void Gym::mortgage(Player* p){
-    if( owner == p ){
-        morgaged = true;
-        p->deposit( purchaseCost * 0.5 );
-    } else {
-        std::cout << "Wrong Owner!";
-        throw PropertyException{};
-    }
-}
+void Gym::losePropEffect() { owner->decrementGymCount(); }
 
 //
-void Gym::unmortgage(Player* p){
-    if(morgaged){
-        morgaged = false;
-        p->withdraw( purchaseCost * 0.6 );
-    } else {
-        std::cout << "Not Morgaged!";
-        throw PropertyException{};
-    }
-
-}
-
 bool Gym::isGym() { return true; }

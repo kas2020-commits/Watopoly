@@ -3,6 +3,7 @@
 #include "AcademicBuilding.h"
 #include "Board.h"
 #include "Game.h"
+#include "GameException.h"
 #include "Gym.h"
 #include "Property.h"
 #include "Residence.h"
@@ -28,6 +29,15 @@ void Game::addPlayer(std::string name, char symbol) {
     auto p = std::make_shared<Player>(name, symbol, board->begin(true));
     players.emplace_back(p);
     attachObservers(p.get());
+    updateObservers("Added player \"" + name + "\" to the game!\n");
+}
+
+// adds a player to the game
+std::shared_ptr<Player> Game::getPlayer(std::string name) {
+    for (auto it = players.begin(); it != players.end(); it++) {
+        if ((*it)->getName() == name) return *it;
+    }
+    return nullptr;
 }
 
 // starts "game", all players must be added before game started
@@ -40,8 +50,7 @@ void Game::start() {
 
 //
 void Game::roll() {
-    if ((*curPlayer)->hasRolled())
-        throw GameException{"Already rolled.\n"};
+    if ((*curPlayer)->hasRolled()) throw GameException{"Already rolled.\n"};
     (*curPlayer)->rollAndMove();
 }
 
@@ -59,40 +68,83 @@ void Game::next() {
 }
 
 //
-void Game::trade(std::string name, std::string giveProp, std::string receiveProp) {}
+void Game::trade(std::string name, std::string giveProp, std::string receiveProp) {
+    // exception checking:
+    auto otherPlayer = getPlayer(name);
+    if (!otherPlayer) throw GameException{"\"" + name "\" is not a valid player.\n"};
+    Property* gpr = dynamic_cast<Property*>(&(board->at(giveProp)));
+    if (!gpr) throw GameException{"\"" + giveProp +  "\" is not a valid property.\n"};
+    if (!gpr->isOwner(curPlayer->get()))
+        throw GameException{"You do not own \"" + giveProp + "\".\n"};
+    Property* rpr = dynamic_cast<Property*>(&(board->at(receiveProp)));
+    if (!rpr) throw GameException{"\"" + receiveProp +  "\" is not a valid property.\n"};
+    if (!rpr->isOwner(curPlayer->get()))
+        throw GameException{"Player \"" name "\" does not own \"" + receiveProp + "\".\n"};
+    // trade is valid
+    gpr->setOwner(otherPlayer.get());
+    rpr->setOwner(curPlayer->get());
+}
 
 //
-void Game::trade(std::string name, std::string giveProp, int receiveCash) {}
+void Game::trade(std::string name, std::string giveProp, int receiveCash) {
+    // exception checking:
+    auto otherPlayer = getPlayer(name);
+    if (!otherPlayer) throw GameException{"\"" + name "\" is not a valid player.\n"};
+    Property* gpr = dynamic_cast<Property*>(&(board->at(giveProp)));
+    if (!gpr) throw GameException{"\"" + giveProp +  "\" is not a valid property.\n"};
+    if (!gpr->isOwner(curPlayer->get()))
+        throw GameException{"You do not own \"" + giveProp + "\".\n"};
+    otherPlayer->withdraw(receiveCash); // will throw exception if insufficient funds
+    // trade is valid
+    (*curPlayer)->deposit(receiveCash);
+    gpr->setOwner(otherPlayer.get());
+}
 
 //
-void Game::trade(std::string name, int giveCash, std::string receiveProp) {}
+void Game::trade(std::string name, int giveCash, std::string receiveProp) {
+    // exception checking:
+    auto otherPlayer = getPlayer(name);
+    if (!otherPlayer) throw GameException{"\"" + name "\" is not a valid player.\n"};
+    Property* rpr = dynamic_cast<Property*>(&(board->at(receiveProp)));
+    if (!rpr) throw GameException{"\"" + receiveProp +  "\" is not a valid property.\n"};
+    if (!rpr->isOwner(curPlayer->get()))
+        throw GameException{"Player \"" name "\" does not own \"" + receiveProp + "\"."};
+    (*curPlayer)->withdraw(giveCash);
+    // trade is valid
+    otherPlayer->deposit(giveCash);
+    rpr->setOwner(curPlayer->get());
+}
 
 //
 void Game::mortgage(std::string name) {
-    Property* pr = static_cast<Property*>(&(board->at(name)));
+    Property* pr = dynamic_cast<Property*>(&(board->at(name)));
     if (!pr) throw GameException("\"" + name + "\" is not a valid property.\n");
-    pr->mortgage(curPlayer->get());
+    if (pr->isOwner(curPlayer->get())) pr->mortgage();
+    else throw GameException{"You do not own \"" + name + "\".\n"};
 }
 
 //
 void Game::unmortgage(std::string name) {
-    Property* pr = static_cast<Property*>(&(board->at(name)));
+    Property* pr = dynamic_cast<Property*>(&(board->at(name)));
     if (!pr) throw GameException("\"" + name + "\" is not a valid property.\n");
-    pr->unmortgage(curPlayer->get());
+    if (pr->isOwner(curPlayer->get())) pr->unmortgage();
+    else throw GameException{"You do not own \"" + name + "\".\n"};
 }
 
 //
 void Game::buyImprovement(std::string name) {
-    AcademicBuilding* ab = static_cast<AcademicBuilding*>(&(board->at(name)));
+    AcademicBuilding* ab = dynamic_cast<AcademicBuilding*>(&(board->at(name)));
     if (ab) throw GameException("\"" + name + "\" is not a valid academic building.\n");
-    ab->buyImprovement(curPlayer->get());
+    if (ab->isOwner(curPlayer->get())) ab->buyImprovement();
+    else throw GameException{"You do not own \"" + name + "\".\n"};
 }
 
 //
 void Game::sellImprovement(std::string name) {
-    AcademicBuilding* ab = static_cast<AcademicBuilding*>(&(board->at(name)));
+    AcademicBuilding* ab = dynamic_cast<AcademicBuilding*>(&(board->at(name)));
     if (!ab) throw GameException("\"" + name + "\" is not a valid academic building.\n");
-    ab->sellImprovement(curPlayer->get());
+    if (ab->isOwner(curPlayer->get())) ab->sellImprovement();
+    else throw GameException{"You do not own \"" + name + "\".\n"};
 }
 
 //

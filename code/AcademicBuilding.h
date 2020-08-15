@@ -5,26 +5,28 @@
 #include <map>
 
 //
-class AcademicBuilding : public Property{
-	protected:
-		int improvementCost;
-		int improvementLevel;
-		std::string blockName;
-		std::vector<int> tuitionAtLevels;
-	public:
-		friend class IO;
-		static std::map<const std::string, int> blockMap;
-		AcademicBuilding(std::string name, std::string blockName,
-            int purchaseCost, int improvementCost,  int tuit0,
-            int tuit1, int tuit2, int tuit3, int tuit4, int tuit5);
-		virtual void landEffect(Player* p) override;
-		virtual void buy(Player* p) override;
-		virtual void mortgage(Player* p) override;
-		virtual void unmortgage(Player* p) override;
-		void buyImprovement(Player* p);
-		void sellImprovement(Player* p);
-		int getImprovementLevel();
-		virtual bool isAcademicBuilding() override;
+class AcademicBuilding : public Property {
+  friend class IO;
+  private:
+	bool ownerHasMonopoly();
+  protected:
+  	static std::map<const std::string, int> blockMonopoly;
+	int improvementCost;
+	int improvementLevel;
+	std::string block;
+	std::vector<int> tuitionAtLevels;
+	virtual void applyFee(Player* p) override;
+	virtual void gainPropEffect() override;
+	virtual void losePropEffect() override;
+	virtual void otherMortgageExcepts() override;
+  public:
+	AcademicBuilding(std::string name, std::string block,
+	  int purchaseCost, int improvementCost, int tuit0,
+	  int tuit1, int tuit2, int tuit3, int tuit4, int tuit5);
+	void buyImprovement();
+	void sellImprovement();
+	int getImprovementLevel();
+	virtual bool isAcademicBuilding() override;
 };
 
 #endif

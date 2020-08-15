@@ -4,14 +4,13 @@
 #include "util.h"
 
 class Gym: public Property{
-    public:
+  protected:
+    virtual void applyFee(Player* p) override;
+    virtual void gainPropEffect() override;
+	  virtual void losePropEffect() override;
+  public:
     Gym(std::string name, int purchaseCost);
-    void landEffect(Player* p) override;
-    void buy(Player* p) override;
-    void mortgage(Player* p) override;
-    void unmortgage(Player* p) override;
-	bool isGym() override;
-
+	  bool isGym() override;
 };
 
 #endif
