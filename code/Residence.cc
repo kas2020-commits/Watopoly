@@ -7,7 +7,7 @@ Residence::Residence(std::string name, int purchaseCost):
   Property(name, purchaseCost){}
 
 //
-void Residence::landEffect(Player*  p){
+void Residence::applyFee(Player*  p){
     if (hasOwner()) {
         int payment;
         if(p->getResCount() == 1) payment = 25;
@@ -19,7 +19,7 @@ void Residence::landEffect(Player*  p){
         catch (GameException&) { throw Debt{p, owner, payment}; }
         owner->deposit(payment);
         std::ostringstream ss{"Payed $"};
-        ss << payment << " for rent to land lord: \""
+        ss << payment << " for rent to land lord: \"";
         ss << owner->getName() << "\"";
         updateObservers(ss.str());
     }

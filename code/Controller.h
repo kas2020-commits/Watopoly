@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "View.h"
 #include "IO.h"
+#include "Debt.h"
 
 //
 class Controller {
@@ -20,10 +21,10 @@ class Controller {
 	DCTimsLineTrap dct;
 	bool testing;
 	void addPlayers();
-	void handleTrade(std::string name, 
+	void handleTrade(std::string name,
 	  std::string give, std::string receive);
   public:
-	Controller(Game* game, View* view, testing = false);
+	Controller(Game* game, View* view, bool testing = false);
 	virtual ~Controller();
 	void run();
 };

@@ -7,6 +7,7 @@
 
 // forward declaration
 class Player;
+class Property;
 
 //
 class PurchaseOption : public LogicException {

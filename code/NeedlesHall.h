@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include "Tile.h"
 #include "util.h"
+#include "Player.h"
 
 class NeedlesHall:public Tile{
     public:

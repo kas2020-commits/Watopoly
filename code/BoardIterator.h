@@ -9,13 +9,21 @@ class Board;
 class Tile;
 
 class BoardIterator {
-	const bool isCyclic;
+	bool isCyclic;
 	std::array<std::shared_ptr<Tile>, MAX_TILES>::iterator curTile;
 	std::array<std::shared_ptr<Tile>, MAX_TILES> & tiles;
+	void swap(BoardIterator &);
 	public:
 
+	// generic constructor
 	BoardIterator(std::array<std::shared_ptr<Tile>, MAX_TILES> &,
-			std::array<std::shared_ptr<Tile>, MAX_TILES>::iterator, const bool isCyclic = false);
+			std::array<std::shared_ptr<Tile>, MAX_TILES>::iterator, bool isCyclic = false);
+
+	// copy constructor
+	BoardIterator(const BoardIterator &);
+
+	// move constructor
+	BoardIterator(BoardIterator &&);
 
 	// Increments the itterator. Before incrementing however the method will
 	// check if the cyclic varibale was chosen. If it was, then it will
@@ -29,6 +37,10 @@ class BoardIterator {
 
 	// derefernce the itterator and call a specfic method in Tile.
 	Tile * operator->();
+
+	// copy constructor implemented
+	BoardIterator & operator=(const BoardIterator &);
+	BoardIterator & operator=(BoardIterator &&);
 
 	// Standard itterator behavior. No major changes have been made.
 	bool operator==(const BoardIterator &);

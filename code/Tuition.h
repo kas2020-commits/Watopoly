@@ -4,6 +4,8 @@
 #include "LogicException.h"
 #include "Tile.h"
 #include "util.h"
+#include "Player.h"
+#include "GameException.h"
 
 //
 class TuitionPayment : public LogicException {

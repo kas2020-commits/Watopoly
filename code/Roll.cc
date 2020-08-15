@@ -28,23 +28,23 @@ Roll::Roll(int die1, int die2) : die1{die1}, die2{die2},
     total{die1 + die2} {}
 
 //
-loadNextRoll(int die1, die2) {
+void Roll::loadNextRoll(int die1, int die2) {
     nextRoll = Roll{die1, die2};
     nextRollLoaded = true;
 }
 
 //
-discardNextRoll() { nextRollLoaded = false; }
+void Roll::discardNextRoll() { nextRollLoaded = false; }
 
 //
-bool Roll:isDouble() { return (die1 == die2); }
+bool Roll::isDouble() { return (die1 == die2); }
 
 //
-std::string getMessage(moreInfo = false) {
+std::string Roll::getMessage(bool moreInfo) {
     std::ostringstream ss{""};
-    ss << "You rolled: " << r.die1 << " + " << r.die2 << " = " << r.total;
+    ss << "You rolled: " << die1 << " + " << die2 << " = " << total;
     if (!moreInfo) return ss.str() + "\n";
-    if (isDouble()) << ", a double!\n";
-    else ss << ", not a double.\n"
+    if (isDouble()) ss << ", a double!\n";
+    else ss << ", not a double.\n";
     return ss.str();
 }

@@ -3,6 +3,8 @@
 
 #include "LogicException.h"
 #include "Tile.h"
+#include "Player.h"
+#include "GameException.h"
 
 //
 class DCTimsLineTrap : public LogicException {

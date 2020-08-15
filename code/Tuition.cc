@@ -20,10 +20,9 @@ void TuitionPayment::payPercent() {
 
 //
 void TuitionPayment::bankrupt() {
-    int cash = player->getCash()
+    int cash = player->getCash();
     if (cash >= 300 || cash >= player->getNetWorth()) {
-        throw GameException{"You can pay tuition with one of the
-          payment options, no reason to go bankrupt."};
+        throw GameException{"You can pay tuition with one of the payment options, no reason to go bankrupt."};
     }
     // otherwise, allow bankruptcy
     player->setBankrupt();

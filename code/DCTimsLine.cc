@@ -9,7 +9,7 @@ DCTimsLineTrap::DCTimsLineTrap() : player{nullptr} {}
 
 //
 void DCTimsLineTrap::useTimsCup() {
-    player->decrementTimsCup();
+    player->decrementTimsCups();
     player->untrap();
 }
 
@@ -21,11 +21,10 @@ void DCTimsLineTrap::payCash() {
 
 //
 void DCTimsLineTrap::roll() {
-    if (player->getTurnsTrpped() == 0) {
-        throw GameException{"Must leave Tim's line 
-          this turn, pay or use Tims cup.\n"};
+    if (player->getTurnsTrapped() == 0) {
+        throw GameException{"Must leave Tim's line this turn, pay or use Tims cup.\n"};
     }
-    else if (player->hasRolled()) 
+    else if (player->hasRolled())
         throw GameException{"Already rolled.\n"};
     Roll r = player->roll(true);
     if (r.isDouble()) player->untrap();
@@ -34,8 +33,8 @@ void DCTimsLineTrap::roll() {
 //
 void DCTimsLineTrap::roll(int die1, int die2) {
     Roll::loadNextRoll(die1, die2);
-    try () { roll(); }
-    catch (GameException& e) { 
+    try { roll(); }
+    catch (GameException& e) {
         Roll::discardNextRoll();
         throw e;
     }
@@ -46,5 +45,5 @@ DCTimsLine::DCTimsLine() : Tile{DC_TIMS_LINE} {}
 
 //
 void DCTimsLine::throwTrap(Player* p) {
-    throw DCTimsLineTrap trap{p};
+    throw DCTimsLineTrap{p};
 }

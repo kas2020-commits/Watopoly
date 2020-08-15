@@ -13,7 +13,7 @@ class Auction : public LogicException {
   private:
     Property* property;
     std::map<std::string, Player*> bidders;
-    Player* p highestBidder;
+    Player * highestBidder;
     int highestBid;
     bool ended;
   public:

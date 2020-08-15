@@ -2,6 +2,8 @@
 #define __GYM_H__
 #include "Property.h"
 #include "util.h"
+#include "GameException.h"
+#include "Debt.h"
 
 class Gym: public Property{
   protected:

@@ -8,6 +8,7 @@
 #include "BoardIterator.h"
 #include "Tile.h"
 #include "util.h"
+#include "Roll.h"
 
 //
 class Player : public Subject {
@@ -24,7 +25,7 @@ class Player : public Subject {
 	Player(const std::string name, const char symbol, BoardIterator);
 
 	// moves the player either by a number of tiles or to a location.
-	Roll roll(moreInfo = false);
+	Roll roll(bool moreInfo = false);
 	void move(const std::string);
 	void rollAndMove();
 	void startTurn();
@@ -52,7 +53,7 @@ class Player : public Subject {
 	void withdraw(const int);
 	void setBankrupt();
 	void untrap();
-	void trap();
+	void trap(int);
 	void setTimsCups(int);
 	void setGymCount(int);
 	void setResCount(int);

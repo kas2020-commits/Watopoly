@@ -59,7 +59,7 @@ void Player::rollAndMove() {
 
 //
 void Player::move(const std::string name) {
-	BoardIterator newPosition = data->position;
+	BoardIterator newPosition { data->position };
 	while (true) {
 		++newPosition;
 		if (newPosition->getName() == name) break;
@@ -72,7 +72,7 @@ void Player::move(const std::string name) {
 }
 
 //
-Roll Player::roll(moreInfo = false) {
+Roll Player::roll(bool moreInfo) {
 	Roll r{};
 	data->rolled = true;
 	updateObservers(r.getMessage(moreInfo));
@@ -80,15 +80,15 @@ Roll Player::roll(moreInfo = false) {
 }
 
 //
-void startTurn() {
+void Player::startTurn() {
 	data->rolled = false;
 	if (isTrapped()) {
 		decrementTurnsTrapped();
 		std::ostringstream ss{"You are trapped in "};
-    	ss << position->getName() << "(for max. ";
+    	ss << data->position->getName() << "(for max. ";
     	ss << data->turnsTrapped << " more turns).\n";
 		updateObservers(ss.str());
-		position->throwTrap(this);
+		data->position->throwTrap(this);
 	}
 	// reset any other turn related logic vars
 }
@@ -124,10 +124,7 @@ Tile & Player::getPosition() { return *data->position; }
 int Player::getTurnsTrapped() { return data->turnsTrapped; }
 
 //
-bool Player::isTrapped() { return (turnsTrapped > 0); }
-
-//
-int Player::getTurnsTrapped() { return turnsTrapped; }
+bool Player::isTrapped() { return (data->turnsTrapped > 0); }
 
 //
 int Player::getNetWorth() { return data->netWorth; }
@@ -170,7 +167,7 @@ void Player::setBankrupt() {
 }
 
 //
-void Player::untrap() { 
+void Player::untrap() {
 	data->turnsTrapped = 0;
 	startTurn(); // start fresh
 	updateObservers("You have been untrapped!");
@@ -180,13 +177,13 @@ void Player::untrap() {
 void Player::trap(int turns) {
 	data->turnsTrapped = turns;
 	std::ostringstream ss{"You have been trapped in "};
-	ss << position->getName() <<  " (for max. " << turns << " turns)!"
+	ss << data->position->getName() <<  " (for max. " << turns << " turns)!";
 	updateObservers(ss.str());
 }
 
 //
 void Player::decrementTurnsTrapped() {
-	if (turnsTrapped <= 0) --(data->turnsTrapped);
+	if (data->turnsTrapped <= 0) --(data->turnsTrapped);
 }
 
 // static methods:
@@ -203,7 +200,7 @@ void Player::incrementTimsCups() {
 //
 void Player::decrementTimsCups() {
 	if (data->timsCups <= 0)
-		throw PlayerException{"No Tims cups."};
+		throw GameException{"No Tims cups."};
 	--(data->timsCups);
 	++totalTimsCups;
 }
@@ -221,14 +218,12 @@ void Player::incrementResCount() { ++(data->resCount); }
 void Player::decrementResCount() { --(data->resCount); }
 
 //
-void Player::incrementBlockCount(std::string name) { 
-	++(data->blockCount[name]);
+void Player::incrementBlockCount(std::string name) {
+	++(blockCount[name]);
 }
 
 //
 void Player::decrementBlockCount(std::string name) {
-	--(data->blockCount[name]);
+	--(blockCount[name]);
 }
 
-//
-void Player::decrementTurnsTrapped() { --(data->turnsTrapped); }
