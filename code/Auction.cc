@@ -1,3 +1,4 @@
+#include <sstream>
 #include "Auction.h"
 #include "GameException.h"
 
@@ -37,10 +38,11 @@ void Auction::end() {
     ended = true;
 }
 
-std::ostringstream ss{""};
+std::string Auction::getMessage() {
+    std::ostringstream ss{""};
     if (!highestBid) {
         ss << "Auction for \"" << property->getName();
-        ss <<  << "\" has begun. Starting bidding at $0.\n";
+        ss <<  "\" has begun. Starting bidding at $0.\n";
     } 
     else if (!ended) {
         ss << "Highest Bid: $" << highestBid;

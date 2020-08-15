@@ -290,6 +290,7 @@ void Controller::run(bool init) {
 					try { command >> bid; }
 					catch (...) { view->update("Not a valid bid.\n"); }
 					au.bid(name, bid);
+					view->update(au.getMessage());
 					continue;
 				}
 				else {
@@ -300,7 +301,7 @@ void Controller::run(bool init) {
 			else if (action == "end") {
 				if (state == 4) {
 					au.end();
-					// print results
+					view->update(au.getMessage());
 					state = 0;
 				}
 				else {
@@ -324,6 +325,7 @@ void Controller::run(bool init) {
 		catch (Auction& e) {
 			au = e;
 			game->populateAuction(au);
+			view->update(au.getMessage());
 			state = 4;
 		}
 		catch (Debt& e) {
