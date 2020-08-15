@@ -106,43 +106,54 @@ void Controller::handleTrade(std::string name, std::string give, std::string rec
 }
 
 //
+void Controller::help() {
+	std::string h {
+		"Here is a list of all the commands you can use:\n"
+		"\troll: rolls dice and moves player\n"
+		"\tnext: end your turn\n"
+		"\ttrade <name> <give> <receive>: offers a trade to name with the current player\n"
+		"\timprove <property> buy/sell: Attempts to buy or sell an improvement for property\n"
+		"\timprove <property> buy/sell: Attempts to buy or sell an improvement for property\n"
+		"\tmortgage <Property>: Attempts to mortgage property\n"
+	};
+	view->update(h);
+}
+
+void Controller::displayBoard() {
+	view->display();
+	view->update("For a list of all the commands you can use, type \"help\"\n");
+}
+
+//
 void Controller::run(bool init) {
 	//
-	if (init) {
+	if (init) { // init new game ???
 		view->update("Welcome to watopoly!\n");
 		addPlayers();
-
-		// main game loop setup
 		game->start();
 	}
-	view->display();
-	/* state 0: regular turn, player has access to all basic commands
+	displayBoard(); // initial board display
+
+	/* CONTROLLER STATES
+	 * state 0: regular turn, player has access to all basic commands
 	 * state 1: student must pay tuition, has access to trade and bankrupt
 	 * state 2: student trapped
 	 * state 3: student must decide where or not to buy a property
 	 * state 4: auction
 	 * state 5: student in debt
 	 */
-	std::stringstream command;
-	std::string action;
+
 	// main game loop for game logic
+	std::istringstream command;
+	std::string action;
 	while (true) {
 		//
-		view->update("For a list of all the commands you can use, type \"help\"\n");
-		command = std::stringstream{view->getCommand()};
+		command = std::istringstream{view->getCommand()};
 		command >> action;
 
 		// game logic
 		try {
-			if (action == "help") {
-				view->update("Here is a list of all the commands you can use:\n");
-				view->update("roll: roll dice\n");
-				view->update("next: end your turn\n");
-				view->update("trade <name> <give> <receive>: offers a trade to name with the current player\n offering give and requesting receive, where give and receive are either amounts of money or a property name. Responses are accept and reject.\n");
-				view->update("improve <property> buy/sell: Attempts to buy or sell an improvement for property\n");
-				view->update("improve <property> buy/sell: Attempts to buy or sell an improvement for property\n");
-				view->update("mortgae <Property>: Attempts to mortgage property\n");
-			}
+			if (action == "help") help();
 			else if (action == "roll") {
 				if (state == 0) {
 					if (!testing) game->roll();
@@ -313,7 +324,7 @@ void Controller::run(bool init) {
 				view->update("Invalid command.\n");
 				continue;
 			}
-			view->display();
+			displayBoard();
 		}
 		catch (GameException& e) {
 			view->update(e.getMessage());
@@ -326,6 +337,7 @@ void Controller::run(bool init) {
 			au = e;
 			game->populateAuction(au);
 			view->update(au.getMessage());
+			view->update("To bid, type \"bid <name> <amount>\"\n");
 			state = 4;
 		}
 		catch (Debt& e) {

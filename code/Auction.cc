@@ -38,6 +38,8 @@ void Auction::end() {
     ended = true;
 }
 
+
+//
 std::string Auction::getMessage() {
     std::ostringstream ss{""};
     if (!highestBid) {
@@ -49,8 +51,8 @@ std::string Auction::getMessage() {
         ss << " by \"" << highestBidder->getName() << "\".\n";
     }
     else {
-        ss << "\"" << highestBidder->getName() << 
-        ss << "\" won the auction of \"" << property->getName() 
+        ss << "\"" << highestBidder->getName();
+        ss << "\" won the auction of \"" << property->getName();
         ss << "\" with the highest bid of $" << highestBid << ".\n";
     }
     return ss.str();

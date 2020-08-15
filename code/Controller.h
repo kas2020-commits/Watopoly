@@ -23,6 +23,8 @@ class Controller {
 	void addPlayers();
 	void handleTrade(std::string name,
 	  std::string give, std::string receive);
+	void help();
+	void displayBoard();
   public:
 	Controller(Game* game, View* view, bool testing = false);
 	virtual ~Controller();

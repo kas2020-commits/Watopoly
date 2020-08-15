@@ -22,7 +22,7 @@ class Auction : public LogicException {
     void bid(std::string name, int amount);
     void addBidder(std::string name, Player* p);
     void end();
-    std::string getMessage();
+    virtual std::string getMessage() override;
 };
 
 #endif
