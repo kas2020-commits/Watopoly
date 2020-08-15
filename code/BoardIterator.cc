@@ -12,6 +12,13 @@ BoardIterator &  BoardIterator::operator++()
 	return *this;
 }
 
+BoardIterator &  BoardIterator::operator--()
+{
+	--curTile;
+	if (curTile == tiles.begin() && isCyclic) curTile = tiles.begin();
+	return *this;
+}
+
 Tile & BoardIterator::operator*()
 {
 	return **curTile;

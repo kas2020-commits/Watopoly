@@ -11,13 +11,15 @@
 //
 class Game : public Subject {
   friend class IO;
+
   private:
     std::unique_ptr<Board> board;
     std::vector<std::shared_ptr<Player>> players;
     std::vector<std::shared_ptr<Player>>::iterator curPlayer;
     bool started;
-    void assets(std::string name);
+    void assets(std::shared_ptr<Player>);
     std::shared_ptr<Player> getPlayer(std::string name);
+
   public:
     Game();
     virtual ~Game();

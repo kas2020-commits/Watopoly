@@ -5,7 +5,7 @@ struct IO::IOImpl {
 	head PLAYER { "PLAYER INFORMATION STARTS" };
 	head IMPROVEMENTS { "TILE IMPROVEMENT INFORMATION" };
 	head CURRENTPLAYER { "CURRENT PLAYER" };
-	head GAMEBOOLS { "GAME BOOLS ARE" };
+	head GAMESTARTED { "DID THE GAME START?" };
 	head ACADEEMIC { "ACADEEMIC BUILDING"};
 	head PROPERTY { "GENERIC PROPERTY" };
 };
@@ -58,7 +58,8 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 	map<int, string> propertyList;
 	map<int, AcademicInfo> academicList;
 
-	map<string, shared_ptr<Player>> IOplayers;
+	vector<shared_ptr<Player>> IOplayers;
+	/* map<string, shared_ptr<Player>> IOplayers; */
 	bool permStarted;
 	bool permRolled;
 
@@ -88,11 +89,12 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 				for (int i = 0; i < tempPosition; ++i) ++tempIt;
 				shared_ptr<Player> tempPlayer = make_shared<Player>(tempName, tempSymbol, tempIt);
 				tempPlayer->deposit(tempCash);
-				tempPlayer->setTimsCups(tempTimsCups);
-				tempPlayer->setResCount(tempResCount);
-				tempPlayer->setGymCount(tempGymCount);
-				tempPlayer->setTurnsTrapped(tempTurnsTrapped);
-				IOplayers[tempName] = tempPlayer;
+				tempPlayer->data.timsCups = tempTimsCups;
+				tempPlayer->data.resCount = tempResCount;
+				tempPlayer->data.gymCount = tempGymCount;
+				tempPlayer->data.turnsTrapped = tempTurnsTrapped;
+
+				IOplayers.push_back(tempPlayer);
 			}
 
 			// handle an academic building
@@ -121,11 +123,11 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 			}
 
 			// stores the boolean values for game.
-			else if (s.compare(list->GAMEBOOLS) == 0)
+			else if (s.compare(list->GAMESTARTED) == 0)
 			{
 				getline(file, s);
 				istringstream bools{s};
-				bools >> permStarted >> permRolled;
+				bools >> permStarted;
 			}
 
 			else break;
@@ -136,12 +138,12 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 	// fix players' blockCount datafield
 	for (auto &i : IOplayers)
 	{
-		string tempPlayerName = i.second->getName();
+		string tempPlayerName = i->getName();
 		for (auto &j : academicList)
 		{
 			if (j.second.name == tempPlayerName)
 			{
-				i.second->blockCount[j.second.blockName] += 1;
+				i->blockCount[j.second.blockName] += 1;
 			}
 		}
 	}
@@ -157,7 +159,14 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 			if (tempTileIndex == tempBoardIt->getIndex())
 			{
 				auto tempAcademic = dynamic_cast<AcademicBuilding *>(&(*tempBoardIt));
-				tempAcademic->owner = IOplayers.find(tempName)->second.get();
+				for (auto &it : IOplayers)
+				{
+					if (it->getName().compare(tempName) == 0)
+					{
+						tempAcademic->owner = it.get();
+						break;
+					}
+				}
 				tempAcademic->improvementLevel = tempTileImprovements;
 			}
 		}
@@ -171,21 +180,27 @@ std::unique_ptr<Game> IO::load(const std::string filename)
 		for (auto tempBoardIt = boardStart; tempBoardIt != boardEnd; ++ tempBoardIt)
 		{
 			auto tempProperty = dynamic_cast<AcademicBuilding *>(&(*tempBoardIt));
-			tempProperty->owner = IOplayers.find(tempName)->second.get();
+			for (auto &it : IOplayers)
+			{
+				if (it->getName().compare(tempName) == 0)
+				{
+					tempProperty->owner = it.get();
+					break;
+				}
+			}
 		}
 	}
 
 	// Update game fields.
 	for (auto i = IOplayers.begin(); i != IOplayers.end(); ++i)
 	{
-		if (i->first.compare(currPlayerName) == 0)
+		if ((*i)->getName().compare(currPlayerName) == 0)
 		{
 			game->curPlayer = i;
 			break;
 		}
 	}
 	game->started = permStarted;
-	game->rolled = permRolled;
 	game->players = IOplayers;
 
 	// fin
@@ -204,14 +219,14 @@ void IO::save(const std::string filename, Game * game)
 	for (auto it = game->players.begin(); it != game->players.end(); ++it)
 	{
 		file << list->PLAYER << endl
-			<< it->second->getName() << endl
-			<< it->second->getSymbol() << " "
-			<< it->second->getPosition().getIndex() << " "
-			<< it->second->getCash() << " "
-			<< it->second->getTimsCups() << " "
-			<< it->second->getResCount() << " "
-			<< it->second->getResCount() << " "
-			<< it->second->getTurnsTrapped() << " "
+			<< it->get()->data.name << endl
+			<< it->get()->data.symbol << " "
+			<< it->get()->data.position->getIndex() << " "
+			<< it->get()->data.cash << " "
+			<< it->get()->data.timsCups << " "
+			<< it->get()->data.resCount << " "
+			<< it->get()->data.resCount << " "
+			<< it->get()->data.turnsTrapped << " "
 			<< endl;
 	}
 
@@ -222,31 +237,31 @@ void IO::save(const std::string filename, Game * game)
 		if (it->isAcademicBuilding())
 		{
 			auto tempAcademic = dynamic_cast<AcademicBuilding *>(&(*it));
-			if (tempAcademic->getOwner() != nullptr)
+			if (tempAcademic->owner != nullptr)
 			{
 				file<< list->ACADEEMIC << endl
 					<< tempAcademic->getIndex() << " "
-					<< tempAcademic->getOwner()->getName() << " "
+					<< tempAcademic->owner->getName() << " "
 					<< tempAcademic->getImprovementLevel() << endl;
 			}
 		}
 		else if (it->isProperty())
 		{
 			auto tempProperty = dynamic_cast<Property *>(&(*it));
-			if (tempProperty->getOwner() != nullptr)
+			if (tempProperty->owner != nullptr)
 			{
 				file<< list->PROPERTY << endl
 					<< tempProperty->getIndex() << " "
-					<< tempProperty->getOwner()->getName() << endl;
+					<< tempProperty->owner->getName() << endl;
 			}
 		}
 	}
 
 	// save current player
-	file << list->CURRENTPLAYER << endl << game->curPlayer->second->getName() << endl;
+	file << list->CURRENTPLAYER << endl << game->curPlayer->get()->getName() << endl;
 
 	// save game bools
-	file << list->GAMEBOOLS << endl << game->started << " " << game->rolled << endl;
+	file << list->GAMESTARTED << endl << game->started << endl;
 
 	// fin
 	file.close();

@@ -1,6 +1,7 @@
 #ifndef __COOP_FEE_H__
 #define __COOP_FEE_H__
 #include "Tile.h"
+#include "Player.h"
 
 //
 class CoopFee: public Tile {

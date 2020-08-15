@@ -21,9 +21,8 @@ void Debt::pay() {
 
 void Debt::bankrupt() {
     if (owedFrom->getCash() >= owed) {
-        throw GameException{"You can pay your debt, 
-          no reason to go bankrupt."};
+        throw GameException{"You can pay your debt, no reason to go bankrupt."};
     }
     //otherwise, allow bankruptcy
-    owed->setBankrupt();
+    owedFrom->setBankrupt();
 }

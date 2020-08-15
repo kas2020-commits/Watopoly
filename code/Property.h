@@ -26,7 +26,7 @@ class Property : public Tile {
   protected:
 	int purchaseCost;
 	Player* owner;
-	bool morgaged;
+	bool mortgaged;
 	virtual void landEffect(Player* p) override;
 	virtual void applyFee(Player* p) = 0;
 	virtual void gainPropEffect() = 0;

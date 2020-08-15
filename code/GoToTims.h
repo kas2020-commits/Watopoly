@@ -1,6 +1,7 @@
 #ifndef __GO_TO_TIMS_H__
 #define __GO_TO_TIMS_H__
 #include "Tile.h"
+#include "Player.h"
 
 //
 class GoToTims : public Tile {

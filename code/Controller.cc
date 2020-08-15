@@ -5,7 +5,7 @@
 #include <iostream> // for debugging
 
 //
-Controller::Controller(Game* game, View* view, testing = false) : game{game}, view{view}, 
+Controller::Controller(Game* game, View* view, bool testing) : game{game}, view{view},
   state{0}, testing{testing} {}
 
 //
@@ -39,7 +39,7 @@ void Controller::addPlayers() {
 				game->addPlayer(name, symbol);
 				break;
 			}
-			catch (PlayerException &) { // implement invalid player construction exception
+			catch (GameException &) { // implement invalid player construction exception
 				view->update("Invalid player details.\n");
 			}
 		}
@@ -124,7 +124,7 @@ void Controller::run() {
 					else {
 						int die1, die2;
 						try { command >> die1 >> die2; }
-						catch () { 
+						catch (...) {
 							game->roll();
 							continue;
 						}
@@ -136,12 +136,12 @@ void Controller::run() {
 					else {
 						int die1, die2;
 						try { command >> die1 >> die2; }
-						catch () {
-							dct->roll();
+						catch (...) {
+							dct.roll();
 							state = 0;
 							continue;
 						}
-						dct->roll(die1, die2);
+						dct.roll(die1, die2);
 						state = 0;
 					}
 				}
@@ -232,11 +232,11 @@ void Controller::run() {
                     std::string method;
 					command >> method;
 					if (method == "$300") {
-						tuition.payCash();
+						tp.payCash();
 						state = 0;
 					}
 					else if (method == "10%") {
-						tuition.payPercent();
+						tp.payPercent();
 						state = 0;
 					}
 					else view->update("Not a valid tuition payment method.\n");

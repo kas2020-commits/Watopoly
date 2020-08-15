@@ -10,14 +10,30 @@
 #include "util.h"
 #include "Roll.h"
 
+
 //
 class Player : public Subject {
 	// static fields
 	static int totalTimsCups;
 	static std::map<const char, bool> symbolChart;
-	// fields
-	struct PlayerImpl;
-	std::shared_ptr<PlayerImpl> data;
+
+	// private structure
+	struct PlayerData {
+		const std::string name;
+		const char symbol;
+		BoardIterator position;
+		int cash;
+		int timsCups;
+		int gymCount;
+		int resCount;
+		bool bankrupt;
+		int turnsTrapped;
+		int netWorth;
+		int rolled;
+		PlayerData(const std::string name, const char symbol, BoardIterator it);
+	};
+
+	PlayerData data;
 	std::map<std::string, int> blockCount;
 
 	public:
@@ -26,6 +42,7 @@ class Player : public Subject {
 
 	// moves the player either by a number of tiles or to a location.
 	Roll roll(bool moreInfo = false);
+	void move(int);
 	void move(const std::string);
 	void rollAndMove();
 	void startTurn();
@@ -59,9 +76,9 @@ class Player : public Subject {
 	void setResCount(int);
 	void changeNetWorth(int);
 
-    // incrementers / decrementers
+	// incrementers / decrementers
 	void incrementTimsCups();
-    void decrementTimsCups();
+	void decrementTimsCups();
 	void incrementGymCount();
 	void decrementGymCount();
 	void incrementResCount();

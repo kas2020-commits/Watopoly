@@ -30,6 +30,7 @@ class BoardIterator {
 	// move the itterator to the first item when called on an itterator
 	// pointing the end.
 	BoardIterator & operator++();
+	BoardIterator & operator--();
 
 	// derefernce the itterator to get the reference to the specific tile on
 	// the board

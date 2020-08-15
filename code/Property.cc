@@ -11,14 +11,14 @@ PurchaseOption::PurchaseOption(Property* pr, Player* p) : property{pr},
 PurchaseOption::PurchaseOption() : property{nullptr}, player{nullptr} {}
 
 //
-void PurchaseOption::buy() { property->buy(Player); }
+void PurchaseOption::buy() { property->buy(player); }
 
 //
 void PurchaseOption::pass() { throw Auction{property}; }
 
 //
 Property::Property(std::string name, int purchaseCost) :
-  Tile{name}, purchaseCost{purchaseCost}, owner{nullptr}, morgaged{false} {}
+  Tile{name}, purchaseCost{purchaseCost}, owner{nullptr}, mortgaged{false} {}
 
 //
 void Property::buy(Player* p) {
@@ -45,12 +45,12 @@ void Property::unmortgage() {
 }
 
 //
-bool Property::otherMortgageExcepts() {}
+void Property::otherMortgageExcepts() {}
 
 //
 void Property::landEffect(Player* p) {
-	if (!isOwned()) throw PurchaseOption(this, p);
-	else if (mortgaged) 
+	if (!hasOwner()) throw PurchaseOption(this, p);
+	else if (mortgaged)
 		updateObservers("Lucky you, \"" + name + "\" is mortgaged.");
 	else applyFee(p);
 }
@@ -62,7 +62,7 @@ bool Property::isOwner(Player* p) { return (p == owner); }
 bool Property::hasOwner() { return (owner == nullptr); }
 
 //
-bool Property::setOwner(Player* p) {
+void Property::setOwner(Player* p) {
 	if (hasOwner()) {
 		losePropEffect();
 		owner->changeNetWorth(purchaseCost);
@@ -72,7 +72,7 @@ bool Property::setOwner(Player* p) {
 	owner->changeNetWorth(purchaseCost);
 	if (mortgaged) {
 		try { owner->withdraw(0.1 * purchaseCost); }
-		catch (GameException& e) { throw Debt{this, 0.1 * purchaseCost}; }
+		catch (GameException& e) { throw Debt{owner, purchaseCost / 10}; }
 	}
 }
 

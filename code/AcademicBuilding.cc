@@ -16,7 +16,7 @@ AcademicBuilding::AcademicBuilding(std::string name, std::string block,
   std::vector<int>{tuit0, tuit1, tuit2, tuit3, tuit4, tuit5}} {}
 
 //
-bool AcademicBuilding::ownerHasMonopoly {
+bool AcademicBuilding::ownerHasMonopoly() {
 	if (!hasOwner()) return false;
 	return (owner->getBlockCount(block) == blockMonopoly[block]);
 }
@@ -51,7 +51,7 @@ void AcademicBuilding::buyImprovement() {
 
 //
 void AcademicBuilding::sellImprovement() {
-	else if (improvementLevel <= 0)
+	if (improvementLevel <= 0)
 		throw GameException{"\"" + name + "\" has no improvements.\n"};
 	// otherwise, we can buy an exception assuming player has necessary funds
 	improvementLevel -= 1;
@@ -60,10 +60,10 @@ void AcademicBuilding::sellImprovement() {
 }
 
 //
-void AcademicBuilding::gainPropEffect() { owner->incrementBlockCount(blockName); }
+void AcademicBuilding::gainPropEffect() { owner->incrementBlockCount(block); }
 
 //
-void AcademicBuilding::losePropEffect() { owner->decrementBlockCount(blockName); }
+void AcademicBuilding::losePropEffect() { owner->decrementBlockCount(block); }
 
 //
 int AcademicBuilding::getImprovementLevel(){ return improvementLevel; }

@@ -8,7 +8,7 @@ Residence::Residence(std::string name, int purchaseCost):
 
 //
 void Residence::applyFee(Player*  p){
-    int payment;
+    int payment = 0;
     if(p->getResCount() == 1) payment = 25;
     else if(p->getResCount() == 2) payment = 50;
     else if(p->getResCount() == 3) payment = 100;
