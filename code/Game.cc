@@ -163,17 +163,16 @@ void Game::sellImprovement(std::string name) {
 
 //
 void Game::assets(std::shared_ptr<Player> p) {
-	std::string name = p->getName();
-
 	//
 	std::vector<AcademicBuilding*> ownedABs{};
 	std::vector<Residence*> ownedResidences{};
 	std::vector<Gym*> ownedGyms{};
+	std::cout << p.get() << "\n";
 
 	//
 	for (auto it = board->begin(); it != board->end(); ++it) {
 		auto pr = dynamic_cast<Property*>(&(*it));
-		if (!pr || pr->hasOwner()) continue; // cotinue to next tile if not a property
+		if (!pr || pr->hasOwner()) continue; // continue to next tile if not a property
 		AcademicBuilding* ab = dynamic_cast<AcademicBuilding*>(pr);
 		if (ab) {
 			if (ab->isOwner(p.get())) ownedABs.emplace_back(ab);
@@ -193,7 +192,8 @@ void Game::assets(std::shared_ptr<Player> p) {
 
 	//
 	std::ostringstream ss{""};
-	ss << "Player: " << name << "\n";
+	ss << "Player: " << p->getName() << "\n";
+	ss << "\tCash: " << p->getCash() << "\n";
 	ss << "\tTotal Tims Cups: " << p->getTimsCups() << "\n";
 	ss << "\tOwned Academic Buildings:\n";
 	if (ownedABs.size() <= 0) ss << "\t\tNone\n";

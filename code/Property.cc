@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Auction.h"
 #include "Debt.h"
 #include "GameException.h"
@@ -11,7 +12,11 @@ PurchaseOption::PurchaseOption(Property* pr, Player* p) : property{pr},
 PurchaseOption::PurchaseOption() : property{nullptr}, player{nullptr} {}
 
 //
-void PurchaseOption::buy() { property->buy(player); }
+void PurchaseOption::buy() { 
+	std::cout << player << "\n";
+	std::cout << property << "\n";
+	property->buy(player); 
+}
 
 //
 void PurchaseOption::pass() { throw Auction{property}; }
@@ -23,6 +28,7 @@ Property::Property(std::string name, int purchaseCost) :
 //
 void Property::buy(Player* p) {
 	p->withdraw(purchaseCost);
+	std::cout << p << "\n";
 	setOwner(p);
 	updateObservers("Bought \"" + name + "\"!\n");
 }
@@ -32,7 +38,7 @@ void Property::mortgage() {
 	if (!mortgaged)
 		throw GameException{"\"" + name + "\" is already mortgaged."};
 	otherMortgageExcepts();
-	owner->deposit(0.5 * purchaseCost);
+	owner->deposit(purchaseCost / 2);
 	mortgaged = true;
 }
 
@@ -40,7 +46,7 @@ void Property::mortgage() {
 void Property::unmortgage() {
 	if (mortgaged)
 		throw GameException{"\"" + name + "\" is already unmortgaged."};
-	owner->withdraw(0.6 * purchaseCost); // may throw
+	owner->withdraw(6 * purchaseCost / 10); // may throw
 	mortgaged = false;
 }
 
@@ -65,7 +71,7 @@ bool Property::hasOwner() { return owner != nullptr; }
 void Property::setOwner(Player* p) {
 	if (hasOwner()) {
 		losePropEffect();
-		owner->changeNetWorth(purchaseCost);
+		owner->changeNetWorth(purchaseCost * -1);
 	}
 	owner = p;
 	gainPropEffect();

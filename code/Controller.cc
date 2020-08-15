@@ -204,22 +204,14 @@ void Controller::run() {
 				// implement through exceptions
 			}
 			else if (action == "assets") {
-                if (state != 1) {
-					game->assets();
-                }
-				else {
-					view->update("Cannot display assets right now.\n");
-                    continue;
-				}
+                if (state != 1) game->assets();
+				else view->update("Cannot display assets right now.\n");
+				continue;
 			}
 			else if (action == "all") {
-                if (state != 1) {
-					game->all();
-                }
-				else {
-					view->update("Cannot display all assets right now.\n");
-                    continue;
-				}
+                if (state != 1) game->all();
+				else view->update("Cannot display all assets right now.\n");
+				continue;
 			}
 			else if (action == "save") {
                 std::string fileName;
@@ -255,10 +247,8 @@ void Controller::run() {
 					po.buy(); // may throw if lack of funds
 					state = 0;
 				}
-				else {
-					view->update("Nothing to buy.\n");
-                    continue;
-				}
+				else view->update("Nothing to buy.\n");
+				continue;
 			}
 			else if (action == "pass") {
 				if (state == 3) po.pass(); // will throw auction
