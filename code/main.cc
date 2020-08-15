@@ -13,7 +13,9 @@ int main(int argc, char* argv[]) {
         Controller controller{&game, &view};
         controller.run();
     }
-    else {
-        // Load IO
+    else if (argc == 2) {
+		IO loader{};
+		loader.load(argv[2]);
     }
+	else {}
 }
