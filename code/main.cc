@@ -7,15 +7,12 @@
 
 //
 int main(int argc, char* argv[]) {
-    if (argc == 1) {
-        Game game{};
-        View view{&game};
-        Controller controller{&game, &view};
-        controller.run();
-    }
-    else if (argc == 2) {
-		IO loader{};
-		loader.load(argv[2]);
-    }
-	else {}
+	Game game{};
+	if (argc == 2) {
+		IO loader;
+		loader.load(std::string {argv[1]}, &game);
+	}
+	View view{&game};
+	Controller controller{&game, &view};
+	controller.run();
 }
