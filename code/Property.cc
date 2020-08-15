@@ -48,6 +48,9 @@ void Property::unmortgage() {
 void Property::otherMortgageExcepts() {}
 
 //
+void Property::newOwnerExcepts() {}
+
+//
 void Property::landEffect(Player* p) {
 	if (!hasOwner()) throw PurchaseOption(this, p);
 	else if (mortgaged)
@@ -64,6 +67,7 @@ bool Property::hasOwner() { return owner != nullptr; }
 //
 void Property::setOwner(Player* p) {
 	if (hasOwner()) {
+		newOwnerExcepts(); // check if owner can be changed, throws if not
 		losePropEffect();
 		owner->changeNetWorth(purchaseCost * -1);
 	}

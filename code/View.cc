@@ -7,14 +7,9 @@
 #include "View.h"
 
 // view class for user to interact with
-View::View(Game* game) : view{""} {
+View::View(Game* game) : view{VIEW_TEMPLATE} {
     // set exception type for input
     std::cin.exceptions(std::ios::failbit|std::ios::eofbit);
-
-    // read in view template
-    std::ifstream viewTemplate{"ViewTemplate.txt"};
-    std::string line;
-    while (std::getline(viewTemplate, line)) view += line + "\n";
 
     // set up tile location vector
     //  note: tiles are indexed 0-39 going clockwise from Collect OSAP
