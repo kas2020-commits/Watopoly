@@ -6,12 +6,10 @@
 
 //
 class AcademicBuilding : public Property {
-	friend class IO;
-
-	private:
+  friend class IO;
+  private:
 	bool ownerHasMonopoly();
-
-	protected:
+  protected:
 	static std::map<const std::string, int> blockMonopoly;
 	int improvementCost;
 	int improvementLevel;
@@ -21,11 +19,11 @@ class AcademicBuilding : public Property {
 	virtual void gainPropEffect() override;
 	virtual void losePropEffect() override;
 	virtual void otherMortgageExcepts() override;
-
-	public:
+	virtual void newOwnerExcepts() override;
+  public:
 	AcademicBuilding(std::string name, std::string block,
-			int purchaseCost, int improvementCost, int tuit0,
-			int tuit1, int tuit2, int tuit3, int tuit4, int tuit5);
+	  int purchaseCost, int improvementCost, int tuit0,
+	  int tuit1, int tuit2, int tuit3, int tuit4, int tuit5);
 	void buyImprovement();
 	void sellImprovement();
 	int getImprovementLevel();

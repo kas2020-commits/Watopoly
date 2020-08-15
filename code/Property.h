@@ -32,6 +32,7 @@ class Property : public Tile {
 	virtual void gainPropEffect() = 0;
 	virtual void losePropEffect() = 0;
 	virtual void otherMortgageExcepts();
+	virtual void newOwnerExcepts();
   public:
 	friend class IO;
 	Property(std::string name, int purchaseCost);

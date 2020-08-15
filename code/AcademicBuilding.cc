@@ -38,6 +38,12 @@ void AcademicBuilding::otherMortgageExcepts() {
 }
 
 //
+void AcademicBuilding::newOwnerExcepts() {
+	if (improvementLevel >= 0)
+		throw GameException{"Cannot assign new owner to Academic Buildings with improvements.\n"};
+}
+
+//
 void AcademicBuilding::buyImprovement() {
 	if (!ownerHasMonopoly())
 		throw GameException{"Cannot buy improvements, need a monopoly first.\n"};
@@ -55,7 +61,7 @@ void AcademicBuilding::sellImprovement() {
 		throw GameException{"\"" + name + "\" has no improvements.\n"};
 	// otherwise, we can buy an exception assuming player has necessary funds
 	improvementLevel -= 1;
-	owner->deposit(0.5 * improvementCost); // may throw
+	owner->deposit(improvementCost / 2); // may throw
 	updateObservers("Sold improvement on \"" + name + "\".\n");
 }
 
