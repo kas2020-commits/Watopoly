@@ -37,14 +37,20 @@ void Auction::end() {
     ended = true;
 }
 
-//
-std::string Auction::getMessage() {/*
-    if (!highestBid) return "Auction for \"" + property->getName() "\""
-    return "Highest "*/
-}
-
-//
-std::string Auction::getConclusion() {
-    if (!ended) return "";
+std::ostringstream ss{""};
+    if (!highestBid) {
+        ss << "Auction for \"" << property->getName();
+        ss <<  << "\" has begun. Starting bidding at $0.\n";
+    } 
+    else if (!ended) {
+        ss << "Highest Bid: $" << highestBid;
+        ss << " by \"" << highestBidder->getName() << "\".\n";
+    }
+    else {
+        ss << "\"" << highestBidder->getName() << 
+        ss << "\" won the auction of \"" << property->getName() 
+        ss << "\" with the highest bid of $" << highestBid << ".\n";
+    }
+    return ss.str();
 }
 
