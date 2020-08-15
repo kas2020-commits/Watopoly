@@ -25,7 +25,7 @@ AcademicInfo::AcademicInfo(std::string name, std::string blockName, int improvem
 	: name{name}, blockName{blockName}, improvementLevel{improvementLevel}
 {}
 
-void IO::load(const std::string filename, Game * game)
+void IO::load(const std::string filename, Game * game, View * view)
 {
 	using namespace std;
 	ifstream file {filename};
@@ -57,7 +57,6 @@ void IO::load(const std::string filename, Game * game)
 	map<int, AcademicInfo> academicList;
 
 	vector<shared_ptr<Player>> IOplayers;
-	/* map<string, shared_ptr<Player>> IOplayers; */
 	bool permStarted;
 
 	try {
@@ -199,6 +198,7 @@ void IO::load(const std::string filename, Game * game)
 	}
 	game->started = permStarted;
 	game->players = IOplayers;
+	game->attach(view);
 
 	// fin
 	file.close();

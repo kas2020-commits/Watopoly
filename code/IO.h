@@ -6,8 +6,9 @@
 #include <memory>
 #include <iostream>
 #include <sstream>
-#include "Game.h"
 #include <map>
+#include "Game.h"
+#include "View.h"
 
 /* Here is the structure of a player's save:
  * PLAYER
@@ -62,7 +63,7 @@ class IO {
 	public:
 	IO();
 	void save(const std::string, Game *);
-	void load(const std::string, Game *);
+	void load(const std::string, Game *, View *);
 };
 
 #endif
