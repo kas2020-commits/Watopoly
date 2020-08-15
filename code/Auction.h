@@ -27,3 +27,4 @@ class Auction : public LogicException {
 };
 
 #endif
+

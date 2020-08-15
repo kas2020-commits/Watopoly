@@ -47,3 +47,4 @@ std::string Auction::getMessage() {/*
 std::string Auction::getConclusion() {
     if (!ended) return "";
 }
+
