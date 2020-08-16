@@ -52,7 +52,7 @@ void IO::load(const std::string filename, Game * game, View * view)
 	istringstream readCountPlayer{s};
 	readCountPlayer >> playerCount;
 
-	for (int i = 1; i < playerCount; ++i)
+	for (int i = 0; i < playerCount; ++i)
 	{
 		getline(file, s);
 		istringstream readPlayer{s};
@@ -213,7 +213,8 @@ void IO::save(const std::string filename, Game * game)
 				file << "BANK ";
 			}
 			file << tempAcademic->getImprovementLevel() << " ";
-			file << tempAcademic->getIndex() << endl;
+			file << endl;
+			/* file << tempAcademic->getIndex() << endl; */
 		}
 		else if (it->isProperty())
 		{
@@ -226,7 +227,8 @@ void IO::save(const std::string filename, Game * game)
 			else {
 				file << "BANK ";
 			}
-			file << tempProperty->getIndex() << endl;
+			/* file << tempProperty->getIndex() << endl; */
+			file << endl;
 		}
 	}
 
