@@ -83,10 +83,6 @@ void Player::startTurn() {
 	rolled = false;
 	if (isTrapped()) {
 		decrementTurnsTrapped();
-		std::ostringstream ss{};
-		ss << "You are trapped in " << position->getName();
-		ss << "(for max. " << turnsTrapped << " more turns).\n";
-		updateObservers(ss.str());
 		position->throwTrap(this);
 	}
 	// reset any other turn related logic vars
