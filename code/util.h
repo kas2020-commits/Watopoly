@@ -4,6 +4,7 @@
 #include <random>
 
 const int MAX_TILES = 40;
+const int PROPERTIES = 28;
 
 // get a random number between min and max
 extern int getRand(int min, int max);
