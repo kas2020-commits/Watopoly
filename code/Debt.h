@@ -10,12 +10,14 @@ class Debt : public LogicException {
     Player* owedFrom;
     Player* owedTo;
     int owed;
+    bool payed;
   public:
     Debt();
     Debt(Player* owedFrom, int owed);
     Debt(Player* owedFrom, Player* owedTo, int owed);
     void pay();
     void bankrupt();
+    virtual std::string getMessage() override;
 };
 
 #endif

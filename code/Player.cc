@@ -15,7 +15,7 @@ Player::Player(const std::string name, const char symbol, BoardIterator it)
 	:
 		// simple fields
 		name{name}, symbol{symbol}, position{it}, cash{1500},
-		timsCups{0}, gymCount{0}, resCount{0}, bankrupt{false}, turnsTrapped{0},
+		timsCups{0}, gymCount{0}, resCount{0}, bankrupt{false}, turnsTrapped{-1},
 		netWorth{1500}, rolled{false},
 
 		// blockCount
@@ -63,7 +63,7 @@ void Player::move(const std::string name) {
 		++newPosition;
 		if (newPosition->getName() == name) break;
 		if (newPosition == position)
-			throw PlayerException{"Fatal Error Occured."};
+			throw PlayerException{"Fatal error occured.\n"};
 	}
 	position = newPosition;
 	position->land(this);
@@ -83,9 +83,9 @@ void Player::startTurn() {
 	rolled = false;
 	if (isTrapped()) {
 		decrementTurnsTrapped();
-		std::ostringstream ss{"You are trapped in "};
-		ss << position->getName() << "(for max. ";
-		ss << turnsTrapped << " more turns).\n";
+		std::ostringstream ss{};
+		ss << "You are trapped in " << position->getName();
+		ss << "(for max. " << turnsTrapped << " more turns).\n";
 		updateObservers(ss.str());
 		position->throwTrap(this);
 	}
@@ -123,7 +123,7 @@ Tile & Player::getPosition() { return *position; }
 int Player::getTurnsTrapped() { return turnsTrapped; }
 
 //
-bool Player::isTrapped() { return (turnsTrapped > 0); }
+bool Player::isTrapped() { return (turnsTrapped >= 0); }
 
 //
 int Player::getNetWorth() { return netWorth; }
@@ -153,7 +153,7 @@ void Player::deposit(const int amount) {
 //
 void Player::withdraw(const int amount) {
 	if (cash < amount)
-		throw PlayerException{"Insufficient Funds."};
+		throw PlayerException{"Insufficient Funds.\n"};
 	cash -= amount;
 	netWorth -= amount;
 }
@@ -165,27 +165,22 @@ void Player::changeNetWorth(int amount) {
 
 //
 void Player::setBankrupt() {
+	updateObservers("You have declared bankruptcy, you are no longer in the game!\n");
 	bankrupt = true;
 }
 
 //
 void Player::untrap() {
-	turnsTrapped = 0;
+	turnsTrapped = -1;
 	startTurn(); // start fresh
-	updateObservers("You have been untrapped!");
 }
 
 //
-void Player::trap(int turns) {
-	turnsTrapped = turns;
-	std::ostringstream ss{"You have been trapped in "};
-	ss << position->getName() <<  " (for max. " << turns << " turns)!";
-	updateObservers(ss.str());
-}
+void Player::trap(int turns) { turnsTrapped = turns; }
 
 //
 void Player::decrementTurnsTrapped() {
-	if (turnsTrapped <= 0) --(turnsTrapped);
+	if (turnsTrapped > -1) --turnsTrapped;
 }
 
 // static methods:
@@ -193,16 +188,14 @@ int Player::getTotalTimsCups() { return totalTimsCups; }
 
 //
 void Player::incrementTimsCups() {
-	if (totalTimsCups <= 0)
-		throw PlayerException{"Tims cups at max. capacity."};
+	if (totalTimsCups <= 0) throw PlayerException{"Tims cups at max. capacity."};
 	++timsCups;
 	--totalTimsCups;
 }
 
 //
 void Player::decrementTimsCups() {
-	if (timsCups <= 0)
-		throw PlayerException{"No Tims cups."};
+	if (timsCups <= 0) throw PlayerException{"No Tims cups."};
 	--timsCups;
 	++totalTimsCups;
 }
@@ -229,17 +222,12 @@ void Player::decrementBlockCount(std::string name) {
 	--(blockCount[name]);
 }
 
-std::string Player::getAvailableSymbols()
-{
-	std::string s { "Avaible symbols: " };
-	for (auto &i : symbolChart)
-	{
-		if (!i.second)
-		{
-			s += i.first;
-			s += " ";
-		}
+std::string Player::getAvailableSymbols() {
+	std::ostringstream ss{};
+	ss << "Avaible symbols: ";
+	for (auto it = symbolChart.begin(); it != symbolChart.end(); it++) {
+		if (!it->second) ss << it->first << " ";
 	}
-	return s;
+	return ss.str() + "\n";
 }
 

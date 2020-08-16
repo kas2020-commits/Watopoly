@@ -10,10 +10,12 @@
 #include "Roll.h"
 #include "util.h"
 
+//
+GameOver::GameOver(Player* p) : GameException{
+  "Game over, \"" + p->getName() + "\" wins!"} {}
+
 // Constructor
-Game::Game()
-	: board{std::make_unique<Board>()}, started{false}
-{
+Game::Game() : board{std::make_unique<Board>()}, started{false} {
 	curPlayer = players.begin();
 }
 
@@ -66,17 +68,20 @@ void Game::roll(int die1, int die2) {
 	}
 }
 
-std::string Game::getAvailablePlayerSymbols()
-{
-	return Player::getAvailableSymbols() + "\n";
+void Game::displaySymbols() {
+	updateObservers(Player::getAvailableSymbols());
 }
 
 //
 void Game::next() {
+	auto oldPlayer = curPlayer;
 	while (true) {
 		curPlayer++;
 		if (curPlayer == players.end()) curPlayer = players.begin();
-		if (!(*curPlayer)->isBankrupt()) break;
+		if (!(*curPlayer)->isBankrupt()) {
+			if (curPlayer == oldPlayer) throw GameOver{curPlayer->get()};
+			break;
+		}
 	}
 	updateObservers("Current turn: " + (*curPlayer)->getName() + "\n");
 	(*curPlayer)->startTurn();
@@ -94,8 +99,7 @@ void Game::trade(std::string name, std::string giveProp, std::string receiveProp
 	Property* rpr = dynamic_cast<Property*>(&(board->at(receiveProp)));
 	if (!rpr) throw GameException{"\"" + receiveProp +  "\" is not a valid property.\n"};
 	if (!rpr->isOwner(curPlayer->get()))
-		throw GameException{"Player \"" + name
-			+ "\" does not own \"" + receiveProp + "\".\n"};
+		throw GameException{"Player \"" + name	+ "\" does not own \"" + receiveProp + "\".\n"};
 	// trade is valid
 	gpr->setOwner(otherPlayer.get());
 	rpr->setOwner(curPlayer->get());

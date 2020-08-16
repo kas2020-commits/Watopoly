@@ -19,6 +19,7 @@ class PurchaseOption : public LogicException {
     PurchaseOption(Property* pr, Player* p);
 	void buy();
 	void pass();
+	virtual std::string getMessage() override;
 };
 
 //

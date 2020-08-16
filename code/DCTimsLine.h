@@ -14,9 +14,10 @@ class DCTimsLineTrap : public LogicException {
     DCTimsLineTrap();
     DCTimsLineTrap(Player* p);
     void useTimsCup();
-    void payCash();
+    void pay();
     void roll();
     void roll(int die1, int die2); // for testing
+    virtual std::string getMessage() override;
 };
 
 //
