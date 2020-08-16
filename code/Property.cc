@@ -1,3 +1,4 @@
+#include <sstream>
 #include "Auction.h"
 #include "Debt.h"
 #include "GameException.h"
@@ -15,6 +16,13 @@ void PurchaseOption::buy() { property->buy(player); }
 
 //
 void PurchaseOption::pass() { throw Auction{property}; }
+
+//
+std::string PurchaseOption::getMessage() {
+	std::ostringstream ss{};
+	ss << "You have the option to buy \"" << property->getName() << "\".\n";
+	return ss.str();
+}
 
 //
 Property::Property(std::string name, int purchaseCost) :

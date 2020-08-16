@@ -41,10 +41,16 @@ void Auction::end() {
 
 //
 std::string Auction::getMessage() {
-    std::ostringstream ss{""};
+    std::ostringstream ss{};
     if (!highestBid) {
-        ss << "Auction for \"" << property->getName();
-        ss <<  "\" has begun. Starting bidding at $0.\n";
+        if (!ended) {
+            ss << "Auction for \"" << property->getName();
+            ss <<  "\" has begun. Starting bidding at $0.\n";
+        }
+        else {
+            ss << "Auction ended without bids. \"" << property->getName();
+            ss << "\" remains unowned.\n";
+        }
     } 
     else if (!ended) {
         ss << "Highest Bid: $" << highestBid;

@@ -15,11 +15,13 @@ Controller::~Controller() {}
 // adds desired amount of players to game
 void Controller::addPlayers() {
 	// gets the number of players from view
+	std::istringstream command{};
 	int numPlayers;
 	while (true) {
 		view->update("Enter number of players (min: 2, max: 8):\n");
+		command = std::istringstream{view->getCommand()};
 		try {
-			numPlayers = std::stoi(view->getCommand());
+			command >> numPlayers;
 			if (numPlayers < 2 || numPlayers > 8) throw std::invalid_argument("");
 			break;
 		}
@@ -31,29 +33,30 @@ void Controller::addPlayers() {
 	// add players to game
 	for (int i = 0; i < numPlayers; ++i) {
 		std::string name;
-		char symbol;
-		view->update("Type the name of the player\n");
 		while (true) {
+			view->update("Insert player name.\n");
+			command = std::istringstream{view->getCommand()};
 			try {
-				std::stringstream playerInfo{view->getCommand()};
-				playerInfo >> name;
+				command >> name;
+				if (name == "BANK") throw GameException{""};
 				break;
 			}
-			catch (GameException &) { // implement invalid player construction exception
+			catch (GameException &) {
 				view->update("Invalid name.\n");
 			}
 		}
-		view->update("Great name! Now pick a symbol from this list:\n");
+		char symbol;
 		while (true) {
+			view->update("Insert symbol name. ");
+			game->displaySymbols();
+			command = std::istringstream{view->getCommand()};
 			try {
-				view->update(game->getAvailablePlayerSymbols());
-				std::stringstream playerInfo{view->getCommand()};
-				playerInfo >> symbol;
+				command >> symbol;
 				game->addPlayer(name, symbol);
 				break;
 			}
-			catch (GameException & fne) {
-				view->update(fne.getMessage());
+			catch (GameException & e) {
+				view->update(e.getMessage());
 			}
 		}
 	}
@@ -121,7 +124,7 @@ void Controller::help() {
 
 void Controller::displayBoard() {
 	view->display();
-	view->update("For a list of all the commands you can use, type \"help\"\n");
+	view->update("For a list of all the commands you can use, type \"help\".\n");
 }
 
 //
@@ -237,7 +240,14 @@ void Controller::run(bool init) {
 				}
 			}
 			else if (action == "bankrupt") {
-				// implement through exceptions
+				if (state == 1) {
+					tp.bankrupt();
+					game->next();
+				}
+				else if (state == 5) {
+					db.bankrupt();
+					game->next();
+				}
 			}
 			else if (action == "assets") {
 				if (state != 1) game->assets();
@@ -261,13 +271,18 @@ void Controller::run(bool init) {
 					command >> method;
 					if (method == "$300") {
 						tp.payCash();
+						view->update(tp.getMessage());
 						state = 0;
 					}
 					else if (method == "10%") {
 						tp.payPercent();
+						view->update(tp.getMessage());
 						state = 0;
 					}
 					else view->update("Not a valid tuition payment method.\n");
+				}
+				else if (state == 2) {
+					dct.pay();
 				}
 				else if (state == 5) { // pay debt
 					db.pay(); // will throw if lack of funds
@@ -304,10 +319,8 @@ void Controller::run(bool init) {
 					view->update(au.getMessage());
 					continue;
 				}
-				else {
-					view->update("No auction currently going on.\n");
-					continue;
-				}
+				else view->update("No auction currently going on.\n");
+				continue;
 			}
 			else if (action == "end") {
 				if (state == 4) {
@@ -320,6 +333,19 @@ void Controller::run(bool init) {
 					continue;
 				}
 			}
+			else if (action == "use") {
+				std::string tims, cup;
+				command >> tims >> cup;
+				if (tims == "Tims" && cup == "cup") {
+					if (state == 2) {
+						dct.useTimsCup();
+						view->update(dct.getMessage());
+					}
+					else view->update("Cannot use Tims cup now.\n");
+				}
+				else view->update("Invalid command.\n");
+				continue;
+			}
 			else {
 				view->update("Invalid command.\n");
 				continue;
@@ -329,28 +355,36 @@ void Controller::run(bool init) {
 		catch (GameException& e) {
 			view->update(e.getMessage());
 		}
+		catch (TuitionPayment& e) {
+			tp = e;
+			view->update(tp.getMessage());
+			view->update("Type \"pay $300\", or \"pay 10%\". respectively.\n");
+			state = 1;
+		}
+		catch (DCTimsLineTrap& e) {
+			dct = e;
+			view->update(dct.getMessage());
+			view->update("Type \"pay\", \"use Tims cup\", or \"roll\" respectively.\n");
+			state = 2;
+		}
 		catch (PurchaseOption& e) {
 			po = e;
+			view->update(po.getMessage());
+			view->update("Type \"buy\", or \"pass\" respectively.\n");
 			state = 3;
 		}
 		catch (Auction& e) {
 			au = e;
 			game->populateAuction(au);
 			view->update(au.getMessage());
-			view->update("To bid, type \"bid <name> <amount>\"\n");
+			view->update("To bid, type \"bid <name> <amount>\". Type \"end\" to end the bidding.\n");
 			state = 4;
 		}
 		catch (Debt& e) {
 			db = e;
+			view->update(db.getMessage());
+			view->update("Type \"pay\", or \"bankrupt\". respectively.\n");
 			state = 5;
-		}
-		catch (TuitionPayment& e) {
-			tp = e;
-			state = 1;
-		}
-		catch (DCTimsLineTrap& e) {
-			dct = e;
-			state = 2;
 		}
 	}
 }

@@ -9,6 +9,12 @@
 #include "Board.h"
 
 //
+class GameOver : public GameException {
+  public:
+    GameOver(Player* p);
+};
+
+//
 class Game : public Subject {
   friend class IO;
 
@@ -39,7 +45,7 @@ class Game : public Subject {
     void assets();
     void all();
     void populateAuction(Auction& au);
-	std::string getAvailablePlayerSymbols();
+	  void displaySymbols();
 };
 
 #endif

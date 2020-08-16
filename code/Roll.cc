@@ -41,8 +41,8 @@ bool Roll::isDouble() { return (die1 == die2); }
 
 //
 std::string Roll::getMessage(bool moreInfo) {
-    std::ostringstream ss{"You rolled: "};
-    ss << die1 << " + " << die2 << " = " << total;
+    std::ostringstream ss{};
+    ss << "You rolled: " << die1 << " + " << die2 << " = " << total;
     if (!moreInfo) return ss.str() + "\n";
     if (isDouble()) ss << ", a double!\n";
     else ss << ", not a double.\n";

@@ -11,12 +11,14 @@
 class TuitionPayment : public LogicException {
   private:
     Player* player;
+    bool payed;
   public:
     TuitionPayment();
     TuitionPayment(Player* p);
     void payCash();
     void payPercent();
     void bankrupt();
+    virtual std::string getMessage() override;
 };
 
 //
