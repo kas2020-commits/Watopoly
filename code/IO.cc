@@ -28,8 +28,6 @@ void IO::load(const std::string filename, Game * game, View * view)
 	int tempTimsCups;
 	int tempCash;
 	int tempPosition;
-	int tempResCount;
-	int tempGymCount;
 	int tempTurnsTrapped;
 
 	Player * tempPlayerPointer = nullptr;
@@ -58,7 +56,7 @@ void IO::load(const std::string filename, Game * game, View * view)
 		istringstream readPlayer{s};
 
 		readPlayer >> tempName >> tempSymbol >> tempTimsCups >> tempCash
-			>> tempPosition >> tempResCount >> tempGymCount >> tempTurnsTrapped;
+			>> tempPosition >> tempTurnsTrapped;
 
 		BoardIterator tempIt { game->board->begin(true) };
 
@@ -70,8 +68,6 @@ void IO::load(const std::string filename, Game * game, View * view)
 		shared_ptr<Player> tempPlayer = make_shared<Player>(tempName, tempSymbol, tempIt);
 		tempPlayer->deposit(tempCash);
 		tempPlayer->timsCups = tempTimsCups;
-		tempPlayer->resCount = tempResCount;
-		tempPlayer->gymCount = tempGymCount;
 		tempPlayer->turnsTrapped = tempTurnsTrapped;
 
 		IOplayers.push_back(tempPlayer);
@@ -193,9 +189,6 @@ void IO::save(const std::string filename, Game * game)
 			<< it->get()->timsCups << " "
 			<< it->get()->cash << " "
 			<< it->get()->position->getIndex() << " "
-
-			<< it->get()->resCount << " "
-			<< it->get()->gymCount << " "
 			<< it->get()->turnsTrapped << " "
 			<< endl;
 	}
@@ -217,7 +210,6 @@ void IO::save(const std::string filename, Game * game)
 			}
 			file << tempAcademic->getImprovementLevel() << " ";
 			file << endl;
-			/* file << tempAcademic->getIndex() << endl; */
 		}
 		else if (it->isProperty())
 		{
@@ -230,7 +222,6 @@ void IO::save(const std::string filename, Game * game)
 			else {
 				file << "BANK ";
 			}
-			/* file << tempProperty->getIndex() << endl; */
 			file << endl;
 		}
 	}
