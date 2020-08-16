@@ -15,29 +15,52 @@ int main(int argc, char* argv[]) {
 	std::string file;
 	IO loader;
 	std::string optionOne, optionTwo;
+	std::string option;
+	std::string value;
 	const std::string TESTING {"-testing"};
+	const std::string LOAD {"-load"};
+	bool failed = false;
 
-	if (argc > 1) optionOne = argv[1];
-	if (argc > 2) optionTwo = argv[2];
-
-	if (!isTesting && (optionOne.compare(TESTING) == 0 || optionTwo.compare(TESTING) == 0))
-	{
+	if (argc == 1) {
+		Controller controller{&game, &view, isTesting};
+		controller.run();
+	}
+	else if (argc == 4) {
+		option = argv[1];
 		isTesting = true;
-	}
-
-	if (argc == 2 && optionOne.compare(TESTING) != 0) {
-		file = optionOne;
 		fromSave = true;
+		if (option.compare(TESTING) == 0) {
+			file = argv[3];
+		}
+		else if (option.compare(LOAD) == 0) {
+			file = argv[2];
+		}
+		else {
+			failed = true;
+		}
 	}
-
-	if (argc == 3 && optionOne.compare(TESTING) != 0) {
-		file = optionOne;
-		fromSave = true;
+	else if (argc == 2) {
+		option = argv[1];
+		if (option.compare(TESTING) == 0) isTesting = true;
+		else {
+			failed = true;
+		}
 	}
+	else if (argc == 3) {
+		option = argv[1];
+		if (option.compare(LOAD) == 0) {
+			file = argv[2];
+			fromSave = true;
+		}
+		else {
+			failed = true;
+		}
+	}
+	else failed = true;
 
-	if (argc == 3 && optionTwo.compare(TESTING) != 0) {
-		file = optionTwo;
-		fromSave = true;
+	if (failed) {
+		std::cout << "Bad Arguments; Quiting..." << std::endl;
+		return 1;
 	}
 
 	// construct the controller with the correct parameters
@@ -46,7 +69,7 @@ int main(int argc, char* argv[]) {
 	// if from a savefile, load it
 	if (fromSave) {
 		try {
-		loader.load(file, &game, &view);
+			loader.load(file, &game, &view);
 		} catch (IOException & fne) {
 			std::cout << fne.getMessage() << std::endl;
 			return 1;
