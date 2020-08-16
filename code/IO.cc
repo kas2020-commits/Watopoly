@@ -52,7 +52,7 @@ void IO::load(const std::string filename, Game * game, View * view)
 	istringstream readCountPlayer{s};
 	readCountPlayer >> playerCount;
 
-	for (int i = 0; i < playerCount; ++i)
+	for (int i = 1; i < playerCount; ++i)
 	{
 		getline(file, s);
 		istringstream readPlayer{s};
@@ -62,9 +62,9 @@ void IO::load(const std::string filename, Game * game, View * view)
 		BoardIterator tempIt { game->board->begin(true) };
 
 		if (tempPosition == 30) throw IOException("Error: Player index was illegal\n");
-		if (tempName.compare("BANK")) throw IOException("Error: Player name illegal\n");
+		/* if (tempName.compare("BANK")) throw IOException("Error: Player name illegal\n"); */
 
-		for (int i = 0; i < tempPosition; ++i) ++tempIt;
+		for (int j = 0; j < tempPosition; ++j) ++tempIt;
 
 		shared_ptr<Player> tempPlayer = make_shared<Player>(tempName, tempSymbol, tempIt);
 		tempPlayer->deposit(tempCash);
@@ -128,21 +128,26 @@ void IO::load(const std::string filename, Game * game, View * view)
 			if (tempBoardIt->isAcademicBuilding())
 			{
 				auto tempAcademic = dynamic_cast<AcademicBuilding *>(&(*tempBoardIt));
-				if (tempAcademic->owner->name == tempPlayerName)
+				if (tempAcademic->owner != nullptr &&
+						tempAcademic->owner->name.compare(tempPlayerName) == 0)
 				{
 					i->blockCount[tempAcademic->block] += 1;
 				}
 			}
 			else if (tempBoardIt->isProperty())
 			{
-				/* auto tempProperty = dynamic_cast<Property *>(&(*tempBoardIt)); */
+				auto tempProperty = dynamic_cast<Property *>(&(*tempBoardIt));
 				tempPropertyName = tempBoardIt->getName();
-				if (tempPropertyName == PAC || tempPropertyName == CIF)
+				if (tempProperty->hasOwner() &&
+						(tempProperty->owner->name.compare(tempPlayerName) == 0)
+						&& (tempPropertyName == PAC || tempPropertyName == CIF))
 				{
 					++i->gymCount;
 				}
-				else if (tempPropertyName == MKV || tempPropertyName == UWP ||
-						tempPropertyName == REV || tempPropertyName == V1)
+				else if (tempProperty->hasOwner() &&
+						tempProperty->owner->name.compare(tempPlayerName) == 0
+						&& (tempPropertyName == MKV || tempPropertyName == UWP ||
+							tempPropertyName == REV || tempPropertyName == V1))
 				{
 					++i->resCount;
 				}
