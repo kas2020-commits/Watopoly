@@ -10,6 +10,12 @@
 #include "Game.h"
 #include "View.h"
 
+class IOException : public GameException {
+	public:
+		IOException(std::string message) : GameException{message} {}
+		IOException() : GameException{""} {}
+};
+
 class IO {
 	struct IOImpl;
 	std::shared_ptr<IOImpl> list;

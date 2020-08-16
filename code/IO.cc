@@ -61,6 +61,9 @@ void IO::load(const std::string filename, Game * game, View * view)
 			>> tempPosition >> tempResCount >> tempGymCount >> tempTurnsTrapped;
 		BoardIterator tempIt { game->board->begin(true) };
 
+		if (tempPosition == 30) throw IOException("Error: Player index was illegal\n");
+		if (tempName.compare("BANK")) throw IOException("Error: Player name illegal\n");
+
 		for (int i = 0; i < tempPosition; ++i) ++tempIt;
 
 		shared_ptr<Player> tempPlayer = make_shared<Player>(tempName, tempSymbol, tempIt);
@@ -158,7 +161,7 @@ void IO::load(const std::string filename, Game * game, View * view)
 	}
 
 	game->started = true;
-	game->players = move(IOplayers);
+	game->players = std::move(IOplayers);
 	game->attach(view);
 
 	// fin

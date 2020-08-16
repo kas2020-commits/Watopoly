@@ -44,7 +44,14 @@ int main(int argc, char* argv[]) {
 	Controller controller{&game, &view, isTesting};
 
 	// if from a savefile, load it
-	if (fromSave) loader.load(file, &game, &view);
+	if (fromSave) {
+		try {
+		loader.load(file, &game, &view);
+		} catch (IOException & fne) {
+			std::cout << fne.getMessage() << std::endl;
+			return 1;
+		}
+	}
 
 	// start program
 	controller.run(!fromSave);
