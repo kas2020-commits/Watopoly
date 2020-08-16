@@ -39,8 +39,8 @@ void Player::rollAndMove() {
 		++position;
 		if (i != r.total - 1) position->pass(this);
 	}
-	position->land(this);
 	updateObservers();
+	position->land(this);
 }
 
 void Player::move(int amount)
@@ -53,7 +53,7 @@ void Player::move(int amount)
 		while (amount != 0) {
 			--position; ++amount;
 		}}
-	else {}
+	updateObservers();
 }
 
 //
@@ -66,8 +66,8 @@ void Player::move(const std::string name) {
 			throw PlayerException{"Fatal error occured.\n"};
 	}
 	position = newPosition;
-	position->land(this);
 	updateObservers();
+	position->land(this);
 }
 
 //

@@ -360,18 +360,21 @@ void Controller::run(bool init) {
 			view->update(tp.getMessage());
 			view->update("Type \"pay $300\", or \"pay 10%\". respectively.\n");
 			state = 1;
+			displayBoard();
 		}
 		catch (DCTimsLineTrap& e) {
 			dct = e;
 			view->update(dct.getMessage());
 			view->update("Type \"pay\", \"use Tims cup\", or \"roll\" respectively.\n");
 			state = 2;
+			displayBoard();
 		}
 		catch (PurchaseOption& e) {
 			po = e;
 			view->update(po.getMessage());
 			view->update("Type \"buy\", or \"pass\" respectively.\n");
 			state = 3;
+			displayBoard();
 		}
 		catch (Auction& e) {
 			au = e;
@@ -379,12 +382,14 @@ void Controller::run(bool init) {
 			view->update(au.getMessage());
 			view->update("To bid, type \"bid <name> <amount>\". Type \"end\" to end the bidding.\n");
 			state = 4;
+			displayBoard();
 		}
 		catch (Debt& e) {
 			db = e;
 			view->update(db.getMessage());
 			view->update("Type \"pay\", or \"bankrupt\". respectively.\n");
 			state = 5;
+			displayBoard();
 		}
 	}
 }
