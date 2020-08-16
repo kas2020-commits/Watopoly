@@ -59,6 +59,7 @@ void IO::load(const std::string filename, Game * game, View * view)
 
 		readPlayer >> tempName >> tempSymbol >> tempTimsCups >> tempCash
 			>> tempPosition >> tempResCount >> tempGymCount >> tempTurnsTrapped;
+
 		BoardIterator tempIt { game->board->begin(true) };
 
 		if (tempPosition == 30) throw IOException("Error: Player index was illegal\n");
@@ -78,6 +79,7 @@ void IO::load(const std::string filename, Game * game, View * view)
 
 	for (int i = 0; i < PROPERTIES; ++i)
 	{
+		bool isPlayerFound = false;
 		getline(file, s);
 		istringstream readProperty{s};
 		readProperty >> tempPropertyName >> tempPropertyOwner >> tempPropertyImprovements;
@@ -88,20 +90,21 @@ void IO::load(const std::string filename, Game * game, View * view)
 				// find pointer to player
 				for (auto & it : IOplayers)
 				{
-					if (it->getName().compare(tempName) == 0)
+					if (it->getName().compare(tempPropertyOwner) == 0)
 					{
 						tempPlayerPointer = it.get();
+						isPlayerFound = true;
 						break;
 					}
 				}
 
-				if (tempBoardIt->isAcademicBuilding())
+				if (isPlayerFound && tempBoardIt->isAcademicBuilding())
 				{
 					auto tempAcademic = dynamic_cast<AcademicBuilding *>(&(*tempBoardIt));
 					tempAcademic->owner = tempPlayerPointer;
 					tempAcademic->improvementLevel = tempPropertyImprovements;
 				}
-				else
+				else if (isPlayerFound)
 				{
 					auto tempProperty = dynamic_cast<Property *>(&(*tempBoardIt));
 					tempProperty->owner = tempPlayerPointer;
