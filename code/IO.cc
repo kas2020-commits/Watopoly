@@ -1,12 +1,6 @@
 #include "IO.h"
 
-struct IO::IOImpl {
-	std::string CURRENTPLAYER { "CURRENT PLAYER" };
-};
-
-IO::IO()
-	: list{ std::make_shared<IOImpl>() }
-{}
+IO::IO() {}
 
 void IO::load(const std::string filename, Game * game, View * view)
 {
@@ -113,12 +107,7 @@ void IO::load(const std::string filename, Game * game, View * view)
 		}
 	}
 
-	// get current player
-	/* getline(file, s); */
-	/* if (s.compare(list->CURRENTPLAYER) == 0) */
-	/* { */
 	getline(file, currPlayerName);
-	/* } */
 
 	// fix players' blockCount datafield
 	for (auto &i : IOplayers)
@@ -229,13 +218,11 @@ void IO::save(const std::string filename, Game * game)
 			else {
 				file << "BANK ";
 			}
-			/* file << tempProperty->getIndex() << endl; */
 			file << endl;
 		}
 	}
 
 	// save current player
-	/* file << list->CURRENTPLAYER << endl << game->curPlayer->get()->getName() << endl; */
 	file << game->curPlayer->get()->getName() << endl;
 
 	// fin

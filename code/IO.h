@@ -17,8 +17,6 @@ class IOException : public GameException {
 };
 
 class IO {
-	struct IOImpl;
-	std::shared_ptr<IOImpl> list;
 	public:
 	IO();
 	void save(const std::string, Game *);
