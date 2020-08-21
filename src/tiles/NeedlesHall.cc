@@ -3,37 +3,39 @@
 NeedlesHall::NeedlesHall(): Tile{NEEDLES_HALL}{}
 
 void NeedlesHall::landEffect(Player* p){
-    int rutr = rand() % 100 + 1;
-    if (rutr == 1){
-        if(p->getTimsCups() < 4){
-			p->setTimsCups(p->getTimsCups() + 1);
-            updateObservers("You move forward two tiles");
-        }
-        // roll up the rim
-    }
+	int theTimsBeLike = getRand(0, 100);
+	int timCups = p->getTimsCups();
+	// You must compare the random number to 42, otherwise the meaning of life
+	// is lost :( (comparing to 1 number gives you a 1% chance of winning)
+	if (theTimsBeLike == 42 && timCups < 4)
+	{
+		p->setTimsCups(timCups + 1);
+		updateObservers("Congratulations! You just won a Roll the Rims Cup");
+	}
 
-    int v1 = rand() % 18 + 1;
-    if( v1 == 1) {
-        p->withdraw(200);
-        updateObservers("You lose $200 \n");
-    } else if(( v1 == 2) && (v1 == 3)){
-        p->withdraw(100);
-        updateObservers("You lose $100 \n");
-    } else if(( v1 >= 3) && (v1 <= 5)){
-        p->withdraw(50);
-        updateObservers("You lose $50 \n");
-    } else if(( v1 >= 6) && (v1 <= 12)){
-        p->deposit(25);
-        updateObservers("You win $25 \n");
-    } else if(( v1 >= 13) && (v1 <= 15)){
-        p->deposit(50);
-        updateObservers("You win $50 \n");
-    } else if(( v1 >= 16 ) && (v1 <= 17)){
-        p->deposit(100);
-        updateObservers("You win $100 \n");
-    } else if(v1 == 18){
-        p->deposit(200);
-        updateObservers("You win $200 \n");
-    }
+	int rndRoll = getRand(0, 17);
+	if (rndRoll == 0) {
+		p->withdraw(200);
+		updateObservers("You lose $200 \n");
+	} else if (rndRoll == 1 || rndRoll == 2) {
+		p->withdraw(100);
+		updateObservers("You lose $100 \n");
+	} else if (rndRoll == 3 || rndRoll == 4 || rndRoll == 5) {
+		p->withdraw(50);
+		updateObservers("You lose $50 \n");
+	} else if (rndRoll > 5 && rndRoll < 12) {
+		p->deposit(25);
+		updateObservers("You win $25 \n");
+	} else if (rndRoll == 12 || rndRoll == 13 || rndRoll == 14) {
+		p->deposit(50);
+		updateObservers("You win $50 \n");
+	} else if (rndRoll == 15 || rndRoll == 16) {
+		p->deposit(100);
+		updateObservers("You win $100 \n");
+	} else if (rndRoll == 17) {
+		p->deposit(200);
+		updateObservers("You win $200 \n");
+	}
+
 }
 
