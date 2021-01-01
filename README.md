@@ -7,3 +7,7 @@
 ## Author
 - Name: Alexandru Camer
 - Waterloo ID: acamer
+
+## Author
+- Name: Zhao Gui
+- Waterloo ID: z2gui
