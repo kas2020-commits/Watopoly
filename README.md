@@ -1,4 +1,4 @@
-# CS 246 Final Project: Watopoly
+# Watopoly
 
 ## Author
 - Name: Karem Abdul-Samad
